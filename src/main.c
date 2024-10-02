@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/02 23:03:52 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/03 06:24:15 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Replaces tabs with spaces and removes extra spaces, ensuring only 
+/* Replaces tabs with spaces and removes extra spaces, ensuring only
 single spaces remain */
 char	*clear_command(char *command)
 {
@@ -54,7 +54,7 @@ int	main(void)
 	char	*path;
 	char	*current_dir;
 	int		exit;
-	
+
 	chdir(getenv("HOME"));
 	user = getenv("USER");
 	while (1)
