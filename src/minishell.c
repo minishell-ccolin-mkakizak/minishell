@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/02 23:13:38 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/03 07:02:05 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*remove_newline(char *command)
 {
 	int	i;
-	
+
 	i = 0;
 	while (command[i])
 		i++;
