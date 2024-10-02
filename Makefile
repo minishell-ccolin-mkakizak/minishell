@@ -11,7 +11,9 @@ DEBUG_FLAGS	=	-fsanitize=address
 SRCS		=	$(addprefix src/,$(FILES))
 OBJS		=	$(SRCS:.c=.o)
 CC			=	clang
-FILES 		=	main.c commands.c minishell.c process_commands.c split_commands.c
+FILES 		=	main.c commands.c minishell.c process_commands.c \
+				split_commands.c pipe.c pipe_utils.c
+
 
 # Colors
 DEF_COLOR = \033[0;39m
