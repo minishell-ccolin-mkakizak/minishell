@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/03 07:02:05 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/03 09:18:08 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_commands(char ***commands)
 	i = 0;
 	while (commands[i])
 	{
-		free_array(commands[i]);
+		free_all(commands[i]);
 		i++;
 	}
 	free(commands);

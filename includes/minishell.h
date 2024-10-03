@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:33:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/03 07:39:57 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/03 09:19:03 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int		process_commands(char ***commands);
 void	cd(char **command);
 void	pwd(char **command);
 char	***split_commands(char *input);
-void	free_array(char **array);
 
 //pip_utils.c
 int		free_all(char **str_arr);

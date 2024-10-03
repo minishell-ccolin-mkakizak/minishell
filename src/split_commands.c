@@ -6,24 +6,11 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 23:12:14 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/02 23:13:35 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/03 09:18:16 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	free(array);
-}
 
 int	array_len(char **array)
 {
@@ -100,6 +87,6 @@ char	***split_commands(char *input)
 		i++;
 	}
 	commands[i] = NULL;
-	free_array(command_groups);
+	free_all(command_groups);
 	return (commands);
 }
