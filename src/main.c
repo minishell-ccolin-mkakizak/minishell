@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/04 13:32:21 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:51:01 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ int	main(void)
 		if (exit)
 			break ;
 	}
+	clear_history();
 	ft_printf("Exiting...\n");
 }

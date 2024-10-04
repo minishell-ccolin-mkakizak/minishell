@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/04 13:38:46 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/04 14:00:30 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ int	minishell(char *command)
 {
 	char ***commands;
 	int	exit;
-	if (command[0] = '\n')
+	if (command[0] == '\0')
+	{
+		free(command);
 		return (0);
+	}
+	add_history(command);
 	exit = 0;
 	commands = split_commands(command);
-	free(command);
 	exit = process_commands(commands);
 	free_commands(commands);
 	if (exit)
