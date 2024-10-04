@@ -7,12 +7,18 @@ INCLUDES	= 	-I includes -I $(LIBFT_PATH)/includes -I /usr/local/opt/readline/inc
 
 CFLAGS		= 	$(INCLUDES)
 LIBS_PATH	=	-L$(LIBFT_PATH) -L /usr/local/opt/readline/lib
+LIBS_FLAGS	=	-lft -lreadline
 DEBUG_FLAGS	=	-fsanitize=address
-SRCS		=	$(addprefix src/,$(FILES))
-OBJS		=	$(SRCS:.c=.o)
+SRC_DIR		=	src
+OBJ_DIR		=	obj
+RM			=	rm -rf
 CC			=	clang
-FILES 		=	main.c commands.c minishell.c process_commands.c \
-				split_commands.c pipe.c pipe_utils.c
+
+# This will find all the .c files in the src directory and make a obj
+# directory to put all the .o files
+SRCS		=	$(shell find $(SRC_DIR) -name '*.c')
+OBJS		=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
 
 
 # Colors
@@ -30,16 +36,20 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) -C $(LIBFT_PATH)
-	$(CC) $(OBJS) -o $(NAME) $(LIBS_PATH) -lft -lreadline
+	$(CC) $(OBJS) -o $(NAME) $(LIBS_PATH) $(LIBS_FLAGS)
 	@echo "$(GREEN)<-----------------$(NAME) compiled!------------------>$(DEF_COLOR)"
 
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJ_DIR)
 	$(MAKE) clean -C $(LIBFT_PATH)
 	@echo "$(CYAN)<--------$(NAME) object files cleaned!-------->$(DEF_COLOR)"
 
 fclean:
-	$(RM) $(OBJS) $(NAME)
+	$(RM) $(OBJ_DIR) $(NAME)
 	$(MAKE) fclean -C $(LIBFT_PATH)
 	@echo "$(CYAN)<------$(NAME) executable files cleaned!------>$(DEF_COLOR)"
 
@@ -47,7 +57,7 @@ re: fclean all
 
 debug: $(OBJS)
 	$(MAKE) -C $(LIBFT_PATH)
-	$(CC) $(DEBUG_FLAGS) $(OBJS) -o $(NAME) $(LIBS_PATH) -lft -lreadline
+	$(CC) $(DEBUG_FLAGS) $(OBJS) -o $(NAME) $(LIBS_PATH) $(LIBS_FLAGS)
 	@echo "$(MAGENTA)<------$(GREEN)Cleaned and rebuilt everything for $(NAME) in debug mode!$(MAGENTA)------>$(DEF_COLOR)"
 
 norm:
@@ -55,3 +65,8 @@ norm:
 	norminette -R CheckDefine includes/*.h
 
 .PHONY: all clean fclean re
+
+
+
+
+
