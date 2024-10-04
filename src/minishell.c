@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/03 09:18:08 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/04 09:51:55 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	minishell(char *command)
 	int	exit;
 
 	exit = 0;
-	commands = split_commands(remove_newline(command));
+	commands = split_commands(command);
 	free(command);
 	exit = process_commands(commands);
 	free_commands(commands);
