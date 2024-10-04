@@ -6,23 +6,11 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/04 09:51:55 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/04 09:55:19 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*remove_newline(char *command)
-{
-	int	i;
-
-	i = 0;
-	while (command[i])
-		i++;
-	i--;
-	command[i] = '\0';
-	return (command);
-}
 
 void	free_commands(char ***commands)
 {
