@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/04 13:51:01 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/04 18:35:17 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ char	*clear_command(char *command)
 	int		j;
 	char	*cleaned;
 
+	if (!command)
+		return (NULL);
+	if (command[0] == '\0')
+		return (command);
 	i = 0;
 	j = 0;
 	cleaned = (char *)malloc(sizeof(char) * (ft_strlen(command) + 1));
@@ -81,7 +85,7 @@ int	main(void)
 {
 	char	*prompt;
 	int		exit;
-	
+
 	chdir(getenv("HOME"));
 	while (1)
 	{
