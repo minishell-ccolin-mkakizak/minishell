@@ -1,12 +1,12 @@
 NAME		=	minishell
 LIBFT_PATH	=	./libs/libft
-INCLUDES	= 	-I includes -I $(LIBFT_PATH)/includes
+INCLUDES	= 	-I includes -I $(LIBFT_PATH)/includes -I /usr/local/opt/readline/include
 
 # this is commented out just for development
 # CFLAGS		=	-Wall -Werror -Wextra $(INCLUDES)
 
 CFLAGS		= 	$(INCLUDES)
-LIBS_PATH	=	-L$(LIBFT_PATH)
+LIBS_PATH	=	-L$(LIBFT_PATH) -L /usr/local/opt/readline/lib
 DEBUG_FLAGS	=	-fsanitize=address
 SRCS		=	$(addprefix src/,$(FILES))
 OBJS		=	$(SRCS:.c=.o)
@@ -30,7 +30,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(MAKE) -C $(LIBFT_PATH)
-	$(CC) $(OBJS) -o $(NAME) $(LIBS_PATH) -lft
+	$(CC) $(OBJS) -o $(NAME) $(LIBS_PATH) -lft -lreadline
 	@echo "$(GREEN)<-----------------$(NAME) compiled!------------------>$(DEF_COLOR)"
 
 clean:
@@ -47,7 +47,7 @@ re: fclean all
 
 debug: $(OBJS)
 	$(MAKE) -C $(LIBFT_PATH)
-	$(CC) $(DEBUG_FLAGS) $(OBJS) -o $(NAME) $(LIBS_PATH) -lft
+	$(CC) $(DEBUG_FLAGS) $(OBJS) -o $(NAME) $(LIBS_PATH) -lft -lreadline
 	@echo "$(MAGENTA)<------$(GREEN)Cleaned and rebuilt everything for $(NAME) in debug mode!$(MAGENTA)------>$(DEF_COLOR)"
 
 norm:

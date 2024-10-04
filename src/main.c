@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/03 07:01:56 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:32:21 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,46 @@ char	*get_last_word(const char *str, char delimiter)
 		return ft_strdup(str);
 }
 
-int	main(void)
+char	*build_prompt(void)
 {
 	char	*user;
 	char	*path;
 	char	*current_dir;
-	int		exit;
+	char	*minishell;
+	int		total_len;
+	char	*prompt;
 
-	chdir(getenv("HOME"));
 	user = getenv("USER");
+	path = getcwd(NULL, 0);
+	current_dir = get_last_word(path, '/');
+	minishell = "minishell";
+	total_len = ft_strlen(user) + ft_strlen(current_dir) \
+		+ ft_strlen(minishell) + 5;
+	prompt = malloc(total_len);
+	if (!prompt)
+		return (NULL);
+	ft_strlcpy(prompt, user, total_len);
+	ft_strlcat(prompt, "@", total_len);
+	ft_strlcat(prompt, minishell, total_len);
+	ft_strlcat(prompt, ":", total_len);
+	ft_strlcat(prompt, current_dir, total_len);
+	ft_strlcat(prompt, "$ ", total_len);
+	free(path);
+	free(current_dir);
+	return (prompt);
+}
+
+int	main(void)
+{
+	char	*prompt;
+	int		exit;
+	
+	chdir(getenv("HOME"));
 	while (1)
 	{
-		path = getcwd(NULL, 0);
-		current_dir = get_last_word(path, '/');
-		ft_printf("%s@minishell:%s$ ", user, current_dir);
-		free(path);
-		free(current_dir);
-		exit = minishell(clear_command(get_next_line(1)));
+		prompt = build_prompt();
+		exit = minishell(clear_command(readline(prompt)));
+		free(prompt);
 		if (exit)
 			break ;
 	}

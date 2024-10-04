@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:33:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/03 09:19:03 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:15:55 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <fcntl.h>
 # include <string.h>
 # include <sys/wait.h>
+
+# include <readline/readline.h>
+# include <readline/history.h>
 
 //input/output for pipe fds
 # define INPUT 0

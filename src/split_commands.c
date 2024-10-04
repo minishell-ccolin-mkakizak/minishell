@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 23:12:14 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/04 09:55:17 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/04 13:35:28 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ char	***split_commands(char *input)
 	char	***commands;
 	int		i;
 
-	if (input[0] != '\n')
-		remove_newline(input);
+	// if (input[0] != '\n')
+	// 	remove_newline(input);
 	command_groups = split_by_string(input, "&&");
 	if (!command_groups)
 		return (NULL);
