@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:33:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/05 09:49:01 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/05 11:20:59 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@
 
 //minishell.c
 int		minishell(char *command);
+
+//build_prompt.c
+char	*get_hostname(void);
+char	*build_prompt(char *hostname);
 
 //process_commands.c
 int		process_commands(char ***commands);
