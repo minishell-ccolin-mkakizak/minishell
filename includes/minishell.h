@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:33:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/04 13:15:55 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/05 09:49:01 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,18 @@
 # define INPUT 0
 # define OUTPUT 1
 
+//minishell.c
 int		minishell(char *command);
+
+//process_commands.c
 int		process_commands(char ***commands);
+
+// split_commands.c
+char	***split_commands(char *input);
+
+//commands.c
 void	cd(char **command);
 void	pwd(char **command);
-char	***split_commands(char *input);
 
 //pip_utils.c
 int		free_all(char **str_arr);
