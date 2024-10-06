@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 11:23:45 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/06 12:00:59 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/06 12:30:35 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ char	*get_linux_hostname(void)
 	return (hostname);
 }
 
-/* Extracts and returns the full path for Linux or just the current directory for macOS */
+/* Extracts and returns the full path for Linux or just the current 
+directory for macOS */
 char	*get_current_dir(const char *path, char delimiter)
-{	
+{
 	if (IS_LINUX)
 	{
 		if (ft_strncmp(path, getenv("HOME"), ft_strlen(getenv("HOME"))) == 0)
@@ -41,8 +42,6 @@ char	*get_current_dir(const char *path, char delimiter)
 	return (get_dir_mac(path, delimiter));
 }
 
-
-
 /* Retrieves the hostname for Linux or MacOS */
 char	*get_hostname(void)
 {
@@ -51,18 +50,13 @@ char	*get_hostname(void)
 
 	if (IS_LINUX)
 		return (get_linux_hostname());
-
 	fd = open(HOSTNAME_MAC, O_RDONLY);
-
 	if (fd == -1)
 		return (ft_strdup("hostname"));
-
 	hostname = extract_mac_hostname(fd);
-
 	close(fd);
 	return (hostname);
 }
-
 
 /* Returns the prompt suffix based on the user and platform */
 char	*get_prompt_suffix(void)

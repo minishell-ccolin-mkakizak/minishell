@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 21:39:52 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/02 23:03:12 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/06 12:28:13 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	run_command(char **command)
 int	process_commands(char ***commands)
 {
 	int	i;
-	
+
 	i = 0;
 	while (commands[i])
 	{

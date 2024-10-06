@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 21:39:52 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/02 22:59:52 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/06 12:23:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	cd(char **command)
 void	pwd(char **command)
 {
 	char	*path;
-	
-	(void)command; // Will need to use command to check for pipe or redirection
+
+	(void)command;
 	path = getcwd(NULL, 0);
 	ft_printf("%s\n", path);
 	free(path);

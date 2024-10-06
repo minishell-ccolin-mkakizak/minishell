@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 17:30:35 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/05/15 14:28:53 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/06 12:39:05 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	recursive_print( int num, int *res)
 static void	check_sign(int *n, int *res)
 {
 	if (write(1, "-", 1) == 1)
-	{	
+	{
 		*n = *n * -1;
 		*res += 1;
 		recursive_print(*n, res);

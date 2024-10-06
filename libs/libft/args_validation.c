@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args_validation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 00:27:04 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/09/17 18:12:02 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/06 12:37:19 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	*args_validation(int argc, char *argv[])
 		if (was_zero && nbr == 0)
 			error();
 		if (nbr == 0 && !was_zero)
-				was_zero = 1;
+			was_zero = 1;
 		args_array[i - 1] = nbr;
 		i++;
 	}

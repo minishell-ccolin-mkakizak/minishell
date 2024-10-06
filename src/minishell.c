@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/04 17:45:43 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/06 12:36:48 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	free_commands(char ***commands)
 
 int	minishell(char *command)
 {
-	char ***commands;
-	int	exit;
+	char	***commands;
+	int		exit;
 
 	exit = 0;
 	if (!command)

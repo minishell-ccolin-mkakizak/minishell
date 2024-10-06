@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:33:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/06 11:31:13 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/06 12:42:05 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@
 
 //check if on mac or linux
 # ifdef __APPLE__
-# define IS_LINUX 0
+#  define IS_LINUX 0
 # endif
 # ifndef IS_LINUX
-# define IS_LINUX 1
+#  define IS_LINUX 1
 # endif
 
-# define HOSTNAME_MAC "/Library/Preferences/SystemConfiguration/preferences.plist"
+# define HOSTNAME_MAC \
+"/Library/Preferences/SystemConfiguration/preferences.plist"
 # define HOSTNAME_LINUX "/etc/hostname"
 
 //input/output for pipe fds
@@ -77,6 +78,6 @@ char	*validate_path(char **path_arr, char *cmd);
 char	*find_path(char *cmd, char *envp[]);
 
 //pipe.c
-int	my_pipe(int argc, char *argv[], char *envp[]);
+int		my_pipe(int argc, char *argv[], char *envp[]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 23:12:14 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/04 13:35:28 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/06 12:27:25 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,11 @@ int	count_delimiters(char *input, char *delimiter)
 	delimiter_len = ft_strlen(delimiter);
 	if (delimiter_len == 0)
 		return (0);
-	while ((next_delim = ft_strnstr(input, delimiter, ft_strlen(input))))
+	while (1)
 	{
+		next_delim = ft_strnstr(input, delimiter, ft_strlen(input));
+		if (!next_delim)
+			break ;
 		count++;
 		input = next_delim + delimiter_len;
 	}
@@ -60,20 +63,23 @@ char	**split_by_string(char *input, char *delimiter)
 	char	*next_delim;
 	int		i;
 
-	result = (char **)malloc(sizeof(char *) * (count_delimiters(input, delimiter) + 2));
+	result = (char **)malloc(sizeof(char *) * \
+	(count_delimiters(input, delimiter) + 2));
 	if (!result)
 		return (NULL);
 	start = input;
 	i = 0;
-	while ((next_delim = ft_strnstr(start, delimiter, ft_strlen(start))))
+	while (1)
 	{
+		next_delim = ft_strnstr(start, delimiter, ft_strlen(start));
+		if (!next_delim)
+			break ;
 		result[i] = ft_substr(start, 0, next_delim - start);
 		start = next_delim + ft_strlen(delimiter);
 		i++;
 	}
 	result[i] = ft_strdup(start);
 	result[++i] = NULL;
-
 	return (result);
 }
 
@@ -85,12 +91,11 @@ char	***split_commands(char *input)
 	char	***commands;
 	int		i;
 
-	// if (input[0] != '\n')
-	// 	remove_newline(input);
 	command_groups = split_by_string(input, "&&");
 	if (!command_groups)
 		return (NULL);
-	commands = (char ***)malloc(sizeof(char **) * (array_len(command_groups) + 1));
+	commands = (char ***)malloc(sizeof(char **) * \
+	(array_len(command_groups) + 1));
 	if (!commands)
 		return (NULL);
 	i = 0;
