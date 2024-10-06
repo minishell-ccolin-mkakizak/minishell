@@ -32,7 +32,7 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-all: $(NAME)
+all: $(NAME) norm_check
 
 $(NAME): $(OBJS)
 	$(MAKE) -C $(LIBFT_PATH)
@@ -63,6 +63,9 @@ debug: $(OBJS)
 norm:
 	norminette -R CheckForbiddenSourceHeader ${SRCS}
 	norminette -R CheckDefine includes/*.h
+
+norm_check:
+	@norminette | grep -v OK | awk '{print "\033[0;91m" $$0 "\033[0m"}'
 
 .PHONY: all clean fclean re
 
