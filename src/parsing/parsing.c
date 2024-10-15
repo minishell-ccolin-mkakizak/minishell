@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/15 12:26:52 by ccolin           ###   ########.fr       */
+/*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
+/*   Updated: 2024/10/15 13:46:16 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /* Replaces tabs with spaces and removes extra spaces, ensuring only
 single spaces remain */
-char	*clear_command(char *command)
+char	*clear_input(char *command)
 {
 	int		i;
 	int		j;
@@ -42,60 +42,59 @@ char	*clear_command(char *command)
 	return (cleaned);
 }
 
-char	**init_envp(void)
+void	replace_token_envp(char *token, char *key)
 {
-	char	**envp;
-
-	envp = malloc(sizeof(char *) * 1);
-	if (!envp)
-		return (NULL);
-	envp[0] = NULL;
-	return (envp);
+	free(token);
+	token = ft_strdup(key);
 }
 
-t_command	init_head(void)
+int	compare_key_envp(char *token, char *key)
 {
-	t_command	head;
+	int	i;
 
-	head = malloc(sizeof(t_command) * 1);
-	if (!head)
-		return (NULL);
-	return (head);
-}
-
-t_command_table	init_table(void)
-{
-	t_command_table	table;
-
-	table = malloc(1, sizeof(t_command_table));
-	if (!table)
-		return (NULL);
-	table.head = init_head();
-	table.exit_status = 0;
-	table.envp = init_envp();
-	return (table);
-}
-
-int	main(void)
-{
-	char			*prompt;
-	char			**envp;
-	char			*hostname;
-	int				exit;
-	t_command_table	table;
-
-	table = init_table();
-	hostname = get_hostname();
-	chdir(getenv("HOME"));
-	while (1)
+	i = 0;
+	while (key[i] != '=')
+		i++;
+	if (strncmp(token, key, i))
 	{
-		prompt = build_prompt(hostname);
-		exit = minishell(parsing(readline(prompt), table));
-		free(prompt);
-		if (exit)
-			break ;
+		replace_token_envp(token, key[i + 1]);
+		return (1);
 	}
-	clear_history();
-	free(hostname);
-	ft_printf("Exiting...\n");
+	return (0);
+}
+
+char	**manage_envp(char **tokens, char **envp)
+{
+	int	i;
+	int	j;
+	int	replaced;
+
+	i = 0;
+	j = 0;
+	while (tokens[i])
+	{
+		if (token[i][0] == '$')
+		{
+			while (envp[j])
+			{
+				replaced = compare_key_envp(tokens[i], envp[j]);
+				if (replaced)
+					break ;
+				j++;
+				if (!envp[j])
+					replace_key_envp(&tokens[i], "");
+			}
+		}
+		i++;
+	}
+	return (tokens);
+}
+
+t_command_table	parsing(t_command_table table, char *input)
+{
+	char	**tokens;
+
+	input = clear_input(input);
+	tokens = ft_split(input, ' ');
+	tokens = manage_envp(tokens, table->envp);
 }

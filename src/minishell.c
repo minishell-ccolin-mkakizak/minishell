@@ -6,44 +6,71 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:53 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/06 12:36:48 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/15 12:22:36 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_commands(char ***commands)
+void	print_command(t_command *cmd)
 {
 	int	i;
 
-	i = 0;
-	while (commands[i])
+	if (!cmd)
+		return ;
+	printf("Command arguments:\n");
+	if (cmd->args)
 	{
-		free_all(commands[i]);
-		i++;
+		i = 0;
+		while (cmd->args[i])
+		{
+			printf("	arg[%d]: %s\n", i, cmd->args[i]);
+			i++;
+		}
 	}
-	free(commands);
+	else
+		printf("	No arguments.\n");
+	printf("Input file: %s\n", cmd->input_file ? cmd->input_file : "None");
+	printf("Output file: %s\n", cmd->output_file ? cmd->output_file : "None");
+	printf("Append: %d\n", cmd->append);
+	printf("Pipe In: %d\n", cmd->pipe_in);
+	printf("Pipe Out: %d\n", cmd->pipe_out);
+	printf("Execution Condition: %d\n", cmd->exec_cond);
+	printf("Is Built-in: %d\n", cmd->is_builtin);
+	printf("----------\n");
 }
 
-int	minishell(char *command)
+void	print_command_table(t_command_table *table)
 {
-	char	***commands;
-	int		exit;
+	t_command	*current;
+	int		i;
 
-	exit = 0;
-	if (!command)
-		return (1);
-	if (command[0] == '\0')
+	if (!table)
+		return ;
+	printf("Exit Status: %d\n", table->exit_status);
+	printf("Environment Variables:\n");
+	if (table->envp)
 	{
-		free(command);
-		return (0);
+		i = 0;
+		while (table->envp[i])
+		{
+			printf("	envp[%d]: %s\n", i, table->envp[i]);
+			i++;
+		}
 	}
-	add_history(command);
-	commands = split_commands(command);
-	exit = process_commands(commands);
-	free_commands(commands);
-	free(command);
-	if (exit)
-		return (1);
-	return (0);
+	else
+		printf("	No environment variables.\n");
+	printf("\nCommands:\n");
+	current = table->head;
+	while (current)
+	{
+		print_command(current);
+		current = current->next;
+	}
+}
+
+int	minishell(t_command_table table)
+{
+	print_command_table(table)
+	free()
 }

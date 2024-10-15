@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 14:33:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/06 12:57:07 by ccolin           ###   ########.fr       */
-/*                                                                            */
+/*                                      */
+/*                            :::     ::::::::   */
+/*   minishell.h                                        :+:   :+:    :+:   */
+/*                          +:+ +:+       +:+    */
+/*   By: ccolin <ccolin@student.42.fr>        +#+  +:+       +#+    */
+/*                        +#+#+#+#+#+   +#+     */
+/*   Created: 2024/10/02 14:33:50 by ccolin   #+#  #+#          */
+/*   Updated: 2024/10/06 12:57:07 by ccolin     ###   ########.fr    */
+/*                                      */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -25,6 +25,27 @@
 
 # include <readline/readline.h>
 # include <readline/history.h>
+
+//command table 
+typedef struct s_command
+{
+	char				**args;
+	char				*input_file;
+	char				*output_file;
+	int					append;
+	int					pipe_in;
+	int					pipe_out;
+	int					exec_cond;
+	int					is_builtin;
+	struct s_command	*next;
+}						t_command;
+
+typedef struct s_command_table
+{
+	t_command	*head;
+	int			exit_status;
+	char		**envp;
+}				t_command_table;
 
 //check if on mac or linux
 # ifdef __APPLE__
