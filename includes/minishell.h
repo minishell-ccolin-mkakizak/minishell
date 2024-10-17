@@ -1,4 +1,5 @@
 /* ************************************************************************** */
+<<<<<<< Updated upstream
 /*                                      */
 /*                            :::     ::::::::   */
 /*   minishell.h                                        :+:   :+:    :+:   */
@@ -8,6 +9,17 @@
 /*   Created: 2024/10/02 14:33:50 by ccolin   #+#  #+#          */
 /*   Updated: 2024/10/06 12:57:07 by ccolin     ###   ########.fr    */
 /*                                      */
+=======
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/02 14:33:50 by ccolin            #+#    #+#             */
+/*   Updated: 2024/10/14 14:04:06 by minoka           ###   ########.fr       */
+/*                                                                            */
+>>>>>>> Stashed changes
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -96,7 +108,8 @@ int		free_all(char **str_arr);
 void	throw_error(char *message, int exit_status, int error_number);
 char	**parse_cmd(int argc, char *argv[]);
 char	*validate_path(char **path_arr, char *cmd);
-char	*find_path(char *cmd, char *envp[]);
+char	*find_path(char *cmd);
+void 	execute_cmd(char **cmd);
 
 //pipe.c
 int		my_pipe(int argc, char *argv[], char *envp[]);

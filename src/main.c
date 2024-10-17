@@ -90,7 +90,12 @@ int	main(void)
 	while (1)
 	{
 		prompt = build_prompt(hostname);
+<<<<<<< Updated upstream
 		exit = minishell(parsing(readline(prompt), table));
+=======
+		exit = minishell(clear_command(readline(prompt)));
+		
+>>>>>>> Stashed changes
 		free(prompt);
 		if (exit)
 			break ;

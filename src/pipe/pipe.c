@@ -6,34 +6,11 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 17:51:25 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/03 07:40:13 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/14 15:02:30 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	execute_cmd(char *cmd, char *envp[])
-{
-	char	**cmd_arr;
-	char	*path;
-
-	cmd_arr = ft_split(cmd, ' ');
-	free(cmd);
-	path = find_path(cmd_arr[0], envp);
-	if (!path)
-	{
-		free_all(cmd_arr);
-		free(path);
-		throw_error("bash: command not found", 127, 0);
-	}
-	if (execve(path, cmd_arr, envp) == -1)
-	{
-		free_all(cmd_arr);
-		free(path);
-		throw_error("bash: execution went worng", EXIT_FAILURE, 0);
-	}
-	return (0);
-}
 
 int	child_process(char *input, char **cmd_arr, int *pipefd, char **envp)
 {
@@ -55,7 +32,7 @@ int	child_process(char *input, char **cmd_arr, int *pipefd, char **envp)
 	close(infile_fd);
 	cmd = ft_strdup(cmd_arr[0]);
 	free_all(cmd_arr);
-	execute_cmd(cmd, envp);
+	// execute_cmd(cmd);
 	return (0);
 }
 
@@ -79,7 +56,7 @@ int	parent_process(char *output, char **cmd_arr, int *pipefd, char **envp)
 	close(outfile_fd);
 	cmd = ft_strdup(cmd_arr[1]);
 	free_all(cmd_arr);
-	execute_cmd(cmd, envp);
+	// execute_cmd(cmd);
 	return (0);
 }
 

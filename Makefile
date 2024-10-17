@@ -32,7 +32,7 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-all: $(NAME) norm_check
+# all: $(NAME) norm_check
 
 $(NAME): $(OBJS)
 	$(MAKE) -C $(LIBFT_PATH)
