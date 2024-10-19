@@ -6,95 +6,89 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/15 13:46:16 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/19 10:59:27 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Replaces tabs with spaces and removes extra spaces, ensuring only
-single spaces remain */
-char	*clear_input(char *command)
-{
-	int		i;
-	int		j;
-	char	*cleaned;
-
-	if (!command)
-		return (NULL);
-	if (command[0] == '\0')
-		return (command);
-	i = 0;
-	j = 0;
-	cleaned = (char *)malloc(sizeof(char) * (ft_strlen(command) + 1));
-	if (!cleaned)
-		return (NULL);
-	while (command[i])
-	{
-		if (command[i] == '\t')
-			command[i] = ' ';
-		if (command[i] != ' ' || (j > 0 && cleaned[j - 1] != ' '))
-			cleaned[j++] = command[i];
-		i++;
-	}
-	cleaned[j] = '\0';
-	free(command);
-	return (cleaned);
-}
-
-void	replace_token_envp(char *token, char *key)
-{
-	free(token);
-	token = ft_strdup(key);
-}
-
-int	compare_key_envp(char *token, char *key)
+void	print_command(t_command *cmd)
 {
 	int	i;
 
-	i = 0;
-	while (key[i] != '=')
-		i++;
-	if (strncmp(token, key, i))
+	if (!cmd)
+		return ;
+	printf("Command arguments:\n");
+	if (cmd->args)
 	{
-		replace_token_envp(token, key[i + 1]);
-		return (1);
-	}
-	return (0);
-}
-
-char	**manage_envp(char **tokens, char **envp)
-{
-	int	i;
-	int	j;
-	int	replaced;
-
-	i = 0;
-	j = 0;
-	while (tokens[i])
-	{
-		if (token[i][0] == '$')
+		i = 0;
+		while (cmd->args[i])
 		{
-			while (envp[j])
-			{
-				replaced = compare_key_envp(tokens[i], envp[j]);
-				if (replaced)
-					break ;
-				j++;
-				if (!envp[j])
-					replace_key_envp(&tokens[i], "");
-			}
+			printf("	arg[%d]: %s\n", i, cmd->args[i]);
+			i++;
 		}
-		i++;
 	}
-	return (tokens);
+	else
+		printf("	No arguments.\n");
+	printf("Input file: %s\n", cmd->input_file ? cmd->input_file : "None");
+	printf("Output file: %s\n", cmd->output_file ? cmd->output_file : "None");
+	printf("Append: %d\n", cmd->append);
+	printf("Pipe In: %d\n", cmd->pipe_in);
+	printf("Pipe Out: %d\n", cmd->pipe_out);
+	printf("Execution Condition: %d\n", cmd->exec_cond);
+	printf("Is Built-in: %d\n", cmd->is_builtin);
+	printf("----------\n");
 }
 
-t_command_table	parsing(t_command_table table, char *input)
+void	print_command_table(t_command_table *table)
 {
-	char	**tokens;
+	t_command	*current;
+	int		i;
 
-	input = clear_input(input);
-	tokens = ft_split(input, ' ');
-	tokens = manage_envp(tokens, table->envp);
+	if (!table)
+		return ;
+	printf("Exit Status: %d\n", table->exit_status);
+	printf("Exit shell: %d\n", table->exit_shell);
+	printf("Environment Variables:\n");
+	if (table->envp)
+	{
+		i = 0;
+		while (table->envp[i])
+		{
+			printf("	envp[%d]: %s\n", i, table->envp[i]);
+			i++;
+		}
+	}
+	else
+		printf("	No environment variables.\n");
+	printf("\nCommands:\n");
+	current = table->head;
+	while (current)
+	{
+		print_command(current);
+		current = current->next;
+	}
+}
+
+int	main_parsing(void)
+{
+	char			*prompt;
+	char			*hostname;
+	char			*input;
+
+	ft_printf("Starting parsing mode\n");
+	hostname = get_hostname();
+	chdir(getenv("HOME"));
+	while (1)
+	{
+		prompt = build_prompt(hostname);
+		input = readline(prompt);
+		free(prompt);
+		if (!input)
+			break ;
+	}
+	clear_history();
+	free(hostname);
+	ft_printf("Exiting...\n");
+	return (0);
 }

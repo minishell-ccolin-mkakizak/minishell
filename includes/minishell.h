@@ -1,25 +1,13 @@
 /* ************************************************************************** */
-<<<<<<< Updated upstream
-/*                                      */
-/*                            :::     ::::::::   */
-/*   minishell.h                                        :+:   :+:    :+:   */
-/*                          +:+ +:+       +:+    */
-/*   By: ccolin <ccolin@student.42.fr>        +#+  +:+       +#+    */
-/*                        +#+#+#+#+#+   +#+     */
-/*   Created: 2024/10/02 14:33:50 by ccolin   #+#  #+#          */
-/*   Updated: 2024/10/06 12:57:07 by ccolin     ###   ########.fr    */
-/*                                      */
-=======
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 14:33:50 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/14 14:04:06 by minoka           ###   ########.fr       */
+/*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
+/*   Updated: 2024/10/19 11:13:58 by ccolin           ###   ########.fr       */
 /*                                                                            */
->>>>>>> Stashed changes
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -29,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <string.h>
 
 # include <errno.h>
 # include <fcntl.h>
@@ -56,6 +45,7 @@ typedef struct s_command_table
 {
 	t_command	*head;
 	int			exit_status;
+	int			exit_shell;
 	char		**envp;
 }				t_command_table;
 
@@ -75,8 +65,15 @@ typedef struct s_command_table
 # define INPUT 0
 # define OUTPUT 1
 
-//minishell.c
-int		minishell(char *command);
+//parsing
+int		main_parsing(void);
+void	print_command(t_command *cmd);
+void	print_command_table(t_command_table *table);
+
+//execution
+int		main_execution(void);
+char 	*get_input(const char *prompt);
+void	add_command_interactive(t_command_table *table);
 
 //build_prompt.c
 char	*build_prompt(char *hostname);
@@ -92,16 +89,6 @@ char	*colon_or_space(void);
 char	*get_dir_mac(const char *path, char delimiter);
 char	*extract_mac_hostname(int fd);
 char	*parse_mac_hostname(char *line);
-
-//process_commands.c
-int		process_commands(char ***commands);
-
-// split_commands.c
-char	***split_commands(char *input);
-
-//commands.c
-void	cd(char **command);
-void	pwd(char **command);
 
 //pip_utils.c
 int		free_all(char **str_arr);
