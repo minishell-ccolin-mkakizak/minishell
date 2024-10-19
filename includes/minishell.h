@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/19 11:13:58 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/19 16:17:10 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,40 +65,48 @@ typedef struct s_command_table
 # define INPUT 0
 # define OUTPUT 1
 
-//parsing
-int		main_parsing(void);
-void	print_command(t_command *cmd);
-void	print_command_table(t_command_table *table);
+//parsing.c
+int			main_parsing(void);
 
-//execution
-int		main_execution(void);
-char 	*get_input(const char *prompt);
-void	add_command_interactive(t_command_table *table);
+//are_quotes_closed.c
+char		*are_quotes_closed(char *input);
+
+//execution.c
+int			main_execution(void);
+
+//mock comand table
+void		add_environment_variables(t_command_table *table);
+char		*get_input(const char *prompt);
+void		init_command_table(t_command_table *table);
+t_command	*prompt_command(void);
+void		add_command_interactive(t_command_table *table);
+void		print_command(t_command *cmd);
+void		print_command_table(t_command_table *table);
 
 //build_prompt.c
-char	*build_prompt(char *hostname);
+char		*build_prompt(char *hostname);
 
 //prompt_linux.c
-char	*get_linux_hostname(void);
-char	*get_current_dir(const char *path, char delimiter);
-char	*get_hostname(void);
-char	*get_prompt_suffix(void);
-char	*colon_or_space(void);
+char		*get_linux_hostname(void);
+char		*get_current_dir(const char *path, char delimiter);
+char		*get_hostname(void);
+char		*get_prompt_suffix(void);
+char		*colon_or_space(void);
 
 //prompt_mac.c
-char	*get_dir_mac(const char *path, char delimiter);
-char	*extract_mac_hostname(int fd);
-char	*parse_mac_hostname(char *line);
+char		*get_dir_mac(const char *path, char delimiter);
+char		*extract_mac_hostname(int fd);
+char		*parse_mac_hostname(char *line);
 
 //pip_utils.c
-int		free_all(char **str_arr);
-void	throw_error(char *message, int exit_status, int error_number);
-char	**parse_cmd(int argc, char *argv[]);
-char	*validate_path(char **path_arr, char *cmd);
-char	*find_path(char *cmd);
-void 	execute_cmd(char **cmd);
+int			free_all(char **str_arr);
+void		throw_error(char *message, int exit_status, int error_number);
+char		**parse_cmd(int argc, char *argv[]);
+char		*validate_path(char **path_arr, char *cmd);
+char		*find_path(char *cmd);
+void		execute_cmd(char **cmd);
 
 //pipe.c
-int		my_pipe(int argc, char *argv[], char *envp[]);
+int			my_pipe(int argc, char *argv[], char *envp[]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/19 10:33:54 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/19 13:28:20 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(void)
 	if (!mode)
 	{
 		main_execution();
-		return (0);	
+		return (0);
 	}
 	main_parsing();
 	return (0);

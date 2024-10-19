@@ -6,68 +6,58 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/19 10:59:27 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/19 17:41:58 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_command(t_command *cmd)
+char	*clear_input(char *input)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*new_input;
 
-	if (!cmd)
-		return ;
-	printf("Command arguments:\n");
-	if (cmd->args)
+	i = 0;
+	j = 0;
+	new_input = ft_calloc(ft_strlen(input), sizeof(char));
+	while (input[i] == ' ' || input[i] == '\t')
+		i++;
+	while (input[i])
 	{
-		i = 0;
-		while (cmd->args[i])
+		new_input[j++] = input[i++];
+		if (input[i - 1] == ' ' || input[i - 1] == '\t')
 		{
-			printf("	arg[%d]: %s\n", i, cmd->args[i]);
-			i++;
+			while (input[i] == ' ' || input[i] == '\t')
+				i++;
 		}
 	}
-	else
-		printf("	No arguments.\n");
-	printf("Input file: %s\n", cmd->input_file ? cmd->input_file : "None");
-	printf("Output file: %s\n", cmd->output_file ? cmd->output_file : "None");
-	printf("Append: %d\n", cmd->append);
-	printf("Pipe In: %d\n", cmd->pipe_in);
-	printf("Pipe Out: %d\n", cmd->pipe_out);
-	printf("Execution Condition: %d\n", cmd->exec_cond);
-	printf("Is Built-in: %d\n", cmd->is_builtin);
-	printf("----------\n");
+	if (new_input[j - 1] == ' ' || new_input[j] == '\t')
+		while (new_input[j - 1] == ' ' || new_input[j] == '\t')
+			j--;
+	new_input[j] = '\0';
+	ft_printf("\ninput = |%s|", input);
+	ft_printf("\ninput = |%s|\n", new_input);
+	return (new_input);
 }
 
-void	print_command_table(t_command_table *table)
+char	**tokenize(char *input, int i)
 {
-	t_command	*current;
-	int		i;
+	return (NULL);
+}
 
-	if (!table)
-		return ;
-	printf("Exit Status: %d\n", table->exit_status);
-	printf("Exit shell: %d\n", table->exit_shell);
-	printf("Environment Variables:\n");
-	if (table->envp)
-	{
-		i = 0;
-		while (table->envp[i])
-		{
-			printf("	envp[%d]: %s\n", i, table->envp[i]);
-			i++;
-		}
-	}
-	else
-		printf("	No environment variables.\n");
-	printf("\nCommands:\n");
-	current = table->head;
-	while (current)
-	{
-		print_command(current);
-		current = current->next;
-	}
+t_command_table	*parse(char *input)
+{
+	char	**tokens;
+
+	input = are_quotes_closed(input);
+	// input = is_pipe_defined(input);
+	// input = is_next_command_defined(input);
+	add_history(input);
+	input = clear_input(input);
+	tokens = tokenize(input, 0);
+	// is_command_valid()
+	return (NULL);
 }
 
 int	main_parsing(void)
@@ -75,6 +65,7 @@ int	main_parsing(void)
 	char			*prompt;
 	char			*hostname;
 	char			*input;
+	char			**tokens;
 
 	ft_printf("Starting parsing mode\n");
 	hostname = get_hostname();
@@ -83,9 +74,10 @@ int	main_parsing(void)
 	{
 		prompt = build_prompt(hostname);
 		input = readline(prompt);
-		free(prompt);
 		if (!input)
 			break ;
+		free(prompt);
+		parse(input);
 	}
 	clear_history();
 	free(hostname);
