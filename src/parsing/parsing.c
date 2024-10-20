@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 19:37:36 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/20 23:13:50 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,30 @@ char	*clear_input(char *input)
 	return (new_input);
 }
 
-t_command_table	*parse(char *input, char **envp)
+void	parse(char *input, char **envp, t_cmnd_tbl command_table)
 {
 	char	**tokens;
 
 	input = are_quotes_closed(input);
 	// input = is_pipe_defined(input);
 	// input = is_next_command_defined(input);
-	add_history(input);
 	ft_printf("----------\nENVPs\n");
 	print_envp(envp);
 	input = clear_input(input);
 	tokens = tokenize(input, 0);
 	ft_printf("\n----------\nTOKENS\n");
 	print_tokens(tokens);
-	free(input);
-	tokens = refine_tokens(tokens, 0, envp);
+	if (!refine_tokens(tokens, 0, envp))
+	{
+		// freetokens
+		parse(continue_input(input), envp, command_table);
+		return ;
+	}
 	ft_printf("----------\nREFINED TOKENS\n");
 	print_tokens(tokens);
-	return (NULL);
+	add_history(input);
+	free(input);
+	return ;
 }
 
 int	main_parsing(char **envp)
@@ -68,6 +73,7 @@ int	main_parsing(char **envp)
 	char			*hostname;
 	char			*input;
 	char			**tokens;
+	t_cmnd_tbl	command_table;
 
 	ft_printf("Starting parsing mode\n");
 	hostname = get_hostname();
@@ -79,7 +85,7 @@ int	main_parsing(char **envp)
 		if (!input)
 			break ;
 		free(prompt);
-		parse(input, envp);
+		parse(input, envp, command_table);
 	}
 	clear_history();
 	free(hostname);

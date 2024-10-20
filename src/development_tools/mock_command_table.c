@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 20:10:06 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/20 23:10:27 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_input(const char *prompt)
 	return (strdup(buffer));
 }
 
-void	add_environment_variables(t_command_table *table)
+void	add_environment_variables(t_cmnd_tbl *table)
 {
 	int	env_count;
 	int	i;
@@ -54,7 +54,7 @@ char	*get_env_variable(void)
 	return (get_input("Enter environment variable (format KEY=value): "));
 }
 
-void	init_command_table(t_command_table *table)
+void	init_cmnd_tbl(t_cmnd_tbl *table)
 {
 	if (!table)
 		return ;
@@ -62,7 +62,7 @@ void	init_command_table(t_command_table *table)
 	handle_commands_interactive(table);
 }
 
-void	setup_table_defaults(t_command_table *table)
+void	setup_table_defaults(t_cmnd_tbl *table)
 {
 	table->head = NULL;
 	table->exit_status = 0;
@@ -70,7 +70,7 @@ void	setup_table_defaults(t_command_table *table)
 	add_environment_variables(table);
 }
 
-void	handle_commands_interactive(t_command_table *table)
+void	handle_commands_interactive(t_cmnd_tbl *table)
 {
 	char	*response;
 
@@ -156,7 +156,7 @@ void	fill_command_flags(t_command *cmd)
 	cmd->next = NULL;
 }
 
-void	add_command_interactive(t_command_table *table)
+void	add_command_interactive(t_cmnd_tbl *table)
 {
 	t_command	*new_command;
 	t_command	*current;
@@ -216,7 +216,7 @@ void	print_command_details(t_command *cmd)
 	printf("----------\n");
 }
 
-void	print_command_table(t_command_table *table)
+void	print_cmnd_tbl(t_cmnd_tbl *table)
 {
 	int	i;
 
@@ -228,7 +228,7 @@ void	print_command_table(t_command_table *table)
 	print_commands(table);
 }
 
-void	print_environment_variables(t_command_table *table)
+void	print_environment_variables(t_cmnd_tbl *table)
 {
 	int	i;
 
@@ -246,7 +246,7 @@ void	print_environment_variables(t_command_table *table)
 		printf("\tNo environment variables.\n");
 }
 
-void	print_commands(t_command_table *table)
+void	print_commands(t_cmnd_tbl *table)
 {
 	t_command	*current;
 

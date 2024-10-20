@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/19 16:06:11 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/20 23:10:27 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 int	main_execution(void)
 {
-	t_command_table	table;
+	t_cmnd_tbl	table;
 
 	ft_printf("Starting execution mode\n-------------\n\n");
-	init_command_table(&table);
-	print_command_table(&table);
+	init_cmnd_tbl(&table);
+	print_cmnd_tbl(&table);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 20:04:37 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/20 23:13:34 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_command_table
 	int			exit_status;
 	int			exit_shell;
 	char		**envp;
-}				t_command_table;
+}				t_cmnd_tbl;
 
 //check if on mac or linux
 # ifdef __APPLE__
@@ -68,28 +68,28 @@ typedef struct s_command_table
 
 //DEVELOPMENT TOOLS
 //mock_comand_table.c
-void		add_environment_variables(t_command_table *table);
+void		add_environment_variables(t_cmnd_tbl *table);
 int			get_env_count(void);
 char		*get_env_variable(void);
-void		init_command_table(t_command_table *table);
-void		setup_table_defaults(t_command_table *table);
-void		handle_commands_interactive(t_command_table *table);
+void		init_cmnd_tbl(t_cmnd_tbl *table);
+void		setup_table_defaults(t_cmnd_tbl *table);
+void		handle_commands_interactive(t_cmnd_tbl *table);
 t_command	*prompt_command(void);
 t_command	*create_command(void);
 void		fill_command_args(t_command *cmd);
 void		fill_command_files(t_command *cmd);
 void		fill_command_flags(t_command *cmd);
-void		add_command_interactive(t_command_table *table);
+void		add_command_interactive(t_cmnd_tbl *table);
 void		print_command(t_command *cmd);
 void		print_command_args(t_command *cmd);
 void		print_command_details(t_command *cmd);
-void		print_command_table(t_command_table *table);
-void		print_environment_variables(t_command_table *table);
-void		print_commands(t_command_table *table);
+void		print_cmnd_tbl(t_cmnd_tbl *table);
+void		print_environment_variables(t_cmnd_tbl *table);
+void		print_commands(t_cmnd_tbl *table);
 t_command	*prompt_command(void);
-void		add_command_interactive(t_command_table *table);
+void		add_command_interactive(t_cmnd_tbl *table);
 void		print_command(t_command *cmd);
-void		print_command_table(t_command_table *table);
+void		print_cmnd_tbl(t_cmnd_tbl *table);
 //parsing_debug.c
 void		print_tokens(char **tokens);
 void		print_envp(char **envp);
@@ -101,6 +101,7 @@ int			main_execution(void);
 //PARSING
 //are_quotes_closed.c
 char		*are_quotes_closed(char *input);
+char		*continue_input(char *input);
 //parsing.c
 int			main_parsing(char **envp);
 //tokenize_utils.c

@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:05:09 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/19 16:05:58 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/20 22:51:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*continue_input(char *input)
 
 	line = NULL;
 	while (!line)
-		line = readline("dquote> ");
+		line = readline("> ");
 	temp = ft_strjoin(input, "\n");
 	free(input);
 	new_input = ft_strjoin(temp, line);
