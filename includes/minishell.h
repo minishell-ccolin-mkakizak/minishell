@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/19 16:17:10 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/20 20:04:37 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_command
 	char				**args;
 	char				*input_file;
 	char				*output_file;
+	char				*heredoc_delimiter;
 	int					append;
 	int					pipe_in;
 	int					pipe_out;
@@ -65,39 +66,55 @@ typedef struct s_command_table
 # define INPUT 0
 # define OUTPUT 1
 
-//parsing.c
-int			main_parsing(void);
-
-//are_quotes_closed.c
-char		*are_quotes_closed(char *input);
-
-//execution.c
-int			main_execution(void);
-
-//mock comand table
+//DEVELOPMENT TOOLS
+//mock_comand_table.c
 void		add_environment_variables(t_command_table *table);
-char		*get_input(const char *prompt);
+int			get_env_count(void);
+char		*get_env_variable(void);
 void		init_command_table(t_command_table *table);
+void		setup_table_defaults(t_command_table *table);
+void		handle_commands_interactive(t_command_table *table);
+t_command	*prompt_command(void);
+t_command	*create_command(void);
+void		fill_command_args(t_command *cmd);
+void		fill_command_files(t_command *cmd);
+void		fill_command_flags(t_command *cmd);
+void		add_command_interactive(t_command_table *table);
+void		print_command(t_command *cmd);
+void		print_command_args(t_command *cmd);
+void		print_command_details(t_command *cmd);
+void		print_command_table(t_command_table *table);
+void		print_environment_variables(t_command_table *table);
+void		print_commands(t_command_table *table);
 t_command	*prompt_command(void);
 void		add_command_interactive(t_command_table *table);
 void		print_command(t_command *cmd);
 void		print_command_table(t_command_table *table);
+//parsing_debug.c
+void		print_tokens(char **tokens);
+void		print_envp(char **envp);
 
-//build_prompt.c
-char		*build_prompt(char *hostname);
+//EXECUTION
+//execution.c
+int			main_execution(void);
 
-//prompt_linux.c
-char		*get_linux_hostname(void);
-char		*get_current_dir(const char *path, char delimiter);
-char		*get_hostname(void);
-char		*get_prompt_suffix(void);
-char		*colon_or_space(void);
+//PARSING
+//are_quotes_closed.c
+char		*are_quotes_closed(char *input);
+//parsing.c
+int			main_parsing(char **envp);
+//tokenize_utils.c
+void		skip_over_quotes(char *input, int *i);
+int			array_size(char **array);
+char		**add_str_to_arr(char **array, char *new_string);
+char		*char_to_string(char c);
+char		*char_to_double_string(char c);
+//tokenize.c
+char		**add_token(char **tokens, char *input, int start, int *i);
+char		**refine_tokens(char **tokens, int i, char **envp);
+char		**tokenize(char *input, int i);
 
-//prompt_mac.c
-char		*get_dir_mac(const char *path, char delimiter);
-char		*extract_mac_hostname(int fd);
-char		*parse_mac_hostname(char *line);
-
+//PIPE
 //pip_utils.c
 int			free_all(char **str_arr);
 void		throw_error(char *message, int exit_status, int error_number);
@@ -105,8 +122,21 @@ char		**parse_cmd(int argc, char *argv[]);
 char		*validate_path(char **path_arr, char *cmd);
 char		*find_path(char *cmd);
 void		execute_cmd(char **cmd);
-
 //pipe.c
 int			my_pipe(int argc, char *argv[], char *envp[]);
+
+//PROMPT
+//build_prompt.c
+char		*build_prompt(char *hostname);
+//prompt_linux.c
+char		*get_linux_hostname(void);
+char		*get_current_dir(const char *path, char delimiter);
+char		*get_hostname(void);
+char		*get_prompt_suffix(void);
+char		*colon_or_space(void);
+//prompt_mac.c
+char		*get_dir_mac(const char *path, char delimiter);
+char		*extract_mac_hostname(int fd);
+char		*parse_mac_hostname(char *line);
 
 #endif

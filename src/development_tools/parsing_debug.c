@@ -1,34 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing_debug.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 19:06:34 by ccolin           ###   ########.fr       */
+/*   Created: 2024/10/20 19:24:10 by ccolin            #+#    #+#             */
+/*   Updated: 2024/10/20 19:39:24 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	print_tokens(char **tokens)
 {
-	int		mode;
+	int	i;
 
-	(void)argc;
-	(void)argv;
-	mode = 2;
-	while (mode != 0 && mode != 1)
+	i = 0;
+	while (tokens && tokens[i])
 	{
-		ft_printf("%s", "Execution mode: 0\nParsing mode: 1\n");
-		scanf("%d", &mode);
+		printf("Token %d: %s\n", i, tokens[i]);
+		i++;
 	}
-	if (!mode)
+}
+
+void	print_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp && envp[i])
 	{
-		main_execution();
-		return (0);
+		printf("envp %d: %s\n", i, envp[i]);
+		i++;
 	}
-	main_parsing(envp);
-	return (0);
 }
