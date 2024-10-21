@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 23:13:50 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:13:07 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*clear_input(char *input)
 	return (new_input);
 }
 
-void	parse(char *input, char **envp, t_cmnd_tbl command_table)
+void	lex(char *input, char **envp, t_cmnd_tbl command_table)
 {
 	char	**tokens;
 
@@ -57,7 +57,7 @@ void	parse(char *input, char **envp, t_cmnd_tbl command_table)
 	if (!refine_tokens(tokens, 0, envp))
 	{
 		// freetokens
-		parse(continue_input(input), envp, command_table);
+		lex(continue_input(input), envp, command_table);
 		return ;
 	}
 	ft_printf("----------\nREFINED TOKENS\n");
@@ -83,12 +83,16 @@ int	main_parsing(char **envp)
 		prompt = build_prompt(hostname);
 		input = readline(prompt);
 		if (!input)
+		{
+			free(prompt);
 			break ;
+		}
 		free(prompt);
-		parse(input, envp, command_table);
+		lex(input, envp, command_table);
 	}
 	clear_history();
 	free(hostname);
 	ft_printf("Exiting...\n");
 	return (0);
 }
+//need to copy envp

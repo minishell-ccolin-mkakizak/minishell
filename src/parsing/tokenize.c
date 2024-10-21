@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:35:13 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 23:16:50 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:15:18 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,27 +52,25 @@ char	*remove_quotes(char *token)
 
 char	**add_token(char **tokens, char *input, int strt, int *i)
 {
-	char	c;
-
 	if (*i > strt && input[*i] == ' ')
 		tokens = add_str_to_arr(tokens, ft_substr(input, strt, *i - strt));
-	else if ((input[*i] == '|' && input[(*i) + 1] != '|') || (input[*i] == '<'\
-	&& input[(*i) + 1] != '<') || (input[*i] == '>' && input[(*i) + 1] != \
-	'>') || input[*i] == '(' || input[*i] == ')')
+	else if ((input[*i] == '|' && input[*i + 1] != '|') ||
+	(input[*i] == '<' && input[*i + 1] != '<') ||
+	(input[*i] == '>' && input[*i + 1] != '>') ||
+	input[*i] == '(' || input[*i] == ')')
 	{
-		c = input[*i];
 		if (*i > strt)
 			tokens = add_str_to_arr(tokens, ft_substr(input, strt, *i - strt));
-		tokens = add_str_to_arr(tokens, char_to_string(c));
+		tokens = add_str_to_arr(tokens, char_to_string(input[*i]));
 	}
-	else if ((input[*i] == '|' && input[(*i) + 1] == '|') || (input[*i] == '&'\
-	&& input[(*i) + 1] == '&') || (input[*i] == '<' && input[(*i) + 1] == \
-	'<') || (input[*i] == '>' && input[(*i) + 1] == '>'))
+	else if ((input[*i] == '|' && input[*i + 1] == '|') ||
+	(input[*i] == '&' && input[*i + 1] == '&') ||
+	(input[*i] == '<' && input[*i + 1] == '<') ||
+	(input[*i] == '>' && input[*i + 1] == '>'))
 	{
-		c = input[*i];
 		if (*i > strt)
 			tokens = add_str_to_arr(tokens, ft_substr(input, strt, *i - strt));
-		tokens = add_str_to_arr(tokens, char_to_double_string(c));
+		tokens = add_str_to_arr(tokens, char_to_double_string(input[*i]));
 		(*i)++;
 	}
 	return (tokens);
@@ -93,7 +91,7 @@ char	**refine_tokens(char **tokens, int i, char **envp)
 			tokens[i] = expend_envp(tokens[i], envp);
 		i++;
 	}
-	return (1);
+	return (tokens);
 }
 
 char	**tokenize(char *input, int i)
@@ -106,7 +104,10 @@ char	**tokenize(char *input, int i)
 	while (input[i])
 	{
 		skip_over_quotes(input, &i);
-		if (ft_strchr(" |<>()", input[i]))
+		if (input[i] == ' ' || ft_strchr("|<>()", input[i]) ||
+			(input[i] == '&' && input[i + 1] == '&') ||
+			(input[i] == '>' && input[i + 1] == '>') ||
+			(input[i] == '<' && input[i + 1] == '<'))
 		{
 			tokens = add_token(tokens, input, strt, &i);
 			strt = i + 1;
