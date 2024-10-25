@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/21 15:13:07 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/25 10:03:54 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*clear_input(char *input)
 
 void	lex(char *input, char **envp, t_cmnd_tbl command_table)
 {
-	char	**tokens;
+	char	**p_toks;
 
 	input = are_quotes_closed(input);
 	// input = is_pipe_defined(input);
@@ -51,17 +51,9 @@ void	lex(char *input, char **envp, t_cmnd_tbl command_table)
 	ft_printf("----------\nENVPs\n");
 	print_envp(envp);
 	input = clear_input(input);
-	tokens = tokenize(input, 0);
-	ft_printf("\n----------\nTOKENS\n");
-	print_tokens(tokens);
-	if (!refine_tokens(tokens, 0, envp))
-	{
-		// freetokens
-		lex(continue_input(input), envp, command_table);
-		return ;
-	}
-	ft_printf("----------\nREFINED TOKENS\n");
-	print_tokens(tokens);
+	p_toks = p_tokize(input, 0);
+	ft_printf("\n----------\np_tokS\n");
+	print_p_toks(p_toks);
 	add_history(input);
 	free(input);
 	return ;
@@ -72,7 +64,7 @@ int	main_parsing(char **envp)
 	char			*prompt;
 	char			*hostname;
 	char			*input;
-	char			**tokens;
+	char			**p_toks;
 	t_cmnd_tbl	command_table;
 
 	ft_printf("Starting parsing mode\n");

@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 23:13:34 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/25 10:10:06 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ typedef struct s_command_table
 	char		**envp;
 }				t_cmnd_tbl;
 
+//token
+typedef struct s_token
+{
+	char	*tok;
+	int		type;
+}			t_tok;
+
+# define COMMAND 1
+# define ARGUMENT 2
+# define OPERATOR 3
+
 //check if on mac or linux
 # ifdef __APPLE__
 #  define IS_LINUX 0
@@ -91,7 +102,7 @@ void		add_command_interactive(t_cmnd_tbl *table);
 void		print_command(t_command *cmd);
 void		print_cmnd_tbl(t_cmnd_tbl *table);
 //parsing_debug.c
-void		print_tokens(char **tokens);
+void		print_p_toks(char **p_toks);
 void		print_envp(char **envp);
 
 //EXECUTION
@@ -104,16 +115,16 @@ char		*are_quotes_closed(char *input);
 char		*continue_input(char *input);
 //parsing.c
 int			main_parsing(char **envp);
-//tokenize_utils.c
+//p_tokize_utils.c
 void		skip_over_quotes(char *input, int *i);
 int			array_size(char **array);
 char		**add_str_to_arr(char **array, char *new_string);
 char		*char_to_string(char c);
 char		*char_to_double_string(char c);
-//tokenize.c
-char		**add_token(char **tokens, char *input, int start, int *i);
-char		**refine_tokens(char **tokens, int i, char **envp);
-char		**tokenize(char *input, int i);
+//p_tokize.c
+char		**add_p_tok(char **p_toks, char *input, int start, int *i);
+char		**refine_p_toks(char **p_toks, int i, char **envp);
+char		**p_tokize(char *input, int i);
 
 //PIPE
 //pip_utils.c

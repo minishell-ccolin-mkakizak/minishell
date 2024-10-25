@@ -6,20 +6,20 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:24:10 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 19:39:24 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/25 10:03:54 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_tokens(char **tokens)
+void	print_p_toks(char **p_toks)
 {
 	int	i;
 
 	i = 0;
-	while (tokens && tokens[i])
+	while (p_toks && p_toks[i])
 	{
-		printf("Token %d: %s\n", i, tokens[i]);
+		printf("p_tok %d: %s\n", i, p_toks[i]);
 		i++;
 	}
 }

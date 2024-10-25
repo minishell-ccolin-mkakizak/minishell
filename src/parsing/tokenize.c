@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/20 19:35:13 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/21 15:15:18 by ccolin           ###   ########.fr       */
+/*   Created: 2024/10/25 10:01:42 by ccolin            #+#    #+#             */
+/*   Updated: 2024/10/25 10:05:38 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,50 +18,36 @@ int	is_valid_key_char(int c)
 	(c >= '0' && c <= '9') || c == '_');
 }
 
-char	*expend_envp(char *token, char **envp)
-{
-	// int	i;
-
-	// i = 0;
-	// while (token[i])
-	// {
-	// 	if (token[i] != '$')
-	// 		i++;
-		
-	// }
-	return (token);
-}
-
-char	*remove_quotes(char *token)
+char	*remove_quotes(char *p_tok)
 {
 	int		len;
 	int		i;
 	int		j;
-	char	*new_token;
+	char	*new_p_tok;
 
 	i = 1;
 	j = 0;
-	len = ft_strlen(token);
-	new_token = malloc(sizeof(char) * ((len - 2) + 1));
+	len = ft_strlen(p_tok);
+	new_p_tok = malloc(sizeof(char) * ((len - 2) + 1));
 	while(i < len - 1)
-		new_token[j++] = token[i++];
-	new_token[j] = '\0';
-	free(token);
-	return (new_token);
+		new_p_tok[j++] = p_tok[i++];
+	new_p_tok[j] = '\0';
+	free(p_tok);
+	return (new_p_tok);
 }
 
-char	**add_token(char **tokens, char *input, int strt, int *i)
+char	**add_p_tok(char **p_toks, char *input, int strt, int *i)
 {
 	if (*i > strt && input[*i] == ' ')
-		tokens = add_str_to_arr(tokens, ft_substr(input, strt, *i - strt));
+		p_toks = add_str_to_arr(p_toks, ft_substr(input, strt, *i - strt));
 	else if ((input[*i] == '|' && input[*i + 1] != '|') ||
 	(input[*i] == '<' && input[*i + 1] != '<') ||
 	(input[*i] == '>' && input[*i + 1] != '>') ||
 	input[*i] == '(' || input[*i] == ')')
 	{
 		if (*i > strt)
-			tokens = add_str_to_arr(tokens, ft_substr(input, strt, *i - strt));
-		tokens = add_str_to_arr(tokens, char_to_string(input[*i]));
+			p_toks = add_str_to_arr(p_toks, ft_substr(input, strt, *i - strt));
+		p_toks = add_str_to_arr(p_toks, char_to_string(input[*i]));
 	}
 	else if ((input[*i] == '|' && input[*i + 1] == '|') ||
 	(input[*i] == '&' && input[*i + 1] == '&') ||
@@ -69,37 +55,19 @@ char	**add_token(char **tokens, char *input, int strt, int *i)
 	(input[*i] == '>' && input[*i + 1] == '>'))
 	{
 		if (*i > strt)
-			tokens = add_str_to_arr(tokens, ft_substr(input, strt, *i - strt));
-		tokens = add_str_to_arr(tokens, char_to_double_string(input[*i]));
+			p_toks = add_str_to_arr(p_toks, ft_substr(input, strt, *i - strt));
+		p_toks = add_str_to_arr(p_toks, char_to_double_string(input[*i]));
 		(*i)++;
 	}
-	return (tokens);
+	return (p_toks);
 }
 
-char	**refine_tokens(char **tokens, int i, char **envp)
+char	**p_tokize(char *input, int i)
 {
-	while (tokens[i])
-	{
-		if (tokens[i][0] == '\'')
-			tokens[i] = remove_quotes(tokens[i]);
-		else if (tokens[i][0] == '"')
-		{
-			tokens[i] = remove_quotes(tokens[i]);
-			tokens[i] = expend_envp(tokens[i], envp);
-		}
-		else
-			tokens[i] = expend_envp(tokens[i], envp);
-		i++;
-	}
-	return (tokens);
-}
-
-char	**tokenize(char *input, int i)
-{
-	char	**tokens;
+	char	**p_toks;
 	int		strt;
 
-	tokens = NULL;
+	p_toks = NULL;
 	strt = i;
 	while (input[i])
 	{
@@ -109,12 +77,13 @@ char	**tokenize(char *input, int i)
 			(input[i] == '>' && input[i + 1] == '>') ||
 			(input[i] == '<' && input[i + 1] == '<'))
 		{
-			tokens = add_token(tokens, input, strt, &i);
+			p_toks = add_p_tok(p_toks, input, strt, &i);
 			strt = i + 1;
 		}
 		i++;
 	}
 	if (strt < i)
-		tokens = add_str_to_arr(tokens, ft_substr(input, strt, i - strt));
-	return (tokens);
+		p_toks = \
+		add_str_to_arr(p_toks, ft_substr(input, strt, i - strt));
+	return (p_toks);
 }

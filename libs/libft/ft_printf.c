@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 18:31:44 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/07/02 18:22:33 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/25 10:03:54 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	check_token(char c, va_list arg_ptr)
+unsigned int	check_p_tok(char c, va_list arg_ptr)
 {
 	if (c == 'c')
 		return (ft_putchar(va_arg(arg_ptr, int)));
@@ -54,7 +54,7 @@ int	ft_printf(const char *format, ...)
 			if (!*format++)
 				return (res);
 			prev_res = res;
-			res += check_token(*format, arg_ptr);
+			res += check_p_tok(*format, arg_ptr);
 			if (res < prev_res)
 				return (-1);
 		}
