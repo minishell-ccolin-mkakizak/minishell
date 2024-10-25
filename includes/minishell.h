@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/25 10:10:06 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/25 12:41:10 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ typedef struct s_command_table
 //token
 typedef struct s_token
 {
-	char	*tok;
+	char	*token;
 	int		type;
-}			t_tok;
+}			t_token;
 
 # define COMMAND 1
 # define ARGUMENT 2
@@ -107,7 +107,7 @@ void		print_envp(char **envp);
 
 //EXECUTION
 //execution.c
-int			main_execution(void);
+int			main_execution(char **envp);
 
 //PARSING
 //are_quotes_closed.c

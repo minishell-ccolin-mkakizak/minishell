@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/25 10:03:54 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/25 12:36:37 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ char	*clear_input(char *input)
 
 void	lex(char *input, char **envp, t_cmnd_tbl command_table)
 {
-	char	**p_toks;
+	char		**p_toks;
+	// t_token	*tokens;
+	//sometype	ast;
 
 	input = are_quotes_closed(input);
 	// input = is_pipe_defined(input);
@@ -54,6 +56,9 @@ void	lex(char *input, char **envp, t_cmnd_tbl command_table)
 	p_toks = p_tokize(input, 0);
 	ft_printf("\n----------\np_tokS\n");
 	print_p_toks(p_toks);
+	//tokens = tokenize(p_toks);
+	//ast = build_ast(tokens);
+	//command_table = build_command_table(ast);
 	add_history(input);
 	free(input);
 	return ;

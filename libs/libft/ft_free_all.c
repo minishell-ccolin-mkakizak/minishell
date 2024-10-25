@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:46:48 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/08/21 17:34:23 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/25 12:49:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "libft.h"
+#include "libft.h"
 
-// void	ft_free_all(char **str)
-// {
-// 	int	i;
+void	ft_free_all(char **str)
+{
+	int	i;
 
-// 	i = 0;
-// 	while (str[i] != NULL)
-// 	{
-// 		free(str[i]);
-// 		i++;
-// 	}
-// 	free(str);
-// }
+	i = 0;
+	while (str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
