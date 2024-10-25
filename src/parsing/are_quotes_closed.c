@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 16:05:09 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 22:51:15 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/25 13:05:42 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,10 @@ char	*are_quotes_closed(char *input)
 			open = find_end_quote(input, &i, '\'');
 		if (input[i] == '"')
 			open = find_end_quote(input, &i, '"');
+		if (input[i] == '(')
+			open = find_end_quote(input, &i, ')');
+		if (input[i] == '$' && input[i + 1] == '{')
+			open = find_end_quote(input, &i, '}');
 		i++;
 	}
 	if (open)

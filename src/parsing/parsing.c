@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/25 12:36:37 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/25 15:28:52 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,3 @@ int	main_parsing(char **envp)
 	ft_printf("Exiting...\n");
 	return (0);
 }
-//need to copy envp
