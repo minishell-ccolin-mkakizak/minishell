@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 13:32:13 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:24:28 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_command_tablef
 	char		**envp;
 }				t_cmnd_tbl;
 
-//token
+//parser
 typedef struct s_token
 {
 	char	*token;
@@ -60,6 +60,13 @@ typedef struct s_token
 # define COMMAND 1
 # define ARGUMENT 2
 # define OPERATOR 3
+
+typedef struct s_lexer_data
+{
+	int		current_token;
+	int		expected_token;
+	char	*stack;
+}			t_lexer_data;
 
 //check if on mac or linux
 # ifdef __APPLE__

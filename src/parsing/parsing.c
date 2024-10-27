@@ -6,60 +6,52 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/25 15:28:52 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:24:27 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*clear_input(char *input)
+void	init_lexer(t_token *tokens, t_lexer_data lexer_data, char *input)
 {
-	int		i;
-	int		j;
-	char	*new_input;
-
-	i = 0;
-	j = 0;
-	new_input = ft_calloc(ft_strlen(input), sizeof(char));
-	while (input[i] == ' ' || input[i] == '\t')
-		i++;
-	while (input[i])
-	{
-		new_input[j++] = input[i++];
-		if (input[i - 1] == ' ' || input[i - 1] == '\t')
-		{
-			while (input[i] == ' ' || input[i] == '\t')
-				i++;
-		}
-	}
-	if (new_input[j - 1] == ' ' || new_input[j] == '\t')
-		while (new_input[j - 1] == ' ' || new_input[j] == '\t')
-			j--;
-	new_input[j] = '\0';
-	ft_printf("\n----------\ninput =\n\t\t|%s|", input);
-	ft_printf("\n----------\ncleared input =\n\t\t|%s|", new_input);
-	return (new_input);
+	tokens = NULL;
+	lexer_data->current_token = NULL;
+	lexer_data->expected_token = COMMAND;
+	lexer_data->stack = malloc(sizeof(char) * (ft_strlen(input) + 1));
+	if (!lexer_data->stack)
+		return (NULL);
 }
 
-void	lex(char *input, char **envp, t_cmnd_tbl command_table)
+int	tokens_size(t_tokens *tokens)
 {
-	char		**p_toks;
-	// t_token	*tokens;
-	//sometype	ast;
+	int		i;
+	
+	i = 0;
+	
+	return (0);
+}
 
-	input = are_quotes_closed(input);
-	// input = is_pipe_defined(input);
-	// input = is_next_command_defined(input);
-	ft_printf("----------\nENVPs\n");
-	print_envp(envp);
-	input = clear_input(input);
-	p_toks = p_tokize(input, 0);
-	ft_printf("\n----------\np_tokS\n");
-	print_p_toks(p_toks);
-	//tokens = tokenize(p_toks);
-	//ast = build_ast(tokens);
-	//command_table = build_command_table(ast);
-	add_history(input);
+void	alloc_tokens(t_tokens *tokens)
+{
+	if (!tokens)
+		tokens = malloc(sizeof(t_tokens) * (tokens_size(&tokens) + 1));
+	if (!tokens)
+		return (NULL);
+}
+
+void	tokenize(t_token *tokens, char *input, t_lexer_data lexer_data, int i)
+{
+	alloc_token(tokens);
+}
+
+void	lex(char *input)
+{
+	t_token			*tokens;
+	t_lexer_data	lexer_data;
+
+	init_lexer(tokens, lexer_data, input);
+	tokenize(tokens, input, parser_data, 0);
+	// add_history(input);
 	free(input);
 	return ;
 }
@@ -85,7 +77,7 @@ int	main_parsing(char **envp)
 			break ;
 		}
 		free(prompt);
-		lex(input, envp, command_table);
+		lex(input);
 	}
 	clear_history();
 	free(hostname);
