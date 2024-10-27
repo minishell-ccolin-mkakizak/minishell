@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 13:32:13 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:15:23 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ t_command	*prompt_command(void);
 void		add_command_interactive(t_cmnd_tbl *table);
 void		print_command(t_command *cmd);
 void		print_cmnd_tbl(t_cmnd_tbl *table);
+
 //parsing_debug.c
 void		print_envp(char **envp);
 
@@ -110,6 +111,7 @@ int			main_execution(char **envp);
 //PARSING
 //parsing.c
 int			main_parsing(char **envp);
+
 //parsing_utils.c
 char		*remove_quotes(char *p_tok);
 int			array_size(char **array);
@@ -118,27 +120,34 @@ char		*char_to_double_string(char c);
 
 //PIPE
 //pip_utils.c
-int			free_all(char **str_arr);
-void		throw_error(char *message, int exit_status, int error_number);
-char		**parse_cmd(int argc, char *argv[]);
-char		*validate_path(char **path_arr, char *cmd);
-char		*find_path(char *cmd);
-void		execute_cmd(char **cmd);
+// int			free_all(char **str_arr);
+// void		throw_error(char *message, int exit_status, int error_number);
+// char		**parse_cmd(int argc, char *argv[]);
+// char		*validate_path(char **path_arr, char *cmd);
+// char		*find_path(char *cmd);
+// void		execute_cmd(char **cmd);
+
 //pipe.c
 int			my_pipe(int argc, char *argv[], char *envp[]);
 
 //PROMPT
 //build_prompt.c
 char		*build_prompt(char *hostname);
+
 //prompt_linux.c
 char		*get_linux_hostname(void);
 char		*get_current_dir(const char *path, char delimiter);
 char		*get_hostname(void);
 char		*get_prompt_suffix(void);
 char		*colon_or_space(void);
+
 //prompt_mac.c
 char		*get_dir_mac(const char *path, char delimiter);
 char		*extract_mac_hostname(int fd);
 char		*parse_mac_hostname(char *line);
+
+//mock_data.c
+t_command *create_mock_commands(void);
+void free_commands(t_command *cmd);
 
 #endif

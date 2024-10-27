@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 14:15:13 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/27 17:15:06 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 int	main_execution(char **envp)
 {
-	t_cmnd_tbl	table;
+	t_cmnd_tbl	*table;
 
+	table = ft_calloc(sizeof table, 1);
+	if(!table)
+		return (-1);
 
-
-
-
+	
 	ft_printf("Starting execution mode\n-------------\n\n");
-	init_cmnd_tbl(&table);
-	print_cmnd_tbl(&table);
+	table->head = create_mock_commands();
+	print_cmnd_tbl(table);
 	return (0);
 }

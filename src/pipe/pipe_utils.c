@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 17:26:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/14 13:35:41 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/27 16:55:00 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,14 @@ void	throw_error(char *message, int exit_status, int error_number)
 		errno = error_number;
 	perror(message);
 	exit(exit_status);
+}
+
+pid_t	safe_fork(void)
+{
+	pid_t	res;
+
+	res = fork();
+	if (res == -1)
+		throw_error("bash: creating child process failed", EXIT_FAILURE, EINTR);
+	return (res);
 }
