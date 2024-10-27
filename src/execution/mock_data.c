@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/27 17:10:43 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/27 17:45:56 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_command *create_mock_commands(void)
     first->pipe_out = 0;
     first->exec_cond = 0;
     first->is_builtin = 0;
-    first->next = NULL;
+    first->next = second;
 
     // Second command: "grep 'hello' < input.txt | "
     second->args = malloc(sizeof(char *) * 3);

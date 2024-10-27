@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 17:00:16 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/27 17:43:18 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ void	print_command(t_command *cmd)
 	if (!cmd)
 		return ;
 	print_command_args(cmd);
+	puts("does it get here\n");
 	print_command_details(cmd);
 }
 
@@ -214,6 +215,7 @@ void	print_command_details(t_command *cmd)
 	printf("Execution Condition: %d\n", cmd->exec_cond);
 	printf("Is Built-in: %d\n", cmd->is_builtin);
 	printf("----------\n");
+
 }
 
 void	print_cmnd_tbl(t_cmnd_tbl *table)
@@ -224,7 +226,7 @@ void	print_cmnd_tbl(t_cmnd_tbl *table)
 		return ;
 	printf("Exit Status: %d\n", table->exit_status);
 	printf("Exit shell: %d\n", table->exit_shell);
-	print_environment_variables(table);
+	// print_environment_variables(table);
 	print_commands(table);
 }
 
