@@ -17,9 +17,6 @@ int	main_execution(char **envp)
 	t_cmnd_tbl	table;
 
 
-
-
-
 	ft_printf("Starting execution mode\n-------------\n\n");
 	init_cmnd_tbl(&table);
 	print_cmnd_tbl(&table);
