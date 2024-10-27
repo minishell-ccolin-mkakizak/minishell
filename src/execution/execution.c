@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 17:17:52 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/27 17:19:16 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	main_execution(char **envp)
 	if(!table)
 		return (-1);
 
-	
 	ft_printf("Starting execution mode\n-------------\n\n");
 	table->head = create_mock_commands();
 	print_cmnd_tbl(table);
