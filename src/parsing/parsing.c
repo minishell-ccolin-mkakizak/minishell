@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 17:24:27 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:28:26 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	lex(char *input)
 
 int	main_parsing(char **envp)
 {
-	char			*prompt;
-	char			*hostname;
-	char			*input;
-	char			**p_toks;
-	t_cmnd_tbl	command_table;
+	// char			*prompt;
+	// char			*hostname;
+	// char			*input;
+	// char			**p_toks;
+	// t_cmnd_tbl	command_table;
 
 	ft_printf("Starting parsing mode\n");
 	hostname = get_hostname();
