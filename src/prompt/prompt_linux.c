@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 11:23:45 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/06 12:30:35 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/27 13:31:56 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_hostname(void)
 
 	if (IS_LINUX)
 		return (get_linux_hostname());
-	fd = open(HOSTNAME_MAC, O_RDONLY);
+	fd = open(HSTNM_MAC, O_RDONLY);
 	if (fd == -1)
 		return (ft_strdup("hostname"));
 	hostname = extract_mac_hostname(fd);

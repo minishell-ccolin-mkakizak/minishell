@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/25 15:28:34 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/27 13:32:13 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_command
 	struct s_command	*next;
 }						t_command;
 
-typedef struct s_command_table
+typedef struct s_command_tablef
 {
 	t_command	*head;
 	int			exit_status;
@@ -69,8 +69,7 @@ typedef struct s_token
 #  define IS_LINUX 1
 # endif
 
-# define HOSTNAME_MAC \
-"/Library/Preferences/SystemConfiguration/preferences.plist"
+# define HSTNM_MAC "/Library/Preferences/SystemConfiguration/preferences.plist"
 # define HOSTNAME_LINUX "/etc/hostname"
 
 //input/output for pipe fds
@@ -102,7 +101,6 @@ void		add_command_interactive(t_cmnd_tbl *table);
 void		print_command(t_command *cmd);
 void		print_cmnd_tbl(t_cmnd_tbl *table);
 //parsing_debug.c
-void		print_p_toks(char **p_toks);
 void		print_envp(char **envp);
 
 //EXECUTION
@@ -110,21 +108,13 @@ void		print_envp(char **envp);
 int			main_execution(char **envp);
 
 //PARSING
-//are_quotes_closed.c
-char		*are_quotes_closed(char *input);
-char		*continue_input(char *input);
 //parsing.c
 int			main_parsing(char **envp);
-//p_tokize_utils.c
-void		skip_over_quotes(char *input, int *i);
+//parsing_utils.c
+char		*remove_quotes(char *p_tok);
 int			array_size(char **array);
-char		**add_str_to_arr(char **array, char *new_string);
 char		*char_to_string(char c);
 char		*char_to_double_string(char c);
-//p_tokize.c
-char		**add_p_tok(char **p_toks, char *input, int start, int *i);
-char		**refine_p_toks(char **p_toks, int i, char **envp);
-char		**p_tokize(char *input, int i);
 
 //PIPE
 //pip_utils.c
