@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:32:16 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 17:28:26 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:48:40 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,28 @@ void	init_lexer(t_token *tokens, t_lexer_data lexer_data, char *input)
 int	tokens_size(t_tokens *tokens)
 {
 	int		i;
-	
+
 	i = 0;
-	
-	return (0);
+	while (tokens[i])
+		i++;
+	return (i);
 }
 
-void	alloc_tokens(t_tokens *tokens)
+void	alloc_token(t_tokens *tokens)
 {
+	int			i;
+	t_tokens	temp;
+
+	i = tokens_size(&tokens);
 	if (!tokens)
-		tokens = malloc(sizeof(t_tokens) * (tokens_size(&tokens) + 1));
+	{
+		tokens = malloc(sizeof(t_tokens) * (i + 1));
+		if (!tokens)
+			return (NULL);
+	}
+	new_tokens = copy_tokens(tokens);
+	free(tokens)
+	tokens = malloc(sizeof(t_tokens) * (i + 1));
 	if (!tokens)
 		return (NULL);
 }
