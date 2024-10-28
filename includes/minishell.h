@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/28 13:50:41 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/28 15:19:44 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_command
 	struct s_command	*next;
 }						t_command;
 
-typedef struct s_command_tablef
+typedef struct s_command_table
 {
 	t_command	*head;
 	int			exit_status;

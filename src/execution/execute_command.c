@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/28 12:45:40 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/28 15:16:32 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	execute_cmd(t_command *cmd, char *envp[])
 	char	**cmd_arr;
 	char	*path;
 
-	print_command(cmd);
+	// print_command(cmd);
 
 	path = find_path(cmd->args[0], envp);
 	if (!path)
