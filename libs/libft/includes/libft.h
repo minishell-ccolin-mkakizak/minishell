@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 14:36:52 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/09/17 19:43:29 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/28 09:58:55 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,6 @@ char				*get_new_string(int fd, char *sttc_str);
 char				*get_one_line(char *str);
 char				*gnl_strdup(const char *str);
 
-// void				ft_free_all(char **str);
+void				ft_free_all(char **str);
 
 #endif

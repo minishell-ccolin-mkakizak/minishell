@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/25 12:49:37 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/10/28 09:54:16 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**copy_envp(char **envp)
 {
 	int		i;
 	char	**copy;
-		
+
 	i = 0;
 	while (envp[i])
 		i++;
@@ -50,9 +50,9 @@ int	main(int argc, char **argv, char **envp)
 	if (!mode)
 	{
 		main_execution(envp_copy);
+		ft_free_all(envp_copy);
 		return (0);
 	}
 	main_parsing(envp_copy);
-	free_all(envp_copy);
 	return (0);
 }

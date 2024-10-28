@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mock_command_table.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 17:43:18 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/28 10:47:55 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,6 @@ void	print_command(t_command *cmd)
 	if (!cmd)
 		return ;
 	print_command_args(cmd);
-	puts("does it get here\n");
 	print_command_details(cmd);
 }
 

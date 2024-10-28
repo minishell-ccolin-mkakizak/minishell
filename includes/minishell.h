@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 17:15:23 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/28 11:03:48 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-//command table 
+//command table
 typedef struct s_command
 {
 	char				**args;
@@ -106,7 +106,24 @@ void		print_envp(char **envp);
 
 //EXECUTION
 //execution.c
-int			main_execution(char **envp);
+int			main_execution(char *envp[]);
+
+//PIPE
+//execute_command.c
+// void		throw_error(char *message, int exit_status, int error_number);
+// char		**parse_cmd(int argc, char *argv[]);
+char		*validate_path(char **path_arr, char *cmd);
+char		*find_path(char *cmd, char *envp[]);
+int			execute_cmd(t_command *cmd, char *envp[]);
+
+//utils.c
+void	throw_error(char *message, int exit_status, int error_number);
+pid_t	safe_fork(void);
+
+
+//mock_data.c
+t_command 	*create_mock_commands(void);
+void 		free_commands(t_command *cmd);
 
 //PARSING
 //parsing.c
@@ -118,17 +135,6 @@ int			array_size(char **array);
 char		*char_to_string(char c);
 char		*char_to_double_string(char c);
 
-//PIPE
-//pip_utils.c
-// int			free_all(char **str_arr);
-// void		throw_error(char *message, int exit_status, int error_number);
-// char		**parse_cmd(int argc, char *argv[]);
-// char		*validate_path(char **path_arr, char *cmd);
-// char		*find_path(char *cmd);
-// void		execute_cmd(char **cmd);
-
-//pipe.c
-int			my_pipe(int argc, char *argv[], char *envp[]);
 
 //PROMPT
 //build_prompt.c
@@ -146,8 +152,5 @@ char		*get_dir_mac(const char *path, char delimiter);
 char		*extract_mac_hostname(int fd);
 char		*parse_mac_hostname(char *line);
 
-//mock_data.c
-t_command *create_mock_commands(void);
-void free_commands(t_command *cmd);
 
 #endif
