@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/28 10:54:08 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/28 13:50:46 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 int	main_execution(char *envp[])
 {
 	t_cmnd_tbl	*table;
-
 	pid_t		pid;
+	int 		outfile_fd;
+
 	table = ft_calloc(sizeof table, 1);
 	if(!table)
 		return (-1);
@@ -26,11 +27,13 @@ int	main_execution(char *envp[])
 	table->head = create_mock_commands();
 	// print_cmnd_tbl(table);
 
+	// jsut going to be excuteing one command here:
 
-	// jsut going to be excuteing one command here::
-	pid = safe_fork();
-	if(pid == 0)
-		execute_cmd(table->head, envp);
+	execute_pipeline(table, envp);
+
+	// pid = safe_fork();
+	// if(pid == 0)
+	// 	execute_cmd(table->head, envp);
 
 	free_commands(table->head);
 	free(table);

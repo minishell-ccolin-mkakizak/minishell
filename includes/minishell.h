@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/28 11:03:48 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/28 13:50:41 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,15 @@ typedef struct s_command_tablef
 	int			exit_shell;
 	char		**envp;
 }				t_cmnd_tbl;
+
+//file_discripters
+
+typedef struct s_fd
+{
+	int stdin_backup;
+	int stdout_backup;
+	int pipe_fd[2];
+}	t_fd;
 
 //token
 typedef struct s_token
@@ -108,10 +117,10 @@ void		print_envp(char **envp);
 //execution.c
 int			main_execution(char *envp[]);
 
-//PIPE
+//pipeline.c
+int 		execute_pipeline(t_cmnd_tbl *table, char *envp[]);
+
 //execute_command.c
-// void		throw_error(char *message, int exit_status, int error_number);
-// char		**parse_cmd(int argc, char *argv[]);
 char		*validate_path(char **path_arr, char *cmd);
 char		*find_path(char *cmd, char *envp[]);
 int			execute_cmd(t_command *cmd, char *envp[]);

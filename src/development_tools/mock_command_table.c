@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/28 10:47:55 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/28 12:45:11 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,7 +213,7 @@ void	print_command_details(t_command *cmd)
 	printf("Pipe Out: %d\n", cmd->pipe_out);
 	printf("Execution Condition: %d\n", cmd->exec_cond);
 	printf("Is Built-in: %d\n", cmd->is_builtin);
-	printf("----------\n");
+	printf("----------\n\n");
 
 }
 

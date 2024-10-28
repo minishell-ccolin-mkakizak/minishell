@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/28 11:06:36 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/28 12:38:38 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_command *create_mock_commands(void)
 
     // First command: "ls -la > output.txt"
     first->args = malloc(sizeof(char *) * 3);
-    first->args[0] = strdup("ls");
+    first->args[0] = strdup("/usr/bin/ls");
     first->args[1] = strdup("-l");
     first->args[2] = NULL;
     first->input_file = NULL;
