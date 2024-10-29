@@ -1,9 +1,0 @@
-total 72
-drwxrwxr-x 2 minoka minoka  4096 10月 28 08:37 includes
-drwxrwxr-x 3 minoka minoka  4096 10月 24 16:41 libs
--rw-rw-r-- 1 minoka minoka  1748 10月 24 16:41 Makefile
--rwxrwxr-x 1 minoka minoka 43288 10月 28 15:25 minishell
-drwxrwxr-x 7 minoka minoka  4096 10月 28 15:17 obj
--rw-r--r-- 1 minoka minoka   455 10月 28 15:25 output.txt
--rw-rw-r-- 1 minoka minoka   312 10月 24 16:41 README.md
-drwxrwxr-x 7 minoka minoka  4096 10月 26 08:43 src

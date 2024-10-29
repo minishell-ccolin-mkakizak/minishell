@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/28 15:27:08 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/29 14:50:11 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 	int			status;
 
 	current = table->head;
+	prev_pipe = -1;
 
 	print_cmnd_tbl(table);
 
@@ -85,6 +86,8 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 		pid = safe_fork();
 		if(pid == 0)
 		{
+			// ft_printf("pid should be 0: %d\n", pid);
+			// print_command(t)
 			if(prev_pipe != -1)
 			{
 				dup2(prev_pipe, STDIN_FILENO);
@@ -94,22 +97,21 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 			{
 				close(fd.pipe_fd[INPUT]);
 				dup2(fd.pipe_fd[OUTPUT], STDOUT_FILENO);
-				close(fd.pipe_fd[INPUT]);
+				close(fd.pipe_fd[OUTPUT]);
 			}
-			output_redirect(table->head);
-			execute_cmd(table->head, envp);
+			output_redirect(current);
+			execute_cmd(current, envp);
 		}
-
 		if(prev_pipe != -1)
 		{
 			close(prev_pipe);
 		}
+
 		if(current->next)
 		{
 			close(fd.pipe_fd[OUTPUT]);
 			prev_pipe = fd.pipe_fd[INPUT];
 		}
-		puts("does it get here?");
 		current = current->next;
 	}
 
