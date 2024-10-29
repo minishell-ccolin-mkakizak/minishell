@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/29 15:26:00 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/29 16:51:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int output_redirect(t_command *cmd)
 
 	if(cmd->output_file)
 	{
+		// this needs an if condition if the operation is > or >>
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
 
 		fd = open(cmd->output_file, flags, 0644);
@@ -65,7 +66,9 @@ int input_redirect(t_command *cmd)
 	int flags;
 
 	if(cmd->input_file)
-	{
+	{	
+		// this also needs a if statment if the operation is < or << 
+
 		flags = O_RDONLY;
 
 		fd = open(cmd->input_file, flags, 0644);
@@ -80,6 +83,36 @@ int input_redirect(t_command *cmd)
 	return (0);
 }
 
+int setup_pipes(int *prev_pipe, t_command *current, t_fd *fd)
+{
+	if(*prev_pipe != -1)
+	{
+		dup2(*prev_pipe, STDIN_FILENO);
+		close(*prev_pipe);
+	}
+	if(current->next)
+	{
+		close(fd->pipe_fd[INPUT]);
+		dup2(fd->pipe_fd[OUTPUT], STDOUT_FILENO);
+		close(fd->pipe_fd[OUTPUT]);
+	}
+	return (0);
+}
+
+int clean_pipes(int *prev_pipe, t_command *current, t_fd *fd)
+{	
+	if(*prev_pipe != -1)
+		{
+			close(*prev_pipe);
+		}
+
+		if(current->next)
+		{
+			close(fd->pipe_fd[OUTPUT]);
+			*prev_pipe = fd->pipe_fd[INPUT];
+		}
+		return (0);
+}
 
 int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 {
@@ -106,35 +139,12 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 		pid = safe_fork();
 		if(pid == 0)
 		{
-			// ft_printf("pid should be 0: %d\n", pid);
-			// print_command(t)
-			if(prev_pipe != -1)
-			{
-				dup2(prev_pipe, STDIN_FILENO);
-				close(prev_pipe);
-			}
-			if(current->next)
-			{
-				close(fd.pipe_fd[INPUT]);
-				dup2(fd.pipe_fd[OUTPUT], STDOUT_FILENO);
-				close(fd.pipe_fd[OUTPUT]);
-			}
+			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
 			output_redirect(current);
 			execute_cmd(current, envp);
 		}
-
-		if(prev_pipe != -1)
-		{
-			close(prev_pipe);
-		}
-
-		if(current->next)
-		{
-			close(fd.pipe_fd[OUTPUT]);
-			prev_pipe = fd.pipe_fd[INPUT];
-		}
-
+		clean_pipes(&prev_pipe, current, &fd);
 		current = current->next;
 	}
 
