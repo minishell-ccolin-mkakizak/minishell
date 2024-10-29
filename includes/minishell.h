@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/28 15:19:44 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:17:49 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,8 @@ pid_t	safe_fork(void);
 
 
 //mock_data.c
-t_command 	*create_mock_commands(void);
+t_command 	*create_mock_commands_0(void);
+t_command 	*create_mock_commands_1(void);
 void 		free_commands(t_command *cmd);
 
 //PARSING

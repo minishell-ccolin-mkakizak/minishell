@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/29 14:50:11 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:26:00 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int output_redirect(t_command *cmd)
 	int fd;
 	int flags;
 
-
 	if(cmd->output_file)
 	{
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
@@ -55,6 +54,27 @@ int output_redirect(t_command *cmd)
 			return (-1);
 		}
 		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	return (0);
+}
+
+int input_redirect(t_command *cmd)
+{
+	int fd;
+	int flags;
+
+	if(cmd->input_file)
+	{
+		flags = O_RDONLY;
+
+		fd = open(cmd->input_file, flags, 0644);
+		if(fd == -1)
+		{
+			// need to implement error handing
+			return( -1);
+		}
+		dup2(fd, STDIN_FILENO);
 		close(fd);
 	}
 	return (0);
@@ -99,9 +119,11 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 				dup2(fd.pipe_fd[OUTPUT], STDOUT_FILENO);
 				close(fd.pipe_fd[OUTPUT]);
 			}
+			input_redirect(current);
 			output_redirect(current);
 			execute_cmd(current, envp);
 		}
+
 		if(prev_pipe != -1)
 		{
 			close(prev_pipe);
@@ -112,6 +134,7 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 			close(fd.pipe_fd[OUTPUT]);
 			prev_pipe = fd.pipe_fd[INPUT];
 		}
+
 		current = current->next;
 	}
 
