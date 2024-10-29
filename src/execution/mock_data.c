@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/29 15:27:35 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/29 15:29:34 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ t_command *create_mock_commands_1(void)
     third->args[1] = NULL;
     third->args[2] = NULL;
     third->input_file = NULL;
-    third->output_file = NULL;
+    third->output_file = strdup("outfile.txt");
     third->heredoc_delimiter = NULL;
     third->append = 1;
     third->pipe_in = 1;
