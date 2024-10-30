@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/30 17:07:08 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:11:51 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main_execution(char *envp[])
 
 	//This is for dev purposes only just making a simple parser to do built in commands
 	hostname = get_hostname();
-	chdir(getenv("HOME"));
+	// chdir(getenv("HOME"));
 	while (1)
 	{
 		prompt = build_prompt(hostname);
@@ -48,7 +48,6 @@ int	main_execution(char *envp[])
 		table->exit_status = 0;
 		table->envp = NULL;
 		execute_pipeline(table, envp);
-
 		free(input);
 	}
 	clear_history();

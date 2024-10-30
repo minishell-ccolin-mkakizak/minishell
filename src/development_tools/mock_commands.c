@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/30 17:03:23 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:20:28 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,10 +185,37 @@ void free_commands(t_command *cmd)
     }
 }
 
-int mock_parsing(char *input)
+
+// mock parsing is for built in commands can only do one command at a time
+t_command *mock_parsing(char *input)
 {
+	t_command	*cmd;
+	char 		**cmd_array;
+
+    // Allocate memory for commands
+    cmd = malloc(sizeof(t_command));
+
+	cmd_array =  ft_split(input, ' ');
+
+    // First command: ""
+    cmd->args = malloc(sizeof(char *) * 3);
+    cmd->args[0] = cmd_array[0];
+    cmd->args[1] = cmd_array[1];
+    cmd->args[2] = NULL;
+    cmd->input_file = NULL;
+    cmd->output_file = NULL;
+    // cmd->output_file = strdup("output.txt");
+    cmd->heredoc_delimiter = NULL;
+    cmd->append = 0;
+    cmd->pipe_in = 0;
+    cmd->pipe_out = 0;
+    cmd->exec_cond = 0;
+    cmd->is_builtin = 1;
+    cmd->next = NULL;
 
 
+	ft_printf("%s\n", input);
 
-	return (0);
+
+	return (cmd);
 }
