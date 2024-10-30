@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/30 13:56:42 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:03:42 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ t_command 	*create_mock_commands_0(void);
 t_command 	*create_mock_commands_1(void);
 t_command 	*create_mock_commands_2(void);
 void 		free_commands(t_command *cmd);
+int			mock_parsing(char *input);
 
 //PARSING
 //parsing.c

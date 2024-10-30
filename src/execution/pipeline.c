@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/30 13:57:08 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 16:12:54 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,8 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 	current = table->head;
 	prev_pipe = -1;
 
-	print_cmnd_tbl(table);
-
+	// for develpment
+		print_cmnd_tbl(table);
 	// print_commands(current);
 
 	init_fd(&fd);

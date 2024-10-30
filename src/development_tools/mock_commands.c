@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mock_data.c                                        :+:      :+:    :+:   */
+/*   mock_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/30 12:59:53 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:03:23 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
+// checking for out files and chaning commands
 t_command *create_mock_commands_0(void)
 {
     t_command *first, *second, *third;
@@ -72,6 +72,7 @@ t_command *create_mock_commands_0(void)
     return (first);
 }
 
+// checking for pipes
 t_command *create_mock_commands_1(void)
 {
     t_command *first, *second, *third;
@@ -158,7 +159,6 @@ t_command *create_mock_commands_2(void)
     return (first);
 }
 
-
 void free_commands(t_command *cmd)
 {
     t_command *temp;
@@ -183,4 +183,12 @@ void free_commands(t_command *cmd)
         free(cmd);
         cmd = temp;
     }
+}
+
+int mock_parsing(char *input)
+{
+
+
+
+	return (0);
 }
