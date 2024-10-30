@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/30 17:22:46 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 18:23:23 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_command
 	int					pipe_in;
 	int					pipe_out;
 	int					exec_cond;
-	int					is_builtin;
+	int					is_built_in;
 	struct s_command	*next;
 }						t_command;
 
@@ -114,6 +114,10 @@ void		print_cmnd_tbl(t_cmnd_tbl *table);
 void		print_envp(char **envp);
 
 //EXECUTION
+
+// built_in_cmds.c
+int 		built_in_cmds(t_command *cmd, char *envp[]);
+
 //execution.c
 int			main_execution(char *envp[]);
 

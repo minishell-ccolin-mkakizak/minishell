@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/28 12:45:11 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 18:19:51 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	fill_command_flags(t_command *cmd)
 				"Does this command write to a pipe? (1 for yes, 0 for no): "));
 	cmd->exec_cond = atoi(get_input(
 				"Enter execution condition (0 for none, 1 for &&, 2 for ||): "));
-	cmd->is_builtin = atoi(get_input(
+	cmd->is_built_in = atoi(get_input(
 				"Is this a built-in command? (1 for yes, 0 for no): "));
 	cmd->next = NULL;
 }
@@ -212,7 +212,7 @@ void	print_command_details(t_command *cmd)
 	printf("Pipe In: %d\n", cmd->pipe_in);
 	printf("Pipe Out: %d\n", cmd->pipe_out);
 	printf("Execution Condition: %d\n", cmd->exec_cond);
-	printf("Is Built-in: %d\n", cmd->is_builtin);
+	printf("Is Built-in: %d\n", cmd->is_built_in);
 	printf("----------\n\n");
 
 }

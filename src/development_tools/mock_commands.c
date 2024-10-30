@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/30 17:20:28 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 18:18:41 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_command *create_mock_commands_0(void)
     first->pipe_in = 0;
     first->pipe_out = 0;
     first->exec_cond = 0;
-    first->is_builtin = 0;
+    first->is_built_in = 0;
     first->next = second;
 
     // Second command?: "grep 'hello' < input.txt | "
@@ -50,7 +50,7 @@ t_command *create_mock_commands_0(void)
     second->pipe_in = 0;
     second->pipe_out = 1;
     second->exec_cond = 0;
-    second->is_builtin = 0;
+    second->is_built_in = 0;
     second->next = third;
 
     // Third command: "wc -l >> count.txt"
@@ -66,7 +66,7 @@ t_command *create_mock_commands_0(void)
     third->pipe_in = 1;
     third->pipe_out = 0;
     third->exec_cond = 0;
-    third->is_builtin = 0;
+    third->is_built_in = 0;
     third->next = NULL;
 
     return (first);
@@ -94,7 +94,7 @@ t_command *create_mock_commands_1(void)
     first->pipe_in = 0;
     first->pipe_out = 0;
     first->exec_cond = 0;
-    first->is_builtin = 0;
+    first->is_built_in = 0;
     first->next = second;
 
     // Second command?: "grep 'hello' < input.txt | "
@@ -110,7 +110,7 @@ t_command *create_mock_commands_1(void)
     second->pipe_in = 0;
     second->pipe_out = 1;
     second->exec_cond = 0;
-    second->is_builtin = 0;
+    second->is_built_in = 0;
     second->next = third;
 
     // Third command: "wc -l >> count.txt"
@@ -125,7 +125,7 @@ t_command *create_mock_commands_1(void)
     third->pipe_in = 1;
     third->pipe_out = 0;
     third->exec_cond = 0;
-    third->is_builtin = 0;
+    third->is_built_in = 0;
     third->next = NULL;
 
     return (first);
@@ -153,7 +153,7 @@ t_command *create_mock_commands_2(void)
     first->pipe_in = 0;
     first->pipe_out = 0;
     first->exec_cond = 0;
-    first->is_builtin = 0;
+    first->is_built_in = 0;
     first->next = NULL;
 
     return (first);
@@ -210,7 +210,7 @@ t_command *mock_parsing(char *input)
     cmd->pipe_in = 0;
     cmd->pipe_out = 0;
     cmd->exec_cond = 0;
-    cmd->is_builtin = 1;
+    cmd->is_built_in = 1;
     cmd->next = NULL;
 
 

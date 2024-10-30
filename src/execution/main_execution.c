@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/30 17:11:51 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 18:04:53 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	main_execution(char *envp[])
 		table->exit_shell = 0;
 		table->exit_status = 0;
 		table->envp = NULL;
+
 		execute_pipeline(table, envp);
 		free(input);
 	}
@@ -54,11 +55,6 @@ int	main_execution(char *envp[])
 	free(hostname);
 	ft_printf("Exiting...\n");
 
-	// print_cmnd_tbl(table);
-	//running pipeline
-	// execute_pipeline(table, envp);
-
-	// this will not be freed when its hooked up;
 	ft_printf("Ending execution mode\n-------------\n\n");
 	free_commands(table->head);
 	free(table);

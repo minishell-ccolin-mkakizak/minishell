@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/30 17:19:40 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 18:40:17 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,10 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
 			output_redirect(current);
+			//built in commands
+			ft_printf("is built in is : %d\n", current->is_built_in);
+			if(current->is_built_in)
+				built_in_cmds(current, envp);
 			execute_cmd(current, envp);
 		}
 		clean_pipes(&prev_pipe, current, &fd);
