@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/29 15:17:49 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:00:05 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,14 +125,17 @@ char		*validate_path(char **path_arr, char *cmd);
 char		*find_path(char *cmd, char *envp[]);
 int			execute_cmd(t_command *cmd, char *envp[]);
 
-//utils.c
-void	throw_error(char *message, int exit_status, int error_number);
-pid_t	safe_fork(void);
-
+//pipeline_utils.c
+void		throw_error(char *message, int exit_status, int error_number);
+pid_t		safe_fork(void);
+void		init_fd(t_fd *fd);
+void		restore_fd(t_fd *fd);
+void		init_pipe(t_fd *fd);
 
 //mock_data.c
 t_command 	*create_mock_commands_0(void);
 t_command 	*create_mock_commands_1(void);
+t_command 	*create_mock_commands_2(void);
 void 		free_commands(t_command *cmd);
 
 //PARSING

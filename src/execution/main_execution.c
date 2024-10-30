@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/29 15:18:08 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:59:22 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main_execution(char *envp[])
 
 	ft_printf("Starting execution mode\n-------------\n\n");
 
-	table->head = create_mock_commands_1();
+	table->head = create_mock_commands_2();
 	table->exit_shell = 0;
 	table->exit_status = 0;
 	table->envp = NULL;

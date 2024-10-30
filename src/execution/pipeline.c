@@ -3,39 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/29 16:51:41 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:43:22 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void init_fd(t_fd *fd)
+int check_for_dilimiter(t_command *cmd, char *input)
 {
-	fd->stdin_backup = dup(STDIN_FILENO);
-	fd->stdout_backup = dup(STDOUT_FILENO);
-	fd->pipe_fd[0] = -1;
-	fd->pipe_fd[1] = -1;
+	int len;
+
+	len = ft_strlen(input);
+
+	input[len -1] = '\0';
+
+	if(ft_strncmp(input, cmd->heredoc_delimiter, len) == 0)
+		return (TRUE);
+
+	return (FALSE);
 }
 
-void restore_fd(t_fd *fd)
+int handle_heredoc(t_command *cmd)
 {
-	dup2(fd->stdin_backup, STDIN_FILENO);
-	dup2(fd->stdout_backup, STDOUT_FILENO);
-	close(fd->stdin_backup);
-	close(fd->stdout_backup);
-}
+	char 	*input;
+	int		pipe_fd[2];
+	size_t	len;
 
-void init_pipe(t_fd *fd)
-{
-	if(pipe(fd->pipe_fd) == -1)
+	if(pipe(pipe_fd) == -1)
 	{
-		//pipe fail error handeling
-		puts("pipe creation failed");
-		return ;
+		/// need to implement error handling here
+
+		return (-1);
 	}
+
+	// will loop until heredoc_dilimiter is met
+	while(1)
+	{
+		ft_printf("->");
+		input = get_next_line(STDIN_FILENO);
+		if(input ==  NULL)
+		{
+			//need to handle error handing here
+			break;
+		}
+		len = ft_strlen(input);
+		if(check_for_dilimiter(cmd, input))
+		{
+			free(input);
+			break;
+		}
+		input[len -1] = '\n';
+		write(pipe_fd[1], input, len);
+		free(input);
+	}
+	close(pipe_fd[1]);
+	dup2(pipe_fd[0], STDIN_FILENO);
+	close(pipe_fd[0]);
+	return (0);
 }
 
 int output_redirect(t_command *cmd)
@@ -65,9 +92,15 @@ int input_redirect(t_command *cmd)
 	int fd;
 	int flags;
 
+	if(cmd->heredoc_delimiter)
+	{
+		handle_heredoc(cmd);
+		return(0);
+	}
+
 	if(cmd->input_file)
-	{	
-		// this also needs a if statment if the operation is < or << 
+	{
+		// this also needs a if statment if the operation is < or <<
 
 		flags = O_RDONLY;
 
@@ -100,7 +133,7 @@ int setup_pipes(int *prev_pipe, t_command *current, t_fd *fd)
 }
 
 int clean_pipes(int *prev_pipe, t_command *current, t_fd *fd)
-{	
+{
 	if(*prev_pipe != -1)
 		{
 			close(*prev_pipe);
@@ -116,6 +149,7 @@ int clean_pipes(int *prev_pipe, t_command *current, t_fd *fd)
 
 int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 {
+	//maybe i can add some of these to the table struct
 	t_fd 		fd;
 	pid_t 		pid;
 	t_command	*current;
@@ -133,6 +167,7 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 	init_fd(&fd);
 	while(current)
 	{
+
 		if(current->next)
 			init_pipe(&fd);
 

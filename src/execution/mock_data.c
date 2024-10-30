@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mock_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/29 15:29:34 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:59:53 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,34 @@ t_command *create_mock_commands_1(void)
     third->exec_cond = 0;
     third->is_builtin = 0;
     third->next = NULL;
+
+    return (first);
+}
+
+// testing for here docW
+t_command *create_mock_commands_2(void)
+{
+    t_command *first;
+    // Allocate memory for commands
+    first = malloc(sizeof(t_command));
+    // second = malloc(sizeof(t_command));
+    // third = malloc(sizeof(t_command));
+
+    // First command: "ls -la > output.txt"
+    first->args = malloc(sizeof(char *) * 3);
+    first->args[0] = strdup("cat");
+    first->args[1] = NULL;
+    first->args[2] = NULL;
+    first->input_file = NULL;
+    first->output_file = NULL;
+    // first->output_file = strdup("output.txt");
+    first->heredoc_delimiter = strdup("heredoc");
+    first->append = 0;
+    first->pipe_in = 0;
+    first->pipe_out = 0;
+    first->exec_cond = 0;
+    first->is_builtin = 0;
+    first->next = NULL;
 
     return (first);
 }
