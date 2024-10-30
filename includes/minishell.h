@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/30 13:00:05 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 13:56:42 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,10 @@ int			main_execution(char *envp[]);
 
 //pipeline.c
 int 		execute_pipeline(t_cmnd_tbl *table, char *envp[]);
+
+//here_doc.c
+int			check_for_dilimiter(t_command *cmd, char *input);
+int			handle_heredoc(t_command *cmd);
 
 //execute_command.c
 char		*validate_path(char **path_arr, char *cmd);

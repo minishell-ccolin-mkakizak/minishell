@@ -6,64 +6,11 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/30 13:43:22 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 13:57:08 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int check_for_dilimiter(t_command *cmd, char *input)
-{
-	int len;
-
-	len = ft_strlen(input);
-
-	input[len -1] = '\0';
-
-	if(ft_strncmp(input, cmd->heredoc_delimiter, len) == 0)
-		return (TRUE);
-
-	return (FALSE);
-}
-
-int handle_heredoc(t_command *cmd)
-{
-	char 	*input;
-	int		pipe_fd[2];
-	size_t	len;
-
-	if(pipe(pipe_fd) == -1)
-	{
-		/// need to implement error handling here
-
-		return (-1);
-	}
-
-	// will loop until heredoc_dilimiter is met
-	while(1)
-	{
-		ft_printf("->");
-		input = get_next_line(STDIN_FILENO);
-		if(input ==  NULL)
-		{
-			//need to handle error handing here
-			break;
-		}
-		len = ft_strlen(input);
-		if(check_for_dilimiter(cmd, input))
-		{
-			free(input);
-			break;
-		}
-		input[len -1] = '\n';
-		write(pipe_fd[1], input, len);
-		free(input);
-	}
-	close(pipe_fd[1]);
-	dup2(pipe_fd[0], STDIN_FILENO);
-	close(pipe_fd[0]);
-	return (0);
-}
 
 int output_redirect(t_command *cmd)
 {
