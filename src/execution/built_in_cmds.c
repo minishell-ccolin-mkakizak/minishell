@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:09:06 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/12 14:48:49 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:40:12 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -22,13 +22,28 @@ void exe_pwd(t_command *cmd, t_env_list *env)
 	char *dir;
 
 	dir = getcwd(NULL, 0);
-	printf("%s\n", dir);
+	ft_printf("%s\n", dir);
 }
 
 void exe_env(t_command *cmd, t_env_list *env)
 {
 	// need to add some error checking also formattig is not quit right
 	print_env_list(env);
+}
+
+void exe_unset(t_command *cmd, t_env_list *env)
+{
+	int i;
+
+	i = 0;
+}
+
+int is_match(char *str1, char *str2)
+{
+	if(strncmp(str1, str2, ft_strlen(str1)) == 0)
+		return (TRUE);
+	else
+		return (FALSE);
 }
 
 int built_in_cmds(t_command *cmd, t_env_list *env)
@@ -40,11 +55,11 @@ int built_in_cmds(t_command *cmd, t_env_list *env)
 	// {
 
 	// }
-	if(strncmp(cmd->args[0], "cd", ft_strlen(cmd->args[0])) == 0)
+	if(is_match(cmd->args[0], "cd"))
 	{
-		exe_cd(cmd, env);
+		// exe_cd(cmd, env);
 	}
-	if(strncmp(cmd->args[0], "pwd", ft_strlen(cmd->args[0])) == 0)
+	if(is_match(cmd->args[0], "pwd"))
 	{
 		exe_pwd(cmd, env);
 	}
@@ -52,11 +67,11 @@ int built_in_cmds(t_command *cmd, t_env_list *env)
 	// {
 
 	// }
-	// if(cmd->args[0] == "unset")
-	// {
-
-	// }
-	if(strncmp(cmd->args[0], "env", ft_strlen(cmd->args[0])) == 0)
+	if(is_match(cmd->args[0], "unset"))
+	{
+		exe_unset(cmd, env);
+	}
+	if(is_match(cmd->args[0], "env"))
 	{
 		exe_env(cmd, env);
 	}

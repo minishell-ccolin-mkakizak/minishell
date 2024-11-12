@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/12 14:48:00 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:27:36 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -17,14 +17,13 @@ void print_env_list(t_env_list *head)
 {
 	t_env_list *current = head;
 	int count = 0;
-	// some this doesn't work with ft_printf()...
+	// somehow this doesn't work with ft_printf()...
 	while (current != NULL) {
 		printf("%s=%s\n",current->name, current->value);
 		current = current->next;
 	}
 }
 
-// function to free the linked list
 void free_env_list(t_env_list *head)
 {
 	t_env_list *current = head;

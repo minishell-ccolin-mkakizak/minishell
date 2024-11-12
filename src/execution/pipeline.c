@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/12 14:49:32 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:25:45 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -48,7 +48,6 @@ int input_redirect(t_command *cmd)
 	if(cmd->input_file)
 	{
 		// this also needs a if statment if the operation is < or <<
-
 		flags = O_RDONLY;
 
 		fd = open(cmd->input_file, flags, 0644);
@@ -115,7 +114,6 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 	init_fd(&fd);
 	while(current)
 	{
-
 		if(current->next)
 			init_pipe(&fd);
 
