@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/31 14:03:28 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:49:32 by mkakizak         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include <minishell.h>
 
@@ -94,7 +94,7 @@ int clean_pipes(int *prev_pipe, t_command *current, t_fd *fd)
 		return (0);
 }
 
-int execute_pipeline(t_cmnd_tbl *table, char *envp[])
+int	pipeline(t_cmnd_tbl *table, char *envp[])
 {
 	//maybe i can add some of these to the table struct
 	t_fd 		fd;
@@ -108,7 +108,8 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 	prev_pipe = -1;
 
 	// for develpment
-		print_cmnd_tbl(table);
+	print_cmnd_tbl(table);
+	// print_env_list(table->envp);
 	// print_commands(current);
 
 	init_fd(&fd);
@@ -125,14 +126,16 @@ int execute_pipeline(t_cmnd_tbl *table, char *envp[])
 			input_redirect(current);
 			output_redirect(current);
 			//built in commands
-			ft_printf("is built in is : %d\n", current->is_built_in);
+			// ft_printf("is built in is : %d\n", current->is_built_in);
 			if(current->is_built_in)
-				built_in_cmds(current, envp);
+				built_in_cmds(current, table->envp);
 			execute_cmd(current, envp);
 		}
 		clean_pipes(&prev_pipe, current, &fd);
 		current = current->next;
 	}
+
+	puts("OUTPUT >");
 
 	while (wait(&status) > 0);
 	restore_fd(&fd);

@@ -6,26 +6,26 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/12 13:11:29 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:48:00 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include <minishell.h>
 
 // function to print all envp
-void printEnvList(t_env_list *head) 
+void print_env_list(t_env_list *head) 
 {
 	t_env_list *current = head;
 	int count = 0;
-
+	// some this doesn't work with ft_printf()...
 	while (current != NULL) {
-		printf("[%d] %s=%s\n", count++, current->name, current->value);
+		printf("%s=%s\n",current->name, current->value);
 		current = current->next;
 	}
 }
 
 // function to free the linked list
-void freeEnvList(t_env_list *head)
+void free_env_list(t_env_list *head)
 {
 	t_env_list *current = head;
 	while (current != NULL) {
@@ -46,7 +46,7 @@ t_env_list *create_node(char *env)
 	if(node == NULL)
 		return (NULL);
 	str_array = ft_split(env, '=');
-	ft_printf("env:%s=%s\n", str_array[0], str_array[1]);
+	// ft_printf("env:%s=%s\n", str_array[0], str_array[1]);
 
 	node->name = ft_strdup(str_array[0]);
 
@@ -55,8 +55,8 @@ t_env_list *create_node(char *env)
 	else
 		node->value = NULL;
 
-	if(node->name == NULL)
-		return (NULL);
+	// if(node->name == NULL)
+	// 	return (NULL);
 	ft_free_all(str_array);
 	return (node);
 }

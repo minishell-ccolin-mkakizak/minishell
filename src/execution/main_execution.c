@@ -6,15 +6,11 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/12 13:08:43 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:46:55 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
 #include <minishell.h>
-
-void printEnvList(t_env_list *head);
-void freeEnvList(t_env_list *head);
-t_env_list *init_env(char *envp[]);
 
 int	main_execution(char *envp[])
 {
@@ -33,9 +29,10 @@ int	main_execution(char *envp[])
 		return (-1);
 
 	//checking to see if the envps are being parsed
+	// table->envp = init_env(envp);
+	// print_env_list(table->envp);
 	table->envp = init_env(envp);
-	printEnvList(table->envp);
-	freeEnvList(table->envp);
+	print_env_list(table->envp);
 
 	ft_printf("Starting execution mode\n-------------\n\n");
 
@@ -55,11 +52,12 @@ int	main_execution(char *envp[])
 		table->head = mock_parsing(input);
 		table->exit_shell = 0;
 		table->exit_status = 0;
-		table->envp = NULL;
+		// table->envp = NULL;
 
-		execute_pipeline(table, envp);
+		pipeline(table, envp);
 		free(input);
 	}
+	free_env_list(table->envp);
 	clear_history();
 	free(hostname);
 	ft_printf("Exiting...\n");

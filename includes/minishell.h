@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/12 12:40:03 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 14:37:29 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -124,13 +124,13 @@ void		print_envp(char **envp);
 //EXECUTION
 
 // built_in_cmds.c
-int 		built_in_cmds(t_command *cmd, char *envp[]);
+int 		built_in_cmds(t_command *cmd, t_env_list *env);
 
 //execution.c
 int			main_execution(char *envp[]);
 
 //pipeline.c
-int 		execute_pipeline(t_cmnd_tbl *table, char *envp[]);
+int 		pipeline(t_cmnd_tbl *table, char *envp[]);
 
 //here_doc.c
 int			check_for_dilimiter(t_command *cmd, char *input);
@@ -165,7 +165,6 @@ int			array_size(char **array);
 char		*char_to_string(char c);
 char		*char_to_double_string(char c);
 
-
 //PROMPT
 //build_prompt.c
 char		*build_prompt(char *hostname);
@@ -182,5 +181,11 @@ char		*get_dir_mac(const char *path, char delimiter);
 char		*extract_mac_hostname(int fd);
 char		*parse_mac_hostname(char *line);
 
+// ENV 
+//init.c
+	t_env_list *init_env(char *envp[]);
+	void print_env_list(t_env_list *head);
+	void free_env_list(t_env_list *head);
+	t_env_list *create_node(char *env);
 
 #endif
