@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   mock_command_table.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/30 18:19:51 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/12 12:41:18 by mkakizak         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #include "minishell.h"
 
@@ -22,37 +22,37 @@ char	*get_input(const char *prompt)
 	return (strdup(buffer));
 }
 
-void	add_environment_variables(t_cmnd_tbl *table)
-{
-	int	env_count;
-	int	i;
+// void	add_environment_variables(t_cmnd_tbl *table)
+// {
+// 	int	env_count;
+// 	int	i;
 
-	env_count = get_env_count();
-	table->envp = malloc((env_count + 1) * sizeof(char *));
-	if (!table->envp)
-		return ;
-	i = 0;
-	while (i < env_count)
-	{
-		table->envp[i] = get_env_variable();
-		i++;
-	}
-	table->envp[env_count] = NULL;
-}
+// 	env_count = get_env_count();
+// 	table->envp = malloc((env_count + 1) * sizeof(char *));
+// 	if (!table->envp)
+// 		return ;
+// 	i = 0;
+// 	while (i < env_count)
+// 	{
+// 		table->envp[i] = get_env_variable();
+// 		i++;
+// 	}
+// 	table->envp[env_count] = NULL;
+// }
 
-int	get_env_count(void)
-{
-	int	env_count;
+// int	get_env_count(void)
+// {
+// 	int	env_count;
 
-	printf("Enter number of environment variables: ");
-	scanf("%d%*c", &env_count);
-	return (env_count);
-}
+// 	printf("Enter number of environment variables: ");
+// 	scanf("%d%*c", &env_count);
+// 	return (env_count);
+// }
 
-char	*get_env_variable(void)
-{
-	return (get_input("Enter environment variable (format KEY=value): "));
-}
+// char	*get_env_variable(void)
+// {
+// 	return (get_input("Enter environment variable (format KEY=value): "));
+// }
 
 void	init_cmnd_tbl(t_cmnd_tbl *table)
 {
@@ -67,7 +67,7 @@ void	setup_table_defaults(t_cmnd_tbl *table)
 	table->head = NULL;
 	table->exit_status = 0;
 	table->exit_shell = 0;
-	add_environment_variables(table);
+	// add_environment_variables(table);
 }
 
 void	handle_commands_interactive(t_cmnd_tbl *table)
@@ -229,23 +229,23 @@ void	print_cmnd_tbl(t_cmnd_tbl *table)
 	print_commands(table);
 }
 
-void	print_environment_variables(t_cmnd_tbl *table)
-{
-	int	i;
+// void	print_environment_variables(t_cmnd_tbl *table)
+// {
+// 	int	i;
 
-	printf("Environment Variables:\n");
-	i = 0;
-	if (table->envp)
-	{
-		while (table->envp[i])
-		{
-			printf("\tenvp[%d]: %s\n", i, table->envp[i]);
-			i++;
-		}
-	}
-	else
-		printf("\tNo environment variables.\n");
-}
+// 	printf("Environment Variables:\n");
+// 	i = 0;
+// 	if (table->envp)
+// 	{
+// 		while (table->envp[i])
+// 		{
+// 			printf("\tenvp[%d]: %s\n", i, table->envp[i]);
+// 			i++;
+// 		}
+// 	}
+// 	else
+// 		printf("\tNo environment variables.\n");
+// }
 
 void	print_commands(t_cmnd_tbl *table)
 {

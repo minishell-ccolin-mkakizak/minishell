@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main_execution.c                                   :+:      :+:    :+:   */
@@ -6,11 +6,15 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/31 14:03:11 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 13:08:43 by mkakizak         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
-#include "minishell.h"
+#include <minishell.h>
+
+void printEnvList(t_env_list *head);
+void freeEnvList(t_env_list *head);
+t_env_list *init_env(char *envp[]);
 
 int	main_execution(char *envp[])
 {
@@ -27,6 +31,11 @@ int	main_execution(char *envp[])
 	table = ft_calloc(sizeof(t_cmnd_tbl), 1);
 	if(!table)
 		return (-1);
+
+	//checking to see if the envps are being parsed
+	table->envp = init_env(envp);
+	printEnvList(table->envp);
+	freeEnvList(table->envp);
 
 	ft_printf("Starting execution mode\n-------------\n\n");
 

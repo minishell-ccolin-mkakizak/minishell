@@ -1,14 +1,14 @@
-/* ************************************************************************** */
+/******************************************************************************/
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/30 18:23:23 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/12 12:40:03 by mkakizak         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
+/******************************************************************************/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -42,22 +42,30 @@ typedef struct s_command
 	struct s_command	*next;
 }						t_command;
 
+//enviroment_variable_list
+typedef struct s_env_list
+{
+	char				*name;
+	char				*value;
+	struct s_env_list	*next;
+}				t_env_list;
+
 typedef struct s_command_table
 {
 	t_command	*head;
 	int			exit_status;
 	int			exit_shell;
-	char		**envp;
+	t_env_list	*envp;
 }				t_cmnd_tbl;
 
 //file_discripters
-
 typedef struct s_fd
 {
-	int stdin_backup;
-	int stdout_backup;
-	int pipe_fd[2];
-}	t_fd;
+	int	stdin_backup;
+	int	stdout_backup;
+	int	pipe_fd[2];
+}		t_fd;
+
 
 //token
 typedef struct s_token
@@ -87,9 +95,9 @@ typedef struct s_token
 
 //DEVELOPMENT TOOLS
 //mock_comand_table.c
-void		add_environment_variables(t_cmnd_tbl *table);
-int			get_env_count(void);
-char		*get_env_variable(void);
+// void		add_environment_variables(t_cmnd_tbl *table);
+// int			get_env_count(void);
+// char		*get_env_variable(void);
 void		init_cmnd_tbl(t_cmnd_tbl *table);
 void		setup_table_defaults(t_cmnd_tbl *table);
 void		handle_commands_interactive(t_cmnd_tbl *table);
@@ -103,7 +111,7 @@ void		print_command(t_command *cmd);
 void		print_command_args(t_command *cmd);
 void		print_command_details(t_command *cmd);
 void		print_cmnd_tbl(t_cmnd_tbl *table);
-void		print_environment_variables(t_cmnd_tbl *table);
+// void		print_environment_variables(t_cmnd_tbl *table);
 void		print_commands(t_cmnd_tbl *table);
 t_command	*prompt_command(void);
 void		add_command_interactive(t_cmnd_tbl *table);
