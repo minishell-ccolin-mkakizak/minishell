@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/09 12:24:59 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/12 14:55:37 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_command
 	struct s_command	*next;
 }						t_command;
 
-typedef struct s_command_tablef
+typedef struct s_command_table
 {
 	t_command	*head;
 	int			exit_status;
@@ -58,15 +58,24 @@ typedef struct s_token
 	struct s_token	*next;
 }					t_token;
 
-# define COMMAND 1
-# define ARGUMENT 2
-# define OPERATOR 3
+# define STRING 		100
+# define COMMAND 		101
+# define ARGUMENT 		102
+# define SINGLE_QUOTE	104
+# define DOUBLE_QUOTE	105
+# define INPUT_TOKEN	106
+# define OUTPUT_TOKEN	107
+# define HEREDOC 		108
+# define APPEND			109
+# define PIPE			110
+# define ENVP			111
 
-typedef struct s_lex_data
+typedef struct s_lx_dt
 {
+	int		next_token_type;
 	int		current_token;
 	char	*stack;
-}			t_lex_data;
+}			t_lx_dt;
 
 //check if on mac or linux
 # ifdef __APPLE__
