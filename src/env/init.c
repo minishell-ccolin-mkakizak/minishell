@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/12 15:27:36 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:17:12 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -30,10 +30,19 @@ void free_env_list(t_env_list *head)
 	while (current != NULL) {
 		t_env_list *temp = current;
 		current = current->next;
-		free(temp->name);
-		free(temp->value);
-		free(temp);
+		free_env_node(temp);
 	}
+}
+
+void free_env_node(t_env_list *node)
+{
+	if(node == NULL)
+		return ;
+	if(node->name)
+		free(node->name);
+	if(node->value)
+		free(node->value);
+	free(node);
 }
 
 t_env_list *create_node(char *env)

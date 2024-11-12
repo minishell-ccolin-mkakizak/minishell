@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/12 15:25:45 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:19:55 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -127,6 +127,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			// ft_printf("is built in is : %d\n", current->is_built_in);
 			if(current->is_built_in)
 				built_in_cmds(current, table->envp);
+			// this envp needs to be set to use the t_env_list instead
 			execute_cmd(current, envp);
 		}
 		clean_pipes(&prev_pipe, current, &fd);

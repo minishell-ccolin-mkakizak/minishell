@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/12 14:37:29 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:23:05 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -18,7 +18,6 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <string.h>
-
 # include <errno.h>
 # include <fcntl.h>
 # include <string.h>
@@ -121,11 +120,22 @@ void		print_cmnd_tbl(t_cmnd_tbl *table);
 //parsing_debug.c
 void		print_envp(char **envp);
 
+//BUILT IN COMMANDS
+//built_in_cmds.c
+int			built_in_cmds(t_command *cmd, t_env_list *env);
+
+//exe_*.c
+void		exe_cd(t_command *cmd, t_env_list *env);
+void		exe_unset(t_command *cmd, t_env_list *env);
+void		exe_pwd(t_command *cmd, t_env_list *env);
+void		exe_env(t_command *cmd, t_env_list *env);
+void		exe_export(t_command *cmd, t_env_list *env);
+void		exe_exit(t_command *cmd, t_env_list *env);
+
+//exe_utils.c
+int			is_match(char *str1, char *str2);
+
 //EXECUTION
-
-// built_in_cmds.c
-int 		built_in_cmds(t_command *cmd, t_env_list *env);
-
 //execution.c
 int			main_execution(char *envp[]);
 
@@ -187,5 +197,7 @@ char		*parse_mac_hostname(char *line);
 	void print_env_list(t_env_list *head);
 	void free_env_list(t_env_list *head);
 	t_env_list *create_node(char *env);
+	void free_env_node(t_env_list *node);
+
 
 #endif
