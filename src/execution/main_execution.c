@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main_execution.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/12 14:46:55 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:14:16 by minoka           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include <minishell.h>
 
@@ -57,8 +57,9 @@ int	main_execution(char *envp[])
 		pipeline(table, envp);
 		free(input);
 	}
-	free_env_list(table->envp);
+	// free_env_list(table->envp);
 	clear_history();
+	rl_clear_history();
 	free(hostname);
 	ft_printf("Exiting...\n");
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mock_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/31 14:04:16 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:08:21 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,8 +199,8 @@ t_command *mock_parsing(char *input)
 
     // First command: ""
     cmd->args = malloc(sizeof(char *) * 3);
-    cmd->args[0] = cmd_array[0];
-    cmd->args[1] = cmd_array[1];
+    cmd->args[0] = ft_strdup(cmd_array[0]);
+    cmd->args[1] = ft_strdup(cmd_array[1]);
     cmd->args[2] = NULL;
     cmd->input_file = NULL;
     cmd->output_file = NULL;
@@ -213,7 +213,7 @@ t_command *mock_parsing(char *input)
     cmd->is_built_in = 1;
     cmd->next = NULL;
 
-
+    ft_free_all(cmd_array);
 	ft_printf("%s\n", input);
 
 
