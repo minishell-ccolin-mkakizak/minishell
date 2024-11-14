@@ -1,26 +1,27 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/12 19:17:12 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:46:21 by minoka           ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include <minishell.h>
 
 // function to print all envp
-void print_env_list(t_env_list *head) 
+void print_env_list(t_env_list *head)
 {
 	t_env_list *current = head;
 	int count = 0;
 	// somehow this doesn't work with ft_printf()...
 	while (current != NULL) {
-		printf("%s=%s\n",current->name, current->value);
+		ft_printf("[%d]%s=%s\n",count, current->name, current->value);
 		current = current->next;
+		count ++;
 	}
 }
 
