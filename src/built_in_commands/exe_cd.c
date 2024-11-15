@@ -1,35 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_utils.c                                       :+:      :+:    :+:   */
+/*   exe_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/04 17:26:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/10/14 13:35:41 by minoka           ###   ########.fr       */
+/*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
+/*   Updated: 2024/11/14 13:42:38 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
-int	free_all(char **str_arr)
+void exe_cd(t_command *cmd, t_env_list *env)
 {
-	int	i;
-
-	i = 0;
-	while (str_arr[i])
-	{
-		free(str_arr[i]);
-		i++;
-	}
-	free(str_arr);
-	return (0);
-}
-
-void	throw_error(char *message, int exit_status, int error_number)
-{
-	if (error_number)
-		errno = error_number;
-	perror(message);
-	exit(exit_status);
+	puts("YOU MADE IT TO CD!!");
 }

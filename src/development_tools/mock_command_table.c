@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mock_command_table.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/20 23:10:27 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/14 13:34:35 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,6 @@ char	*get_input(const char *prompt)
 	return (strdup(buffer));
 }
 
-void	add_environment_variables(t_cmnd_tbl *table)
-{
-	int	env_count;
-	int	i;
-
-	env_count = get_env_count();
-	table->envp = malloc((env_count + 1) * sizeof(char *));
-	if (!table->envp)
-		return ;
-	i = 0;
-	while (i < env_count)
-	{
-		table->envp[i] = get_env_variable();
-		i++;
-	}
-	table->envp[env_count] = NULL;
-}
-
-int	get_env_count(void)
-{
-	int	env_count;
-
-	printf("Enter number of environment variables: ");
-	scanf("%d%*c", &env_count);
-	return (env_count);
-}
-
-char	*get_env_variable(void)
-{
-	return (get_input("Enter environment variable (format KEY=value): "));
-}
-
 void	init_cmnd_tbl(t_cmnd_tbl *table)
 {
 	if (!table)
@@ -67,7 +35,7 @@ void	setup_table_defaults(t_cmnd_tbl *table)
 	table->head = NULL;
 	table->exit_status = 0;
 	table->exit_shell = 0;
-	add_environment_variables(table);
+	// add_environment_variables(table);
 }
 
 void	handle_commands_interactive(t_cmnd_tbl *table)
@@ -151,7 +119,7 @@ void	fill_command_flags(t_command *cmd)
 				"Does this command write to a pipe? (1 for yes, 0 for no): "));
 	cmd->exec_cond = atoi(get_input(
 				"Enter execution condition (0 for none, 1 for &&, 2 for ||): "));
-	cmd->is_builtin = atoi(get_input(
+	cmd->is_built_in = atoi(get_input(
 				"Is this a built-in command? (1 for yes, 0 for no): "));
 	cmd->next = NULL;
 }
@@ -212,8 +180,9 @@ void	print_command_details(t_command *cmd)
 	printf("Pipe In: %d\n", cmd->pipe_in);
 	printf("Pipe Out: %d\n", cmd->pipe_out);
 	printf("Execution Condition: %d\n", cmd->exec_cond);
-	printf("Is Built-in: %d\n", cmd->is_builtin);
-	printf("----------\n");
+	printf("Is Built-in: %d\n", cmd->is_built_in);
+	printf("----------\n\n");
+
 }
 
 void	print_cmnd_tbl(t_cmnd_tbl *table)
@@ -224,27 +193,10 @@ void	print_cmnd_tbl(t_cmnd_tbl *table)
 		return ;
 	printf("Exit Status: %d\n", table->exit_status);
 	printf("Exit shell: %d\n", table->exit_shell);
-	print_environment_variables(table);
+	// print_environment_variables(table);
 	print_commands(table);
 }
 
-void	print_environment_variables(t_cmnd_tbl *table)
-{
-	int	i;
-
-	printf("Environment Variables:\n");
-	i = 0;
-	if (table->envp)
-	{
-		while (table->envp[i])
-		{
-			printf("\tenvp[%d]: %s\n", i, table->envp[i]);
-			i++;
-		}
-	}
-	else
-		printf("\tNo environment variables.\n");
-}
 
 void	print_commands(t_cmnd_tbl *table)
 {

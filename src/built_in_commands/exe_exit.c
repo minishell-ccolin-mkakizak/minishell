@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.c                                        :+:      :+:    :+:   */
+/*   exe_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/19 10:04:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 14:12:07 by mkakizak         ###   ########.fr       */
+/*   Created: 2024/11/12 19:15:13 by mkakizak          #+#    #+#             */
+/*   Updated: 2024/11/14 13:42:48 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
-int	main_execution(char **envp)
+void exe_exit(t_command *cmd, t_env_list *env)
 {
-	t_cmnd_tbl	table;
-
-
-
-	ft_printf("Starting execution mode\n-------------\n\n");
-	init_cmnd_tbl(&table);
-	print_cmnd_tbl(&table);
-	return (0);
+	puts("YOU MADE IT TO EXIT");
 }
