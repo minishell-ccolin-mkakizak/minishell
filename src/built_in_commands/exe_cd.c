@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   exe_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/28 10:45:11 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/28 10:45:29 by minoka           ###   ########.fr       */
+/*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
+/*   Updated: 2024/11/14 13:42:38 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	throw_error(char *message, int exit_status, int error_number)
+void exe_cd(t_command *cmd, t_env_list *env)
 {
-	if (error_number)
-		errno = error_number;
-	perror(message);
-	exit(exit_status);
-}
-
-pid_t	safe_fork(void)
-{
-	pid_t	res;
-
-	res = fork();
-	if (res == -1)
-		throw_error("bash: creating child process failed", EXIT_FAILURE, EINTR);
-	return (res);
+	puts("YOU MADE IT TO CD!!");
 }

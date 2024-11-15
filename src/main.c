@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/28 09:54:16 by minoka           ###   ########.fr       */
+/*   Updated: 2024/10/30 18:02:43 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,14 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("%s", "Execution mode: 0\nParsing mode: 1\n");
 		scanf("%d", &mode);
 	}
+
 	if (!mode)
 	{
 		main_execution(envp_copy);
 		ft_free_all(envp_copy);
 		return (0);
 	}
-	main_parsing(envp_copy);
+
+	// main_parsing(envp_copy);
 	return (0);
 }
