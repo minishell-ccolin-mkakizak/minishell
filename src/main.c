@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/30 18:02:43 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/16 12:49:39 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ char	**copy_envp(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	int			mode;
-	char		**envp_copy;
+	int		mode;
+	char	**envp_copy;
 
 	(void)argc;
 	(void)argv;
@@ -47,14 +47,17 @@ int	main(int argc, char **argv, char **envp)
 		ft_printf("%s", "Execution mode: 0\nParsing mode: 1\n");
 		scanf("%d", &mode);
 	}
-
-	if (!mode)
+	if (mode == 0)
 	{
 		main_execution(envp_copy);
 		ft_free_all(envp_copy);
 		return (0);
 	}
-
-	// main_parsing(envp_copy);
+	if (mode == 1)
+	{
+		main_parsing(envp_copy);
+		ft_free_all(envp_copy);
+		return (0);
+	}
 	return (0);
 }
