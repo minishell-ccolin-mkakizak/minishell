@@ -210,8 +210,6 @@ void					string_token(t_token *token, char *input,
 // utilities.c
 int						is_valid_key_char(char c, int is_first_char);
 int						is_delimiter(char *input, int i);
-char	*ft_strdup(const char *s1);                                // If custom
-char	*ft_substr(char const *s, unsigned int start, size_t len); // If custom
 
 // COMMAND_TABLE
 // command_table_init.c
