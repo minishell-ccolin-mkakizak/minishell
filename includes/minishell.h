@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 12:01:19 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/17 13:39:41 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,20 +207,36 @@ void					sngl_char_opr_tok(t_token *token, char *input,
 							t_lx_dt *lx_dt, int i);
 void					string_token(t_token *token, char *input,
 							t_lx_dt *lx_dt, int i);
-
-// command_table.c
-void					init_command_table(t_cmnd_tbl **command_table);
-void					build_command_table(t_token *token,
-							t_cmnd_tbl *command_table);
-void					init_command(t_command *command, int is_pipe);
-t_token					*add_args(t_token *token, t_command *command);
-t_token					*add_operator(t_token *token, t_command *command);
-
 // utilities.c
 int						is_valid_key_char(char c, int is_first_char);
 int						is_delimiter(char *input, int i);
 char	*ft_strdup(const char *s1);                                // If custom
 char	*ft_substr(char const *s, unsigned int start, size_t len); // If custom
+
+// COMMAND_TABLE
+// command_table_init.c
+void					init_command_table(t_cmnd_tbl **command_table);
+void					init_command(t_command *command, int is_pipe);
+t_command				*init_new_command(int is_pipe);
+
+// command_table_build.c
+void					build_command_table(t_token *token,
+							t_cmnd_tbl *command_table);
+t_token					*add_args(t_token *token, t_command *command);
+t_token					*add_operator(t_token *token, t_command *command);
+
+// operators_handlers.c
+t_token					*handle_input_operator(t_token *token,
+							t_command *command);
+t_token					*handle_output_append_operator(t_token *token,
+							t_command *command);
+t_token					*handle_heredoc_operator(t_token *token,
+							t_command *command);
+
+// built_in_check.c
+int						is_specific_builtin(t_command *command,
+							const char *builtin);
+int						is_built_in(t_command *command);
 
 // PROMPT
 // build_prompt.c
