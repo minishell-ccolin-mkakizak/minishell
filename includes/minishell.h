@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/16 17:45:27 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/17 12:01:19 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ typedef struct s_command
 	char				*input_file;
 	char				*output_file;
 	char				*heredoc_delimiter;
-	int					append;
+	char				*append;
 	int					pipe_in;
 	int					pipe_out;
-	int					exec_cond;
 	int					is_built_in;
 	struct s_command	*next;
 }						t_command;
@@ -213,7 +212,7 @@ void					string_token(t_token *token, char *input,
 void					init_command_table(t_cmnd_tbl **command_table);
 void					build_command_table(t_token *token,
 							t_cmnd_tbl *command_table);
-void					init_command(t_command *command);
+void					init_command(t_command *command, int is_pipe);
 t_token					*add_args(t_token *token, t_command *command);
 t_token					*add_operator(t_token *token, t_command *command);
 
