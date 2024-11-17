@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:24:10 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/16 14:40:16 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/17 19:27:17 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	print_tokens(t_token *token)
 {
 	int i;
 
+	if (!TABLE_DEBUG)
+		return ;
 	i = 1;
 	while (1)
 	{
