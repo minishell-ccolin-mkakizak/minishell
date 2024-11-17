@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mock_command_table.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/14 13:34:35 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/17 12:07:38 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,26 +101,17 @@ void	fill_command_args(t_command *cmd)
 
 void	fill_command_files(t_command *cmd)
 {
-	cmd->input_file = get_input(
-			"Enter input file (or press Enter for none): ");
-	cmd->heredoc_delimiter = get_input(
-			"Enter heredoc delimiter (or press Enter for none): ");
-	cmd->output_file = get_input(
-			"Enter output file (or press Enter for none): ");
+	cmd->input_file = get_input("Enter input file (or press Enter for none): ");
+	cmd->heredoc_delimiter = get_input("Enter heredoc delimiter (or press Enter for none): ");
+	cmd->output_file = get_input("Enter output file (or press Enter for none): ");
+	cmd->append = get_input("Enter output file for append (or press Enter for none): "); 
 }
 
 void	fill_command_flags(t_command *cmd)
 {
-	cmd->append = atoi(get_input(
-				"Append output file? (1 for yes, 0 for no): "));
-	cmd->pipe_in = atoi(get_input(
-				"Does this command read from a pipe? (1 for yes, 0 for no): "));
-	cmd->pipe_out = atoi(get_input(
-				"Does this command write to a pipe? (1 for yes, 0 for no): "));
-	cmd->exec_cond = atoi(get_input(
-				"Enter execution condition (0 for none, 1 for &&, 2 for ||): "));
-	cmd->is_built_in = atoi(get_input(
-				"Is this a built-in command? (1 for yes, 0 for no): "));
+	cmd->pipe_in = atoi(get_input("Does this command read from a pipe? (1 for yes, 0 for no): "));
+	cmd->pipe_out = atoi(get_input("Does this command write to a pipe? (1 for yes, 0 for no): "));
+	cmd->is_built_in = atoi(get_input("Is this a built-in command? (1 for yes, 0 for no): "));
 	cmd->next = NULL;
 }
 
@@ -174,15 +165,14 @@ void	print_command_args(t_command *cmd)
 void	print_command_details(t_command *cmd)
 {
 	printf("Input file: %s\n", cmd->input_file ? cmd->input_file : "None");
-	printf("Heredoc delimiter: %s\n", cmd->heredoc_delimiter ? cmd->heredoc_delimiter : "None");
+	printf("Heredoc delimiter: %s\n",
+		cmd->heredoc_delimiter ? cmd->heredoc_delimiter : "None");
 	printf("Output file: %s\n", cmd->output_file ? cmd->output_file : "None");
-	printf("Append: %d\n", cmd->append);
+	printf("Append: %s\n", cmd->append);
 	printf("Pipe In: %d\n", cmd->pipe_in);
 	printf("Pipe Out: %d\n", cmd->pipe_out);
-	printf("Execution Condition: %d\n", cmd->exec_cond);
 	printf("Is Built-in: %d\n", cmd->is_built_in);
 	printf("----------\n\n");
-
 }
 
 void	print_cmnd_tbl(t_cmnd_tbl *table)
@@ -196,7 +186,6 @@ void	print_cmnd_tbl(t_cmnd_tbl *table)
 	// print_environment_variables(table);
 	print_commands(table);
 }
-
 
 void	print_commands(t_cmnd_tbl *table)
 {

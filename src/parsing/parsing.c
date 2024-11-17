@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/16 17:45:54 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/17 11:48:16 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	parse(char *input, t_cmnd_tbl *command_table)
 	print_tokens(token);
 	add_history(input);
 	free(input);
-	// build_command_table(token, command_table);
+	build_command_table(token, command_table);
+	print_cmnd_tbl(command_table);
 	// freetokens
 	// free lx_dt
 	return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mock_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 17:07:41 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/14 13:08:21 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/17 12:10:32 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ t_command *create_mock_commands_0(void)
     first->output_file = NULL;
     // first->output_file = strdup("output.txt");
     first->heredoc_delimiter = NULL;
-    first->append = 0;
+    first->append = NULL;
     first->pipe_in = 0;
     first->pipe_out = 0;
-    first->exec_cond = 0;
     first->is_built_in = 0;
     first->next = second;
 
@@ -46,10 +45,9 @@ t_command *create_mock_commands_0(void)
     // second->output_file = NULL;
     second->output_file = strdup("hello.txt");
     second->heredoc_delimiter = NULL;
-    second->append = 0;
+    second->append = NULL;
     second->pipe_in = 0;
     second->pipe_out = 1;
-    second->exec_cond = 0;
     second->is_built_in = 0;
     second->next = third;
 
@@ -62,10 +60,9 @@ t_command *create_mock_commands_0(void)
     // third->output_file = strdup("output.txt");
     third->output_file = NULL;
     third->heredoc_delimiter = NULL;
-    third->append = 1;
+    third->append = NULL;
     third->pipe_in = 1;
     third->pipe_out = 0;
-    third->exec_cond = 0;
     third->is_built_in = 0;
     third->next = NULL;
 
@@ -90,10 +87,9 @@ t_command *create_mock_commands_1(void)
     first->output_file = NULL;
     // first->output_file = strdup("output.txt");
     first->heredoc_delimiter = NULL;
-    first->append = 0;
+    first->append = NULL;
     first->pipe_in = 0;
     first->pipe_out = 0;
-    first->exec_cond = 0;
     first->is_built_in = 0;
     first->next = second;
 
@@ -106,10 +102,9 @@ t_command *create_mock_commands_1(void)
     second->input_file = NULL;
     second->output_file = NULL;
     second->heredoc_delimiter = NULL;
-    second->append = 0;
+    second->append = NULL;
     second->pipe_in = 0;
     second->pipe_out = 1;
-    second->exec_cond = 0;
     second->is_built_in = 0;
     second->next = third;
 
@@ -121,10 +116,9 @@ t_command *create_mock_commands_1(void)
     third->input_file = NULL;
     third->output_file = strdup("outfile.txt");
     third->heredoc_delimiter = NULL;
-    third->append = 1;
+    third->append = NULL;
     third->pipe_in = 1;
     third->pipe_out = 0;
-    third->exec_cond = 0;
     third->is_built_in = 0;
     third->next = NULL;
 
@@ -152,7 +146,6 @@ t_command *create_mock_commands_2(void)
     first->append = 0;
     first->pipe_in = 0;
     first->pipe_out = 0;
-    first->exec_cond = 0;
     first->is_built_in = 0;
     first->next = NULL;
 
@@ -209,7 +202,6 @@ t_command *mock_parsing(char *input)
     cmd->append = 0;
     cmd->pipe_in = 0;
     cmd->pipe_out = 0;
-    cmd->exec_cond = 0;
     cmd->is_built_in = 1;
     cmd->next = NULL;
 
