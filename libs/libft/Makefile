@@ -1,4 +1,5 @@
-SRC			= 	ft_isalpha \
+NAME		=	libft.a
+SRC			=	ft_isalpha \
 				ft_isdigit \
 				ft_isalnum \
 				ft_isascii \
@@ -65,38 +66,45 @@ SRC			= 	ft_isalpha \
 				get_next_line_utils \
 				ft_free_all
 
-SRCS		= $(addsuffix .c, $(SRC))
-OBJS		= $(addprefix $(OBJ_DIR), $(addsuffix .o, $(SRC)))
+SRCS		=	$(addsuffix .c, $(SRC))
+OBJS		=	$(addprefix $(OBJ_DIR), $(SRC:=.o))
 INCLUDES	=	./includes
 OBJ_DIR		=	obj/
-NAME		=	libft.a
 AR			=	ar rc
 LIB			=	ranlib
 CC			=	cc
 RM			=	rm -rf
 CFLAGS		=	-Wall -Wextra -Werror
-OBJF		=	.cache_exists
 
-all:		$(NAME)
-.c.o:
-			$(CC) $(CFLAGS) -c -I $(INCLUDES) $< -o $(<:.c=.o)
+DEF_COLOR	=	\033[0;39m
+GREEN		=	\033[0;92m
+CYAN		=	\033[0;96m
+MAGENTA		=	\033[0;95m
 
-$(NAME):	$(OBJS)
-			$(AR) $(NAME) $(OBJS)
+all: $(NAME)
 
-$(OBJ_DIR)%.o:  %.c | $(OBJF)
-			$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
+$(NAME): $(OBJS)
+	@printf "\033[1A\033[K"
+	@printf "$(GREEN)[%2d/%2d]$(DEF_COLOR) All files compiled! Creating library: $(CYAN)$(NAME)$(DEF_COLOR)...\n" "$$(find $(OBJ_DIR) -type f | wc -l)" "$$(find $(SRCS) -type f | wc -l)"
+	@$(AR) $(NAME) $(OBJS)
+	@$(LIB) $(NAME)
+	@echo "$(GREEN)<------------------$(NAME) created!------------------->\n\n$(DEF_COLOR)"
 
-$(OBJF):
-			mkdir -p $(OBJ_DIR)
 
-re:
-			fclean all
+$(OBJ_DIR)%.o: %.c
+	@mkdir -p $(@D)
+	@printf "\033[1A\033[K"
+	@printf "$(GREEN)[%2d/%2d]$(DEF_COLOR) Compiling Libft: $(CYAN)%s$(DEF_COLOR)\n" "$$(find $(OBJ_DIR) -type f | wc -l)" "$$(find $(SRCS) -type f | wc -l)" "$<"
+	@$(CC) $(CFLAGS) -c -I $(INCLUDES) $< -o $@
+
 clean:
-			$(RM) $(OBJS)
-			$(RM) -r $(OBJ_DIR)
+	@$(RM) $(OBJ_DIR)
+	@echo "$(CYAN)<----------------Object files cleaned!---------------->$(DEF_COLOR)\n"
 
-fclean:		clean
-			$(RM) $(NAME)
+fclean: clean
+	@$(RM) $(NAME)
+	@echo "$(CYAN)<--------------Library $(NAME) cleaned!--------------->$(DEF_COLOR)"
 
-.PHONY: all re clean fclean
+re: fclean all
+
+.PHONY: all clean fclean re
