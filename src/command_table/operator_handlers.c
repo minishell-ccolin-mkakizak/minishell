@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operator_handlers.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 13:35:07 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/18 13:22:25 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_token	*handle_heredoc_operator(t_token *token, t_command *command)
 	if (token->type == HEREDOC)
 	{
 		token = token->next;
-		command->output_file = ft_strdup(token->token);
+		command->heredoc_delimiter= ft_strdup(token->token);
 		token = token->next;
 	}
 	return (token);

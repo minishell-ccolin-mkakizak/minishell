@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:09:06 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/14 13:49:15 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/18 13:00:25 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int built_in_cmds(t_command *cmd, t_env_list *env)
+int built_in_cmds(t_command *cmd, t_env_list *env, int is_child)
 {
 	// char *command;
 	// ft_printf("cmd is: %s\n", cmd->args[0]);
@@ -49,6 +49,10 @@ int built_in_cmds(t_command *cmd, t_env_list *env)
 	}
 
 	// puts("is built in\n");
-	exit(EXIT_SUCCESS);
+	ft_printf("is_child is %d\n", is_child);
+	if(is_child)
+		exit(EXIT_SUCCESS);
+	else
+	return (0);
 	// NEED TO USE exit to stop this process
 }

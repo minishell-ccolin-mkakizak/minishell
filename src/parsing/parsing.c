@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 13:24:14 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/18 12:30:25 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	main_parsing(char **envp)
 
 	hostname = get_hostname();
 	chdir(getenv("HOME"));
+
+	command_table->envp = init_env(envp);
 	while (1)
 	{
 		prompt = build_prompt(hostname);
@@ -58,6 +60,7 @@ int	main_parsing(char **envp)
 		free(prompt);
 		init_command_table(&command_table);
 		parse(input, command_table);
+		pipeline(command_table, envp);
 	}
 	return (clear_history(), free(hostname), ft_printf("Exiting...\n"), 0);
 }

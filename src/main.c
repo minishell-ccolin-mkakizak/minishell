@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/16 12:49:39 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/18 13:47:08 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,29 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	envp_copy = copy_envp(envp);
 	mode = 2;
-	while (mode != 0 && mode != 1)
+
+	char		*prompt;
+	char		*hostname;
+	char		*input;
+	t_cmnd_tbl	*command_table;
+
+	hostname = get_hostname();
+	chdir(getenv("HOME"));
+
+	command_table->envp = init_env(envp);
+	while (1)
 	{
-		ft_printf("%s", "Execution mode: 0\nParsing mode: 1\n");
-		scanf("%d", &mode);
+		prompt = build_prompt(hostname);
+		input = readline(prompt);
+		if (!input)
+		{
+			free(prompt);
+			break ;
+		}
+		free(prompt);
+		init_command_table(&command_table);
+		parse(input, command_table);
+		pipeline(command_table, envp);
 	}
-	if (mode == 0)
-	{
-		main_execution(envp_copy);
-		ft_free_all(envp_copy);
-		return (0);
-	}
-	if (mode == 1)
-	{
-		main_parsing(envp_copy);
-		ft_free_all(envp_copy);
-		return (0);
-	}
-	return (0);
+	return (clear_history(), free(hostname), ft_printf("Exiting...\n"), 0);
 }
