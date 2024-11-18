@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 12:07:38 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/17 19:23:45 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,8 @@ void	print_command_details(t_command *cmd)
 void	print_cmnd_tbl(t_cmnd_tbl *table)
 {
 	int	i;
-
+	if (!TABLE_DEBUG)
+		return ;
 	if (!table)
 		return ;
 	printf("Exit Status: %d\n", table->exit_status);

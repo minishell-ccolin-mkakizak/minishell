@@ -5,7 +5,7 @@ INCLUDES	= 	-I includes -I $(LIBFT_PATH)/includes -I /usr/local/opt/readline/inc
 # this is commented out just for development
 # CFLAGS		=	-Wall -Werror -Wextra $(INCLUDES)
 
-CFLAGS		= 	$(INCLUDES)
+CFLAGS		= 	$(INCLUDES) -DTABLE_DEBUG=$(TABLE_DEBUG)
 LIBS_PATH	=	-L$(LIBFT_PATH) -L /usr/local/opt/readline/lib
 LIBS_FLAGS	=	-lft -lreadline
 DEBUG_FLAGS	=	-fsanitize=address
@@ -13,6 +13,7 @@ SRC_DIR		=	src
 OBJ_DIR		=	obj
 RM			=	rm -rf
 CC			=	clang
+TABLE_DEBUG ?= 	0
 
 # This will find all the .c files in the src directory and make a obj
 # directory to put all the .o files
@@ -59,6 +60,9 @@ debug: $(OBJS)
 	$(MAKE) -C $(LIBFT_PATH)
 	$(CC) $(DEBUG_FLAGS) $(OBJS) -o $(NAME) $(LIBS_PATH) $(LIBS_FLAGS)
 	@echo "$(MAGENTA)<------$(GREEN)Cleaned and rebuilt everything for $(NAME) in debug mode!$(MAGENTA)------>$(DEF_COLOR)"
+
+table: TABLE_DEBUG=1
+table: fclean $(NAME)
 
 norm:
 	norminette -R CheckForbiddenSourceHeader ${SRCS}
