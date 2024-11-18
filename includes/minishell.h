@@ -6,7 +6,11 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/11/18 16:32:08 by ccolin           ###   ########.fr       */
+=======
+/*   Updated: 2024/11/18 16:53:18 by mkakizak         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-// command table
+// command linked list
 typedef struct s_command
 {
 	char				**args;
@@ -46,6 +50,7 @@ typedef struct s_env_list
 	struct s_env_list	*next;
 }						t_env_list;
 
+//command_table
 typedef struct s_command_table
 {
 	t_command			*head;
@@ -103,84 +108,29 @@ typedef struct s_lx_dt
 # define INPUT 0
 # define OUTPUT 1
 
+# ifndef TABLE_DEBUG
+#  define TABLE_DEBUG 0
+# endif
+
 // DEVELOPMENT TOOLS
-// mock_comand_table.c
-// void		add_environment_variables(t_cmnd_tbl *table);
-// int			get_env_count(void);
-// char		*get_env_variable(void);
-void					init_cmnd_tbl(t_cmnd_tbl *table);
-void					setup_table_defaults(t_cmnd_tbl *table);
-void					handle_commands_interactive(t_cmnd_tbl *table);
-t_command				*prompt_command(void);
-t_command				*create_command(void);
-void					fill_command_args(t_command *cmd);
-void					fill_command_files(t_command *cmd);
-void					fill_command_flags(t_command *cmd);
-void					add_command_interactive(t_cmnd_tbl *table);
+// print_command_table.c
 void					print_command(t_command *cmd);
 void					print_command_args(t_command *cmd);
 void					print_command_details(t_command *cmd);
 void					print_cmnd_tbl(t_cmnd_tbl *table);
-// void		print_environment_variables(t_cmnd_tbl *table);
 void					print_commands(t_cmnd_tbl *table);
-t_command				*prompt_command(void);
-void					add_command_interactive(t_cmnd_tbl *table);
-void					print_command(t_command *cmd);
-void					print_cmnd_tbl(t_cmnd_tbl *table);
 
 // parsing_debug.c
 void					print_envp(char **envp);
 const char				*getTokenTypeName(int type);
 void					print_tokens(t_token *token);
 
-// BUILT IN COMMANDS
-// built_in_cmds.c
-int 					built_in_cmds(t_command *cmd, t_env_list *env, int is_child);
-
-// exe_*.c
-void					exe_cd(t_command *cmd, t_env_list *env);
-void					exe_unset(t_command *cmd, t_env_list *env);
-void					exe_pwd(t_command *cmd, t_env_list *env);
-void					exe_env(t_command *cmd, t_env_list *env);
-void					exe_export(t_command *cmd, t_env_list *env);
-void					exe_exit(t_command *cmd, t_env_list *env);
-
-// exe_utils.c
-int						is_match(char *str1, char *str2);
-
-// EXECUTION
-// execution.c
-int						main_execution(char *envp[]);
-
-// pipeline.c
-int						pipeline(t_cmnd_tbl *table, char *envp[]);
-
-// here_doc.c
-int						check_for_dilimiter(t_command *cmd, char *input);
-int						handle_heredoc(t_command *cmd);
-
-// execute_command.c
-char					*validate_path(char **path_arr, char *cmd);
-char					*find_path(char *cmd, char *envp[]);
-int						execute_cmd(t_command *cmd, char *envp[]);
-
-// pipeline_utils.c
-void					throw_error(char *message, int exit_status,
-							int error_number);
-pid_t					safe_fork(void);
-void					init_fd(t_fd *fd);
-void					restore_fd(t_fd *fd);
-void					init_pipe(t_fd *fd);
 
 // mock_data.c
-t_command				*create_mock_commands_0(void);
-t_command				*create_mock_commands_1(void);
-t_command				*create_mock_commands_2(void);
-void					free_commands(t_command *cmd);
-t_command				*mock_parsing(char *input);
+// void					free_commands(t_command *cmd);
 
-// PARSING
-// parsing.c
+//--------------------------PARSING FUCNTIONS-----------------------------------------// 
+//parsing.c
 int						main_parsing(char **envp);
 void					parse(char *input, t_cmnd_tbl *command_table);
 
@@ -255,6 +205,10 @@ char					*get_dir_mac(const char *path, char delimiter);
 char					*extract_mac_hostname(int fd);
 char					*parse_mac_hostname(char *line);
 
+
+
+//--------------------------EXECUTIONG FUCNTIONS-----------------------------------------
+
 // ENV
 // init.c
 t_env_list				*init_env(char *envp[]);
@@ -263,4 +217,43 @@ void					free_env_list(t_env_list *head);
 t_env_list				*create_node(char *env);
 void					free_env_node(t_env_list *node);
 
+// BUILT IN COMMANDS
+// built_in_cmds.c
+int 					built_in_cmds(t_command *cmd, t_env_list *env, int is_child);
+
+// exe_*.c
+void					exe_cd(t_command *cmd, t_env_list *env);
+void					exe_unset(t_command *cmd, t_env_list *env);
+void					exe_pwd(t_command *cmd, t_env_list *env);
+void					exe_env(t_command *cmd, t_env_list *env);
+void					exe_export(t_command *cmd, t_env_list *env);
+void					exe_exit(t_command *cmd, t_env_list *env);
+
+// exe_utils.c
+int						is_match(char *str1, char *str2);
+
+// EXECUTION
+// execution.c
+// int						main_execution(char *envp[]);
+
+// pipeline.c
+int						pipeline(t_cmnd_tbl *table, char *envp[]);
+
+// here_doc.c
+int						check_for_dilimiter(t_command *cmd, char *input);
+int						handle_heredoc(t_command *cmd);
+
+// execute_command.c
+char					*validate_path(char **path_arr, char *cmd);
+char					*find_path(char *cmd, char *envp[]);
+int						execute_cmd(t_command *cmd, char *envp[], int is_child);
+
+// pipeline_utils.c
+void					throw_error(char *message, int exit_status,
+							int error_number);
+pid_t					safe_fork(void);
+void					init_fd(t_fd *fd);
+void					restore_fd(t_fd *fd);
+void					init_pipe(t_fd *fd);
+int 					has_pipe(t_command *head);
 #endif
