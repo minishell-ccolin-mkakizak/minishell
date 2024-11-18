@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:24:10 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 19:27:17 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/18 12:49:34 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	print_tokens(t_token *token)
 	i = 1;
 	while (1)
 	{
-		printf("Token %d\nString= %s\nType = %s\n\n", i, token->token,
-			getTokenTypeName(token->type));
+		printf("Token %-5d\tString= %-20s\tType = %-15s\n\n", i, token->token, getTokenTypeName(token->type));
 		if (!token->next)
 			return ;
 		token = token->next;
