@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/18 13:50:34 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:51:30 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,10 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 
 		if(current->next)
 			init_pipe(&fd);
-		
-		if(!(current->is_built_in))
-			pid = safe_fork();
+
+		if(current->next || !current->is_built_in || has_pipe(table->head))
+		pid = safe_fork();
+		// if((current->is_built_in))
 		
 		if(pid == 0)
 		{	
@@ -127,13 +128,15 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
 			output_redirect(current);
+
 			if(current->is_built_in)
 				built_in_cmds(current, table->envp, is_child);
+			else
+				execute_cmd(current, envp, is_child);
 			// this envp needs to be set to use the t_env_list instead
-			execute_cmd(current, envp);
 		}
-		else
-		{
+		else if (current->is_built_in && !has_pipe(table->head))
+		{	
 			built_in_cmds(current, table->envp, is_child);
 		}
 		clean_pipes(&prev_pipe, current, &fd);

@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:09:06 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/18 13:52:18 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:06:34 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int built_in_cmds(t_command *cmd, t_env_list *env, int is_child)
 		exe_exit(cmd, env);
 	}
 	// puts("is built in\n");
-	// ft_printf("is_child is %d\n", is_child);
+	ft_printf("[builtin]is_child is%d\n", is_child);
 	if(is_child)
 		exit(EXIT_SUCCESS);
 	else

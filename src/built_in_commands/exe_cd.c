@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/14 13:42:38 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/18 14:20:02 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 
 void exe_cd(t_command *cmd, t_env_list *env)
 {
+	chdir(cmd->args[1]);
 	puts("YOU MADE IT TO CD!!");
 }

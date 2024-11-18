@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/18 12:46:55 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:51:21 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int						is_match(char *str1, char *str2);
 
 // EXECUTION
 // execution.c
-int						main_execution(char *envp[]);
+// int						main_execution(char *envp[]);
 
 // pipeline.c
 int						pipeline(t_cmnd_tbl *table, char *envp[]);
@@ -162,7 +162,7 @@ int						handle_heredoc(t_command *cmd);
 // execute_command.c
 char					*validate_path(char **path_arr, char *cmd);
 char					*find_path(char *cmd, char *envp[]);
-int						execute_cmd(t_command *cmd, char *envp[]);
+int						execute_cmd(t_command *cmd, char *envp[], int is_child);
 
 // pipeline_utils.c
 void					throw_error(char *message, int exit_status,
@@ -171,6 +171,7 @@ pid_t					safe_fork(void);
 void					init_fd(t_fd *fd);
 void					restore_fd(t_fd *fd);
 void					init_pipe(t_fd *fd);
+int 					has_pipe(t_command *head);
 
 // mock_data.c
 t_command				*create_mock_commands_0(void);

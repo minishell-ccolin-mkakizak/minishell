@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/12 16:31:58 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:09:00 by mkakizak         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include <minishell.h>
 
@@ -69,12 +69,14 @@ char	*find_path(char *cmd, char *envp[])
 	return (ft_free_all(path_arr), NULL);
 }
 
-int	execute_cmd(t_command *cmd, char *envp[])
+int	execute_cmd(t_command *cmd, char *envp[], int is_child)
 {
 	char	**cmd_arr;
 	char	*path;
 
 	// print_command(cmd);
+	ft_printf("[non-builtin]is_child is%d\n", is_child);
+
 	path = find_path(cmd->args[0], envp);
 	if (!path)
 	{
