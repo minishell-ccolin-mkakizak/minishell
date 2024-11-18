@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 13:35:03 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/18 12:38:49 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	build_command_table(t_token *token, t_cmnd_tbl *command_table)
 {
 	t_command	*command;
+
 	command_table->head = init_new_command(0);
 	if (!command_table->head)
 		return ;
@@ -23,8 +24,7 @@ void	build_command_table(t_token *token, t_cmnd_tbl *command_table)
 	{
 		token = add_args(token, command);
 		token = add_operator(token, command);
-		if (is_built_in(command))
-			command->is_built_in = 1;
+		command->is_built_in = is_built_in(command);
 		if (token && token->type == PIPE)
 		{
 			command->pipe_out = 1;
