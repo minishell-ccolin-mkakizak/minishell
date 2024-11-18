@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt_linux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 11:23:45 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 13:31:56 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/18 15:49:06 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*get_linux_hostname(void)
 	if (fd == -1)
 		return (ft_strdup("hostname"));
 	hostname = get_next_line(fd);
+	// hostname = getenv("HOST");
 	hostname[ft_strlen(hostname) - 1] = '\0';
 	close(fd);
 	return (hostname);

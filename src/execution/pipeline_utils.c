@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 10:45:11 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/31 14:03:37 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:51:10 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,16 @@ void init_pipe(t_fd *fd)
 		puts("pipe creation failed");
 		return ;
 	}
+}
+
+int has_pipe(t_command *head)
+{
+	t_command *current = head;
+	while (current)
+	{
+		if (current->next)
+			return (TRUE);
+		current = current->next;
+	}
+	return (FALSE);
 }
