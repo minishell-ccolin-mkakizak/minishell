@@ -6,42 +6,18 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/18 14:25:15 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:51:26 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**copy_envp(char **envp)
-{
-	int		i;
-	char	**copy;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	copy = malloc(sizeof(char *) * (i + 1));
-	if (!copy)
-		return (NULL);
-	i = 0;
-	while (envp[i])
-	{
-		copy[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	copy[i] = NULL;
-	return (copy);
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	int		mode;
-	char	**envp_copy;
 
 	(void)argc;
 	(void)argv;
-	envp_copy = copy_envp(envp);
-	mode = 2;
 
 	char		*prompt;
 	char		*hostname;

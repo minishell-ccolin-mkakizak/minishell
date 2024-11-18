@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/18 15:09:00 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:53:54 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	execute_cmd(t_command *cmd, char *envp[], int is_child)
 	char	*path;
 
 	// print_command(cmd);
-	ft_printf("[non-builtin]is_child is%d\n", is_child);
+	// ft_printf("[non-builtin]is_child is%d\n", is_child);
 
 	path = find_path(cmd->args[0], envp);
 	if (!path)
