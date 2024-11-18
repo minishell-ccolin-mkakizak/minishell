@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:54:32 by minoka            #+#    #+#             */
-/*   Updated: 2024/10/31 14:03:14 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:51:10 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int handle_heredoc(t_command *cmd)
 		return (-1);
 	}
 
-	// will loop until heredoc_dilimiter is met
 	while(1)
 	{
 		ft_printf("->");
