@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 19:29:54 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/18 12:46:55 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void					print_tokens(t_token *token);
 
 // BUILT IN COMMANDS
 // built_in_cmds.c
-int						built_in_cmds(t_command *cmd, t_env_list *env);
+int 					built_in_cmds(t_command *cmd, t_env_list *env, int is_child);
 
 // exe_*.c
 void					exe_cd(t_command *cmd, t_env_list *env);

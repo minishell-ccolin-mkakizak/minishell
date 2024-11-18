@@ -1,4 +1,4 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
@@ -6,9 +6,9 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/12 19:19:55 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 13:45:45 by mkakizak         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include <minishell.h>
 
@@ -99,6 +99,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 	t_fd 		fd;
 	pid_t 		pid;
 	t_command	*current;
+	int 		is_child;
 
 	int 		prev_pipe;
 	int			status;
@@ -106,29 +107,36 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 	current = table->head;
 	prev_pipe = -1;
 
-	// for develpment
-	print_cmnd_tbl(table);
-	// print_env_list(table->envp);
-	// print_commands(current);
-
 	init_fd(&fd);
+
+	is_child = FALSE;
+	pid = 1;
+
 	while(current)
 	{
+
 		if(current->next)
 			init_pipe(&fd);
-
-		pid = safe_fork();
+		
+		if(!(current->is_built_in))
+			pid = safe_fork();
+		
 		if(pid == 0)
-		{
+		{	
+			is_child = TRUE;
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
 			output_redirect(current);
 			//built in commands
 			// ft_printf("is built in is : %d\n", current->is_built_in);
 			if(current->is_built_in)
-				built_in_cmds(current, table->envp);
+				built_in_cmds(current, table->envp, is_child);
 			// this envp needs to be set to use the t_env_list instead
 			execute_cmd(current, envp);
+		}
+		else
+		{
+			built_in_cmds(current, table->envp, is_child);
 		}
 		clean_pipes(&prev_pipe, current, &fd);
 		current = current->next;
