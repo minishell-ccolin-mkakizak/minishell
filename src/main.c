@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/18 13:57:01 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:22:32 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ int	main(int argc, char **argv, char **envp)
 		parse(input, command_table);
 		pipeline(command_table, envp);
 	}
-	free_env_list(command_table->envp);
-	return (clear_history(), free(hostname), ft_printf("Exiting...\n"), 0);
+	// free_env_list(command_table->envp);
+	return (rl_clear_history(), free(hostname), ft_printf("Exiting...\n"), 0);
 }

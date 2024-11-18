@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 11:23:45 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/27 13:31:56 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/18 15:31:35 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@ char	*get_linux_hostname(void)
 {
 	int		fd;
 	char	*hostname;
+	char	*temp;
 
 	fd = open(HOSTNAME_LINUX, O_RDONLY);
 	if (fd == -1)
 		return (ft_strdup("hostname"));
-	hostname = get_next_line(fd);
+	temp = get_next_line(fd);
+	hostname = ft_strdup(temp);
+	free(temp);
 	hostname[ft_strlen(hostname) - 1] = '\0';
 	close(fd);
 	return (hostname);

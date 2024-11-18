@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/18 12:46:55 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:32:08 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,9 @@ void					string_token(t_token *token, char *input,
 // utilities.c
 int						is_valid_key_char(char c, int is_first_char);
 int						is_delimiter(char *input, int i);
+// free_parser_data.c
+void					free_tokens(t_token *token);
+void					free_parser_data(t_token *token, t_lx_dt *lx_dt);
 
 // COMMAND_TABLE
 // command_table_init.c

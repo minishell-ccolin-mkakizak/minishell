@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/18 12:30:25 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:04:02 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	parse(char *input, t_cmnd_tbl *command_table)
 {
 	t_token	*token;
-	t_token	*token_head;
 	t_lx_dt	*lx_dt;
 
 	lx_dt = malloc(sizeof(t_lx_dt));
@@ -32,8 +31,7 @@ void	parse(char *input, t_cmnd_tbl *command_table)
 	free(input);
 	build_command_table(token, command_table);
 	print_cmnd_tbl(command_table);
-	// freetokens
-	// free lx_dt
+	free_parser_data(token, lx_dt);
 	return ;
 }
 
