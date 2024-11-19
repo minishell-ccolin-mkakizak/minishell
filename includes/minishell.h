@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 09:19:55 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/19 17:32:30 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_command_table
 	t_command			*head;
 	int					exit_status;
 	int					exit_shell;
-	t_env_list			*envp;
+	t_env_list	*envp;
 }						t_cmnd_tbl;
 
 // file_discripters
@@ -125,7 +125,7 @@ void					print_tokens(t_token *token);
 // mock_data.c
 // void					free_commands(t_command *cmd);
 
-//--------------------------PARSING FUCNTIONS-----------------------------------------// 
+//--------------------------PARSING FUCNTIONS-----------------------------------------//
 //parsing.c
 int						main_parsing(char **envp);
 void					parse(char *input, t_cmnd_tbl *command_table);
@@ -162,7 +162,7 @@ void					free_parser_data(t_token *token, t_lx_dt *lx_dt);
 
 // COMMAND_TABLE
 // command_table_init.c
-void					init_command_table(t_cmnd_tbl **command_table);
+void					init_command_table(t_cmnd_tbl **command_table, char *envp[]);
 void					init_command(t_command *command, int is_pipe);
 t_command				*init_new_command(int is_pipe);
 
