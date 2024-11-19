@@ -1,5 +1,6 @@
 NAME		=	minishell
 LIBFT_PATH	=	./libs/libft
+LIBFT		=	$(LIBFT_PATH)/libft.a
 INCLUDES	= 	-I includes -I $(LIBFT_PATH)/includes -I /usr/local/opt/readline/include
 
 # this is commented out just for development
@@ -20,8 +21,6 @@ TABLE_DEBUG ?= 	0
 SRCS		=	$(shell find $(SRC_DIR) -name '*.c')
 OBJS		=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-
-
 # Colors
 DEF_COLOR = \033[0;39m
 GRAY = \033[0;90m
@@ -33,44 +32,44 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-# all: $(NAME) norm_check
+all: $(LIBFT) $(NAME)
 
-$(NAME): $(OBJS)
-	$(MAKE) -C $(LIBFT_PATH)
-	$(CC) $(OBJS) -o $(NAME) $(LIBS_PATH) $(LIBS_FLAGS)
-	@echo "$(GREEN)<-----------------$(NAME) compiled!------------------>$(DEF_COLOR)"
+$(LIBFT):
+	$(MAKE) --no-print-directory -C $(LIBFT_PATH)
+
+$(NAME): $(OBJS) $(LIBFT)
+	@printf "\033[1A\033[K"
+	@printf "$(GREEN)[%2d/%2d]$(DEF_COLOR) All files compiled! Linking $(CYAN)$(NAME)$(DEF_COLOR)...\n" "$$(find $(SRCS) -type f | wc -l)" "$$(find $(SRCS) -type f | wc -l)"
+	@$(CC) $(OBJS) -o $(NAME) $(LIBS_PATH) $(LIBS_FLAGS)
+	@echo "$(GREEN)<-----------------$(NAME) compiled!----------------->$(DEF_COLOR)\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@printf "\033[1A\033[K"
+	@printf "$(GREEN)[%2d/%2d]$(DEF_COLOR) Compiling Minishell: $(CYAN)%s$(DEF_COLOR)\n" "$$(find $(OBJ_DIR) -type f | wc -l)" "$$(find $(SRCS) -type f | wc -l)" "$<"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ_DIR)
-	$(MAKE) clean -C $(LIBFT_PATH)
-	@echo "$(CYAN)<--------$(NAME) object files cleaned!-------->$(DEF_COLOR)"
+	@$(RM) $(OBJ_DIR)
+	@$(MAKE) --no-print-directory clean -C $(LIBFT_PATH)
+	@echo "$(CYAN)<-----------$(NAME) object files cleaned!----------->$(DEF_COLOR)\n"
 
 fclean:
-	$(RM) $(OBJ_DIR) $(NAME)
-	$(MAKE) fclean -C $(LIBFT_PATH)
-	@echo "$(CYAN)<------$(NAME) executable files cleaned!------>$(DEF_COLOR)"
+	@$(RM) $(OBJ_DIR) $(NAME)
+	@$(MAKE) --no-print-directory fclean -C $(LIBFT_PATH)
+	@echo "\n$(CYAN)<---------$(NAME) executable files cleaned!--------->$(DEF_COLOR)\n"
 
 re: fclean all
 
-debug: $(OBJS)
-	$(MAKE) -C $(LIBFT_PATH)
+debug: $(LIBFT) $(OBJS)
 	$(CC) $(DEBUG_FLAGS) $(OBJS) -o $(NAME) $(LIBS_PATH) $(LIBS_FLAGS)
-	@echo "$(MAGENTA)<------$(GREEN)Cleaned and rebuilt everything for $(NAME) in debug mode!$(MAGENTA)------>$(DEF_COLOR)"
+	@echo "\n$(MAGENTA)<------$(GREEN)Cleaned and rebuilt everything for $(NAME) in debug mode!$(MAGENTA)------>$(DEF_COLOR)"
 
 table: TABLE_DEBUG=1
-table: fclean $(NAME)
+table: fclean all
 
 norm:
 	norminette -R CheckForbiddenSourceHeader ${SRCS}
 	norminette -R CheckDefine includes/*.h
 
 .PHONY: all clean fclean re
-
-
-
-
-
