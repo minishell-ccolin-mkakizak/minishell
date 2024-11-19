@@ -84,17 +84,16 @@ MAGENTA		=	\033[0;95m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "\033[1A\033[K"
-	@printf "$(GREEN)[%2d/%2d]$(DEF_COLOR) All files compiled! Creating library: $(CYAN)$(NAME)$(DEF_COLOR)...\n" "$$(find $(OBJ_DIR) -type f | wc -l)" "$$(find $(SRCS) -type f | wc -l)"
+	@printf "\r$(GREEN)[%2d/%2d]$(DEF_COLOR) All files compiled! Creating library: $(CYAN)$(NAME)$(DEF_COLOR)...\033[K" \
+		"$$(find $(OBJ_DIR) -type f | wc -l)" "$$(find $(SRCS) -type f | wc -l)"
 	@$(AR) $(NAME) $(OBJS)
 	@$(LIB) $(NAME)
-	@echo "$(GREEN)<------------------$(NAME) created!------------------->\n\n$(DEF_COLOR)"
-
+	@echo "\n$(GREEN)<------------------$(NAME) created!------------------->$(DEF_COLOR)"
 
 $(OBJ_DIR)%.o: %.c
 	@mkdir -p $(@D)
-	@printf "\033[1A\033[K"
-	@printf "$(GREEN)[%2d/%2d]$(DEF_COLOR) Compiling Libft: $(CYAN)%s$(DEF_COLOR)\n" "$$(find $(OBJ_DIR) -type f | wc -l)" "$$(find $(SRCS) -type f | wc -l)" "$<"
+	@printf "\r$(GREEN)[%2d/%2d]$(DEF_COLOR) Compiling Libft: $(CYAN)%s$(DEF_COLOR)\033[K" \
+		"$$(find $(OBJ_DIR) -type f | wc -l)" "$$(find $(SRCS) -type f | wc -l)" "$<"
 	@$(CC) $(CFLAGS) -c -I $(INCLUDES) $< -o $@
 
 clean:
