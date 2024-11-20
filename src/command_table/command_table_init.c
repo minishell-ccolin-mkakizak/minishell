@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_init.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 13:33:26 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/19 17:28:37 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	init_command_table(t_cmnd_tbl **command_table)
+void	init_command_table(t_cmnd_tbl **command_table, char *envp[])
 {
 	*command_table = malloc(sizeof(t_cmnd_tbl));
 	if (!*command_table)
@@ -20,6 +20,7 @@ void	init_command_table(t_cmnd_tbl **command_table)
 	(*command_table)->head = NULL;
 	(*command_table)->exit_shell = 0;
 	(*command_table)->exit_status = 0;
+	(*command_table)->envp = init_env(envp);
 }
 
 void	init_command(t_command *command, int is_pipe)

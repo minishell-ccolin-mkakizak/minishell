@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/18 15:52:57 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:14:18 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,9 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 
 		if(current->next || !current->is_built_in || has_pipe(table->head))
 		pid = safe_fork();
-		
+
 		if(pid == 0)
-		{	
+		{
 			is_child = TRUE;
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
@@ -134,7 +134,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 				execute_cmd(current, envp, is_child);
 		}
 		else if (current->is_built_in && !has_pipe(table->head))
-		{	
+		{
 			built_in_cmds(current, table->envp, is_child);
 		}
 		clean_pipes(&prev_pipe, current, &fd);

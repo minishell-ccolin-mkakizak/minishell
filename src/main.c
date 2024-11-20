@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 09:20:33 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/19 17:34:35 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char **argv, char **envp)
 	hostname = get_hostname();
 	chdir(getenv("HOME"));
 
-	// command_table->envp = init_env(envp);
 	while (1)
 	{
 		prompt = build_prompt(hostname);
@@ -38,10 +37,10 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		free(prompt);
-		init_command_table(&command_table);
+		init_command_table(&command_table, envp);
 		parse(input, command_table);
 		pipeline(command_table, envp);
 	}
-	// free_env_list(command_table->envp);
+	free_env_list(command_table->envp);
 	return (rl_clear_history(), free(hostname), ft_printf("Exiting...\n"), 0);
 }
