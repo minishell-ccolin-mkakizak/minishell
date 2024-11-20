@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 22:56:46 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/20 23:36:30 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	j = i;
 	while (input[j] && input[j] != ' ')
 	{
-		if (input[j] == '\'' || input[j] == '\"')
+		if (input[j] == '\'' || input[i] == '\"')
 			go_to_end_of_quotes(input, &j, input[j]);
 		j++;
 	}

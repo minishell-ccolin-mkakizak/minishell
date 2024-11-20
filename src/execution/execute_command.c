@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/18 15:53:54 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:39:49 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*validate_path(char **path_arr, char *cmd)
 	return (NULL);
 }
 
-char	*find_path(char *cmd, char *envp[])
+char	*find_path(char *cmd, t_env_list *envs)
 {
 	char	**path_arr;
 	char	*path_str;
@@ -51,16 +51,11 @@ char	*find_path(char *cmd, char *envp[])
 	if (!cmd || !cmd[0])
 		return (NULL);
 	i = 0;
-	while (envp[i])
+	path_str = get_env_var(envs, "PATH");
+	if(path_str == NULL)
 	{
-		if (ft_strnstr(envp[i], "PATH=", 5))
-		{
-			path_str = ft_strnstr(envp[i], "PATH=", 5);
-			break ;
-		}
-		i++;
+		// errro handling for not finding paths:
 	}
-	path_str = ft_strtrim(path_str, "PATH=");
 	path_arr = ft_split(path_str, ':');
 	free(path_str);
 	path = validate_path(path_arr, cmd);
@@ -69,15 +64,12 @@ char	*find_path(char *cmd, char *envp[])
 	return (ft_free_all(path_arr), NULL);
 }
 
-int	execute_cmd(t_command *cmd, char *envp[], int is_child)
+int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 {
 	char	**cmd_arr;
 	char	*path;
 
-	// print_command(cmd);
-	// ft_printf("[non-builtin]is_child is%d\n", is_child);
-
-	path = find_path(cmd->args[0], envp);
+	path = find_path(cmd->args[0], table->envp);
 	if (!path)
 	{
 		// need to handle errors here

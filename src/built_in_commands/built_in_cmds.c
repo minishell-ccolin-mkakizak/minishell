@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:09:06 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/18 15:53:43 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:06:23 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int built_in_cmds(t_command *cmd, t_env_list *env, int is_child)
+int built_in_cmds(t_command *cmd, t_cmnd_tbl *table, int is_child)
 {
 	// char *command;
 	// ft_printf("cmd is: %s\n", cmd->args[0]);
@@ -24,34 +24,30 @@ int built_in_cmds(t_command *cmd, t_env_list *env, int is_child)
 	// }
 	if(is_match(cmd->args[0], "cd"))
 	{
-		exe_cd(cmd, env);
+		exe_cd(cmd, table);
 	}
 	if(is_match(cmd->args[0], "pwd"))
 	{
-		exe_pwd(cmd, env);
+		exe_pwd(cmd, table);
 	}
 	if(is_match(cmd->args[0], "export"))
 	{
-		exe_export(cmd, env);
+		exe_export(cmd, table);
 	}
 	if(is_match(cmd->args[0], "unset"))
 	{
-		exe_unset(cmd, env);
-		// print_env_list(env);
+		exe_unset(cmd, table);
 	}
 	if(is_match(cmd->args[0], "env"))
 	{
-		exe_env(cmd, env);
+		exe_env(cmd, table);
 	}
 	if(is_match(cmd->args[0], "exit"))
 	{
-		exe_exit(cmd, env);
+		exe_exit(cmd, table);
 	}
-	// puts("is built in\n");
-	// ft_printf("[builtin]is_child is%d\n", is_child);
 	if(is_child)
 		exit(EXIT_SUCCESS);
 	else
-	return (0);
-	// NEED TO USE exit to stop this process
+		return (0);
 }
