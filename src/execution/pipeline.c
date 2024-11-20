@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/19 17:14:18 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 14:33:22 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@ int output_redirect(t_command *cmd)
 {
 	int fd;
 	int flags;
+	int i;
 
-	if(cmd->output_file)
+	if(cmd->output_file == NULL || cmd->output_file[0] == NULL)
+		return(0);
+
+
+	i = 0;
+	while(cmd->output_file[i])
 	{
 		// this needs an if condition if the operation is > or >>
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
 
-		fd = open(cmd->output_file, flags, 0644);
+		fd = open(cmd->output_file[i], flags, 0644);
 		if(fd == -1)
 		{
 			// need to implement error handing
@@ -30,6 +36,7 @@ int output_redirect(t_command *cmd)
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
+		i++;
 	}
 	return (0);
 }
@@ -119,8 +126,11 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			init_pipe(&fd);
 
 		if(current->next || !current->is_built_in || has_pipe(table->head))
-		pid = safe_fork();
+		{
+			pid = safe_fork();
+		}
 
+		ft_printf("PID_1:%d\n", pid);
 		if(pid == 0)
 		{
 			is_child = TRUE;
@@ -128,10 +138,13 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			input_redirect(current);
 			output_redirect(current);
 
+
 			if(current->is_built_in)
 				built_in_cmds(current, table->envp, is_child);
 			else
+			{
 				execute_cmd(current, envp, is_child);
+			}
 		}
 		else if (current->is_built_in && !has_pipe(table->head))
 		{
