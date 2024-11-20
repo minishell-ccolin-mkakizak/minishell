@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 16:41:29 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/20 17:36:17 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_command_table
 	t_command			*head;
 	int					exit_status;
 	int					exit_shell;
-	t_env_list	*envp;
+	t_env_list			*envp;
 }						t_cmnd_tbl;
 
 // file_discripters
@@ -206,24 +206,26 @@ char					*parse_mac_hostname(char *line);
 //--------------------------EXECUTIONG FUCNTIONS-----------------------------------------
 
 // ENV
+
 // init.c
 t_env_list				*init_env(char *envp[]);
 void					print_env_list(t_env_list *head);
 void					free_env_list(t_env_list *head);
 t_env_list				*create_node(char *env);
 void					free_env_node(t_env_list *node);
+char 					*get_env_var(t_env_list *envs, char *name);
 
 // BUILT IN COMMANDS
 // built_in_cmds.c
-int 					built_in_cmds(t_command *cmd, t_env_list *env, int is_child);
+int 					built_in_cmds(t_command *cmd,  t_cmnd_tbl *table, int is_child);
 
 // exe_*.c
-void					exe_cd(t_command *cmd, t_env_list *env);
-void					exe_unset(t_command *cmd, t_env_list *env);
-void					exe_pwd(t_command *cmd, t_env_list *env);
-void					exe_env(t_command *cmd, t_env_list *env);
-void					exe_export(t_command *cmd, t_env_list *env);
-void					exe_exit(t_command *cmd, t_env_list *env);
+void					exe_cd(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_unset(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_pwd(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_env(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_export(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_exit(t_command *cmd,  t_cmnd_tbl *table);
 
 // exe_utils.c
 int						is_match(char *str1, char *str2);
@@ -241,8 +243,8 @@ int						handle_heredoc(t_command *cmd);
 
 // execute_command.c
 char					*validate_path(char **path_arr, char *cmd);
-char					*find_path(char *cmd, char *envp[]);
-int						execute_cmd(t_command *cmd, char *envp[], int is_child);
+char					*find_path(char *cmd, t_env_list *table);
+int						execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[]);
 
 // pipeline_utils.c
 void					throw_error(char *message, int exit_status,

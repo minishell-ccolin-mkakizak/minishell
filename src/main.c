@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 17:34:35 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:32:27 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 
 	hostname = get_hostname();
 	chdir(getenv("HOME"));
+	init_command_table(&command_table, envp);
 
 	while (1)
 	{
@@ -37,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		}
 		free(prompt);
-		init_command_table(&command_table, envp);
 		parse(input, command_table);
 		pipeline(command_table, envp);
 	}
