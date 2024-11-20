@@ -6,45 +6,52 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:20:31 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/14 13:52:10 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 15:21:36 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void exe_unset(t_command *cmd, t_env_list *env)
+void exe_unset(t_command *cmd, t_cmnd_tbl *table)
 {
 	t_env_list	*current;
 	t_env_list	*prev;
 
-	char *name;
+	char 		*name;
 
 	puts("YOU MADE IT TO UNSET");
 
-	if (!env  || !cmd->args[1])
+	if (!table->envp  || !cmd->args[1])
 	{
 		//error handling if no name
 		return ;
 	}
 
-	current = env;
+	current = table->envp;
 	name = cmd->args[1];
+
 	prev = NULL;
-	if (current && strcmp(current->name, name) == 0)
+
+	if (current && is_match(current->name, name))
 	{
-		env = current->next;
+		puts("found match");
+		table->envp = current->next;
 		return (free_env_node(current));
 	}
-	while (current && strcmp(current->name, name) != 0)
+
+	while (current && !is_match(current->name, name))
 	{
 		prev = current;
 		current = current->next;
 	}
-	if (!current)
-		return ;
+	if (current)
+	{
+		puts("found match in list");
+		prev->next = current->next;
+		return (free_env_node(current));
+	}
 
-	// Unlink the node
-	prev->next = current->next;
-	return (free_env_node(current));
+	puts("did not find match");
+	return ;
 }
 

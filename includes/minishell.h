@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 16:41:29 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/20 15:22:25 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_command_table
 	t_command			*head;
 	int					exit_status;
 	int					exit_shell;
-	t_env_list	*envp;
+	t_env_list			*envp;
 }						t_cmnd_tbl;
 
 // file_discripters
@@ -215,15 +215,15 @@ void					free_env_node(t_env_list *node);
 
 // BUILT IN COMMANDS
 // built_in_cmds.c
-int 					built_in_cmds(t_command *cmd, t_env_list *env, int is_child);
+int 					built_in_cmds(t_command *cmd,  t_cmnd_tbl *table, int is_child);
 
 // exe_*.c
-void					exe_cd(t_command *cmd, t_env_list *env);
-void					exe_unset(t_command *cmd, t_env_list *env);
-void					exe_pwd(t_command *cmd, t_env_list *env);
-void					exe_env(t_command *cmd, t_env_list *env);
-void					exe_export(t_command *cmd, t_env_list *env);
-void					exe_exit(t_command *cmd, t_env_list *env);
+void					exe_cd(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_unset(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_pwd(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_env(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_export(t_command *cmd,  t_cmnd_tbl *table);
+void					exe_exit(t_command *cmd,  t_cmnd_tbl *table);
 
 // exe_utils.c
 int						is_match(char *str1, char *str2);

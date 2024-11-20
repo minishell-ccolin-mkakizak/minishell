@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/20 14:33:22 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 15:18:16 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,9 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			pid = safe_fork();
 		}
 
-		ft_printf("PID_1:%d\n", pid);
 		if(pid == 0)
 		{
+			ft_printf("IN CHILD PROCESS PID_1:[%d]\n", pid);
 			is_child = TRUE;
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
@@ -140,7 +140,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 
 
 			if(current->is_built_in)
-				built_in_cmds(current, table->envp, is_child);
+				built_in_cmds(current, table, is_child);
 			else
 			{
 				execute_cmd(current, envp, is_child);
@@ -148,7 +148,9 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 		}
 		else if (current->is_built_in && !has_pipe(table->head))
 		{
-			built_in_cmds(current, table->envp, is_child);
+
+			ft_printf("IN PARENT PROCESS PID_1:[%d]\n", pid);
+			built_in_cmds(current, table, is_child);
 		}
 		clean_pipes(&prev_pipe, current, &fd);
 		current = current->next;
