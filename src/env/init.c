@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/20 16:09:13 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 17:33:13 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,26 @@ void print_env_list(t_env_list *head)
 		current = current->next;
 		count ++;
 	}
+}
+
+char *get_env_var(t_env_list *envs, char *name)
+{
+	t_env_list *current;
+	t_env_list *prev;
+
+	int i;
+	current = envs;
+
+	while (current && !is_match(current->name, name))
+	{
+		prev = current;
+		current = current->next;
+	}
+	if(current)
+	{
+		return(ft_strdup(current->value));
+	}
+	return(NULL);
 }
 
 void free_env_list(t_env_list *head)

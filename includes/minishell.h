@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 15:22:25 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 17:36:17 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,12 +206,14 @@ char					*parse_mac_hostname(char *line);
 //--------------------------EXECUTIONG FUCNTIONS-----------------------------------------
 
 // ENV
+
 // init.c
 t_env_list				*init_env(char *envp[]);
 void					print_env_list(t_env_list *head);
 void					free_env_list(t_env_list *head);
 t_env_list				*create_node(char *env);
 void					free_env_node(t_env_list *node);
+char 					*get_env_var(t_env_list *envs, char *name);
 
 // BUILT IN COMMANDS
 // built_in_cmds.c
@@ -241,8 +243,8 @@ int						handle_heredoc(t_command *cmd);
 
 // execute_command.c
 char					*validate_path(char **path_arr, char *cmd);
-char					*find_path(char *cmd, char *envp[]);
-int						execute_cmd(t_command *cmd, char *envp[], int is_child);
+char					*find_path(char *cmd, t_env_list *table);
+int						execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[]);
 
 // pipeline_utils.c
 void					throw_error(char *message, int exit_status,

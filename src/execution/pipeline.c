@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/20 16:02:51 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 17:40:16 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 
 		if(pid == 0)
 		{
-			ft_printf("IN CHILD PROCESS PID_1:[%d]\n", pid);
+			// ft_printf("IN CHILD PROCESS PID_1:[%d]\n", pid);
 			is_child = TRUE;
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
@@ -143,13 +143,13 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 				built_in_cmds(current, table, is_child);
 			else
 			{
-				execute_cmd(current, envp, is_child);
+				execute_cmd(current, table, is_child, envp);
 			}
 		}
 		else if (current->is_built_in && !has_pipe(table->head))
 		{
 
-			ft_printf("IN PARENT PROCESS PID_1:[%d]\n", pid);
+			// ft_printf("IN PARENT PROCESS PID_1:[%d]\n", pid);
 			built_in_cmds(current, table, is_child);
 		}
 		clean_pipes(&prev_pipe, current, &fd);
