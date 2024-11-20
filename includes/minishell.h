@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 17:32:30 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/19 16:41:29 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ typedef struct s_command
 {
 	char				**args;
 	char				*input_file;
-	char				*output_file;
+	char				**output_file;
 	char				*heredoc_delimiter;
-	char				*append;
+	char				**append;
 	int					pipe_in;
 	int					pipe_out;
 	int					is_built_in;
