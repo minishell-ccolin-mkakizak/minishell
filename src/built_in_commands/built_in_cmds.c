@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:09:06 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/20 16:33:34 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 17:06:23 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int built_in_cmds(t_command *cmd, t_cmnd_tbl *table, int is_child)
 	if(is_match(cmd->args[0], "unset"))
 	{
 		exe_unset(cmd, table);
-		// print_env_list(table->envp);
 	}
 	if(is_match(cmd->args[0], "env"))
 	{
@@ -47,11 +46,8 @@ int built_in_cmds(t_command *cmd, t_cmnd_tbl *table, int is_child)
 	{
 		exe_exit(cmd, table);
 	}
-	// puts("is built in\n");
-	// ft_printf("[builtin]is_child is%d\n", is_child);
 	if(is_child)
 		exit(EXIT_SUCCESS);
 	else
 		return (0);
-	// NEED TO USE exit to stop this process
 }

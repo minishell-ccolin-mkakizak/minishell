@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:20:31 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/20 16:33:49 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:47:49 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,14 @@ void exe_unset(t_command *cmd, t_cmnd_tbl *table)
 		//error handling if no name
 		return ;
 	}
-
 	current = table->envp;
 	name = cmd->args[1];
-
 	prev = NULL;
-
 	if (current && is_match(current->name, name))
 	{
 		table->envp = current->next;
 		return (free_env_node(current));
 	}
-
 	while (current && !is_match(current->name, name))
 	{
 		prev = current;
@@ -48,8 +44,6 @@ void exe_unset(t_command *cmd, t_cmnd_tbl *table)
 		prev->next = current->next;
 		return (free_env_node(current));
 	}
-
-	puts("did not find match");
 	return ;
 }
 
