@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_init.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 17:28:37 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:41:48 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_command(t_command *command, int is_pipe)
 {
 	if (!command)
 		return ;
+	command->command = NULL;
 	command->args = NULL;
 	command->input_file = NULL;
 	command->output_file = NULL;

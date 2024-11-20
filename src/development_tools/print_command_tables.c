@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 17:52:16 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/20 19:43:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	print_command(t_command *cmd)
 
 	if (!cmd)
 		return ;
+	printf("Command: %s\n", cmd->command ? cmd->command : "None");
 	print_command_arrays(cmd->args, "arg");
 	print_command_details(cmd);
 }

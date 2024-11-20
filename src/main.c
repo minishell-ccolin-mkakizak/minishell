@@ -3,44 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 17:34:35 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 22:30:25 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+char*	get_input(void)
 {
-	int		mode;
-
-	(void)argc;
-	(void)argv;
-
 	char		*prompt;
 	char		*hostname;
 	char		*input;
-	t_cmnd_tbl	*command_table;
 
 	hostname = get_hostname();
-	chdir(getenv("HOME"));
-
+	prompt = build_prompt(hostname);
 	while (1)
 	{
-		prompt = build_prompt(hostname);
 		input = readline(prompt);
 		if (!input)
-		{
-			free(prompt);
 			break ;
+		if (input[0] == 0)
+		{
+			free(input);
+			continue ;
 		}
 		free(prompt);
-		init_command_table(&command_table, envp);
-		parse(input, command_table);
-		pipeline(command_table, envp);
+		free(hostname);
+		return (input);
+	}
+	return (NULL);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	char		*input;
+	t_cmnd_tbl	*command_table;
+
+	(void)argc;
+	(void)argv;
+	chdir(getenv("HOME"));
+	init_command_table(&command_table, envp);
+	while (1)
+	{
+		input = get_input();
+			if (input)
+				if (parse(input, command_table) == PARSING_ERROR)
+					continue ;
+		if (input)
+			pipeline(command_table, envp);
+		if (!input)
+			break ;
 	}
 	free_env_list(command_table->envp);
-	return (rl_clear_history(), free(hostname), ft_printf("Exiting...\n"), 0);
+	return (rl_clear_history(), ft_printf("Exiting...\n"), 0);
 }

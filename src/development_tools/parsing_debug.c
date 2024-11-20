@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:24:10 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/18 12:49:34 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/20 17:03:05 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ const char	*getTokenTypeName(int type)
 		return ("STRING");
 	case COMMAND:
 		return ("COMMAND");
-	case ARGUMENT:
-		return ("ARGUMENT");
 	case SINGLE_QUOTE:
 		return ("SINGLE_QUOTE");
 	case DOUBLE_QUOTE:
