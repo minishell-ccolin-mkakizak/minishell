@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/14 13:46:21 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 16:09:13 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ t_env_list *init_env(char *envp[])
 	t_env_list	*new_node;
 	int 		i;
 	i = 1;
+
 	if(envp == NULL || envp[0] == NULL)
 		return(NULL);
 
