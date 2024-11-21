@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:20:31 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/20 16:47:49 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/21 15:56:48 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void exe_unset(t_command *cmd, t_cmnd_tbl *table)
 
 	puts("YOU MADE IT TO UNSET");
 
-	if (!table->envp  || !cmd->args[1])
+	if (!table->envp  || !cmd->args[0])
 	{
 		//error handling if no name
 		return ;
 	}
 	current = table->envp;
-	name = cmd->args[1];
+	name = cmd->args[0];
 	prev = NULL;
 	if (current && is_match(current->name, name))
 	{
