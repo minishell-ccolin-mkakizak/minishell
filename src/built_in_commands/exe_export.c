@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:14:22 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/20 17:05:37 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/21 16:14:29 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void exe_export(t_command *cmd, t_cmnd_tbl *table)
 
 	char 		*env;
 
-	if (!table->envp  || !cmd->args[1])
+	if (!table->envp  || !cmd->args[0])
 	{
 		//error handling if no env
 		return ;
 	}
 	current = table->envp;
-	env = cmd->args[1];
+	env = cmd->args[0];
 	prev = NULL;
 	if (current && is_match(current->name, env))
 	{

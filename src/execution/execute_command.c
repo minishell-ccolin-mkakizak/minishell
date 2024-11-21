@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/20 17:39:49 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/21 16:33:54 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,34 @@ char	*find_path(char *cmd, t_env_list *envs)
 	return (ft_free_all(path_arr), NULL);
 }
 
+char **set_command(char *command, char **args)
+{	
+	char	**res;
+	int		args_count;
+	int 	i;
+
+	i = 0;
+	args_count =  get_array_len(args);
+	res = ft_calloc(sizeof(char *), args_count + 2);	
+	while(i <= args_count)
+	{	
+		if(i == 0)
+			res[i] = ft_strdup(command);
+		else
+			res[i] = ft_strdup(args[i - 1]); 
+		i++;
+	}
+	res[i] = NULL;
+	return (res);
+}
+
 int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 {
-	char	**cmd_arr;
+	char	**set_array;
 	char	*path;
-
-	path = find_path(cmd->args[0], table->envp);
+	
+	path = find_path(cmd->command, table->envp);
+	set_array = set_command(cmd->command, cmd->args);
 	if (!path)
 	{
 		// need to handle errors here
@@ -77,7 +99,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 		// free(path);
 		throw_error("bash: command not found", 127, 0);
 	}
-	if (execve(path, cmd->args, envp) == -1)
+	if (execve(path, set_array, envp) == -1)
 	{
 		ft_free_all(cmd->args);
 		free(path);

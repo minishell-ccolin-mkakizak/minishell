@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 23:14:37 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/21 16:33:31 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,8 @@ void					exe_exit(t_command *cmd,  t_cmnd_tbl *table);
 
 // exe_utils.c
 int						is_match(char *str1, char *str2);
+int						get_array_len(char **array);
+int						print_str_arr(char **arr, int len);
 
 // EXECUTION
 // execution.c
