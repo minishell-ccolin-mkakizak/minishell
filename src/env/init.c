@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/20 17:33:13 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/21 16:38:10 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void print_env_list(t_env_list *head)
 {
 	t_env_list *current = head;
 	int count = 0;
-	// somehow this doesn't work with ft_printf()...
 	while (current != NULL) {
 		ft_printf("[%d]%s=%s\n",count, current->name, current->value);
 		current = current->next;
@@ -78,14 +77,14 @@ t_env_list *create_node(char *env)
 	// ft_printf("env:%s=%s\n", str_array[0], str_array[1]);
 
 	node->name = ft_strdup(str_array[0]);
+	if(node->name == NULL)
+		return (NULL);
 
 	if(str_array[1])
 		node->value = ft_strdup(str_array[1]);
 	else
 		node->value = NULL;
 
-	// if(node->name == NULL)
-	// 	return (NULL);
 	ft_free_all(str_array);
 	return (node);
 }

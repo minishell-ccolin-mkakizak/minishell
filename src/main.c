@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 23:24:05 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/21 18:33:01 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,25 @@ char*	get_input(void)
 	return (NULL);
 }
 
+volatile sig_atomic_t sig_received = 0;
+
+void	signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		ft_printf("\nReceived SIGINT (Ctrl+C)\n"); fflush(stdout);
+		sig_received = 1;
+	}
+	else if (sig == SIGQUIT)
+	{
+		ft_printf("\nReceived SIGQUIT (Ctrl+\\)\n");
+	}
+	else if (sig == SIGTERM)
+	{
+		ft_printf("\nReceived SIGTERM\n");
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
@@ -46,12 +65,24 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	chdir(getenv("HOME"));
 	init_command_table(&command_table, envp);
+
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, signal_handler);
+	signal(SIGTERM, signal_handler);
 	while (1)
 	{
+
+		if (sig_received)
+		{
+			sig_received = 0;
+			continue;
+		}
+
+		printf("sig_received = %d\n", sig_received);
 		input = get_input();
-			if (input)
-				if (parse(input, command_table) == PARSING_ERROR)
-					continue ;
+		if (input)
+			if (parse(input, command_table) == PARSING_ERROR)
+				continue ;
 		if (input)
 			pipeline(command_table, envp);
 		if (!input)
