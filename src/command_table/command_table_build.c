@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 17:57:04 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/20 20:18:21 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	build_command_table(t_token *token, t_cmnd_tbl *command_table)
 		while (token && token->type != PIPE)
 		{
 			if (token)
+				token = add_command(token, command);
+			if (token)
 				token = add_args(token, command);
 			if (token)
 				token = add_operator(token, command);
@@ -43,6 +45,16 @@ void	build_command_table(t_token *token, t_cmnd_tbl *command_table)
 	}
 }
 
+t_token	*add_command(t_token *token, t_command *command)
+{
+	if (token->type == COMMAND)
+	{
+		command->command = ft_strdup(token->token);
+		return (token->next);
+	}
+	return (token);
+}
+
 t_token	*add_operator(t_token *token, t_command *command)
 {
 	if (token)
@@ -54,20 +66,17 @@ t_token	*add_operator(t_token *token, t_command *command)
 	return (token);
 }
 
-int	is_arg(t_token *token)
-{
-	return (token && (token->type == STRING_TYPE || token->type == DOUBLE_QUOTE || token->type == SINGLE_QUOTE));
-}
-
 t_token	*add_args(t_token *token, t_command *command)
 {
 	t_token	*head;
 	int		i;
-	if (!is_arg(token))
+	if (!is_arg(token->type))
+	{
 		return (token);
+	}
 	i = 0;
 	head = token;
-	while (is_arg(token))
+	while (token && (is_arg(token->type)))
 	{
 		i++;
 		token = token->next;
@@ -77,8 +86,7 @@ t_token	*add_args(t_token *token, t_command *command)
 	if (!command->args)
 		return (NULL);
 	i = 0;
-	while (token && (token->type == STRING_TYPE || token->type == DOUBLE_QUOTE
-			|| token->type == SINGLE_QUOTE))
+	while (token && (is_arg(token->type)))
 	{
 		command->args[i] = ft_strdup(token->token);
 		i++;

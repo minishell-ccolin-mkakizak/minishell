@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/17 13:35:20 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/20 20:16:49 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	is_specific_builtin(t_command *command, const char *builtin)
 {
-	if ((ft_strlen(command->args[0]) == ft_strlen(builtin))
-		&& strncmp(command->args[0], builtin, ft_strlen(builtin)) == 0)
+	if ((ft_strlen(command->command) == ft_strlen(builtin))
+		&& strncmp(command->command, builtin, ft_strlen(builtin)) == 0)
 		return (1);
 	return (0);
 }

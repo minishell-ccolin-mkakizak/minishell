@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 17:36:17 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/20 23:14:37 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 // command linked list
 typedef struct s_command
 {
+	char				*command;
 	char				**args;
 	char				*input_file;
 	char				**output_file;
@@ -71,9 +72,17 @@ typedef struct s_token
 	struct s_token		*next;
 }						t_token;
 
+
+typedef struct s_lx_dt
+{
+	int					next_token_type;
+	int					previous_token_type;
+	int					pre_previous_token_type;
+	int					expecting_command;
+}						t_lx_dt;
+
 # define STRING_TYPE 100
 # define COMMAND 101
-# define ARGUMENT 102
 # define SINGLE_QUOTE 104
 # define DOUBLE_QUOTE 105
 # define INPUT_TYPE 106
@@ -82,12 +91,7 @@ typedef struct s_token
 # define APPEND 109
 # define PIPE 110
 # define ENVP 111
-
-typedef struct s_lx_dt
-{
-	int					next_token_type;
-	int					current_token;
-}						t_lx_dt;
+# define PARSING_ERROR 112
 
 // check if on mac or linux
 # ifdef __APPLE__
@@ -128,30 +132,34 @@ void					print_tokens(t_token *token);
 //--------------------------PARSING FUCNTIONS-----------------------------------------//
 //parsing.c
 int						main_parsing(char **envp);
-void					parse(char *input, t_cmnd_tbl *command_table);
+int						parse(char *input, t_cmnd_tbl *command_table);
 
 // lexer.c
+int						is_previous_tok_operator_except_pipe(t_lx_dt *lx_dt);
+int						is_arg(int type);
 void					init_lexer(t_token **token, t_lx_dt *lx_dt,
 							char *input);
-void					tokenize(t_token *token, char *input, t_lx_dt *lx_dt,
+int						tokenize(t_token *token, char *input, t_lx_dt *lx_dt,
 							int i);
-void					next_token(t_token *token, char *input, t_lx_dt *lx_dt,
+int						next_token(t_token *token, char *input, t_lx_dt *lx_dt,
 							int i);
 int						skip_spaces_tabs(char *input, int i);
 int						next_token_type(char *input, int i);
 
 // token_handlers.c
-void					single_quote_token(t_token *token, char *input,
+int						command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i);
+
+int						single_quote_token(t_token *token, char *input,
 							t_lx_dt *lx_dt, int i);
-void					double_quote_token(t_token *token, char *input,
+int						double_quote_token(t_token *token, char *input,
 							t_lx_dt *lx_dt, int i);
-void					envp_token(t_token *token, char *input, t_lx_dt *lx_dt,
+int						envp_token(t_token *token, char *input, t_lx_dt *lx_dt,
 							int i);
-void					dbl_char_opr_tok(t_token *token, char *input,
+int						dbl_char_opr_tok(t_token *token, char *input,
 							t_lx_dt *lx_dt, int i);
-void					sngl_char_opr_tok(t_token *token, char *input,
+int						sngl_char_opr_tok(t_token *token, char *input,
 							t_lx_dt *lx_dt, int i);
-void					string_token(t_token *token, char *input,
+int						string_token(t_token *token, char *input,
 							t_lx_dt *lx_dt, int i);
 // utilities.c
 int						is_valid_key_char(char c, int is_first_char);
@@ -167,6 +175,7 @@ void					init_command(t_command *command, int is_pipe);
 t_command				*init_new_command(int is_pipe);
 
 // command_table_build.c
+t_token					*add_command(t_token *token, t_command *command);
 void					build_command_table(t_token *token,
 							t_cmnd_tbl *command_table);
 t_token					*add_args(t_token *token, t_command *command);

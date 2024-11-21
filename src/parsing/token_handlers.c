@@ -6,41 +6,101 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/16 17:38:51 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/20 23:36:30 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	single_quote_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+char	*continue_input(char *input, char *str)
+{
+	char	*line;
+	char	*temp;
+
+	line = readline(str);
+	temp = ft_strjoin(input, "\n");
+	free(input);
+	input = ft_strjoin(temp, line);
+	free(line);
+	free(temp);
+	return (input);
+}
+
+void	go_to_end_of_quotes(char *input, int *j, char c)
+{
+	int		i;
+	
+	i = *j;
+	while(1)
+	{
+		i++;
+		if (input[i] == c)
+			break ;
+		if (!input[i])
+			input = continue_input(input, ">");
+	}
+	*j = i;
+}
+
+int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+{
+	int j;
+
+	j = i;
+	while (input[j] && input[j] != ' ')
+	{
+		if (input[j] == '\'' || input[i] == '\"')
+			go_to_end_of_quotes(input, &j, input[j]);
+		j++;
+	}
+	token->token = ft_substr(input, i, j - i);
+	i = j;
+	token->type = COMMAND;
+	lx_dt->expecting_command = FALSE;
+	return (next_token(token, input, lx_dt, i));
+}
+
+int	single_quote_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	int	j;
 
-	j = ++i;
-	while (input[j] && input[j] != '\'')
+	j = i;
+	while (1)
+	{
 		j++;
-	token->token = ft_substr(input, i, j - i);
+		if (!input[j])
+			continue_input(input, ">");
+		if (input[j] == '\'')
+			break;
+	}
+	token->token = ft_substr(input, i + 1, j - i - 1);
 	i = j;
 	token->type = lx_dt->next_token_type;
 	i++;
-	next_token(token, input, lx_dt, i);
+	return (next_token(token, input, lx_dt, i));
 }
 
-void	double_quote_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	double_quote_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	int	j;
 
-	j = ++i;
-	while (input[j] && input[j] != '\"')
+	j = i;
+	while (1)
+	{
 		j++;
-	token->token = ft_substr(input, i, j - i);
+		if (!input[j])
+			continue_input(input, ">");
+		if (input[j] == '\"')
+			break;
+	}
+	token->token = ft_substr(input, i + 1, j - i - 1);
 	i = j;
 	token->type = lx_dt->next_token_type;
 	i++;
-	next_token(token, input, lx_dt, i);
+	return (next_token(token, input, lx_dt, i));
 }
 
-void	envp_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	envp_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	int	j;
 
@@ -50,35 +110,37 @@ void	envp_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	token->token = ft_substr(input, i, j - i);
 	i = j;
 	token->type = lx_dt->next_token_type;
-	next_token(token, input, lx_dt, i);
+	return (next_token(token, input, lx_dt, i));
 }
 
-void	dbl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
-{
+int	dbl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+{	
 	token->token = malloc(sizeof(char) * (2 + 1));
 	if (!token->token)
-		return ;
+		return (0);
 	token->token[0] = input[i];
 	token->token[1] = input[i];
 	token->token[2] = '\0';
 	token->type = lx_dt->next_token_type;
 	i = i + 2;
-	next_token(token, input, lx_dt, i);
+	return (next_token(token, input, lx_dt, i));
 }
 
-void	sngl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	sngl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	token->token = malloc(sizeof(char) * (1 + 1));
 	if (!token->token)
-		return ;
+		return (0);
 	token->token[0] = input[i];
 	token->token[1] = '\0';
 	token->type = lx_dt->next_token_type;
 	i++;
-	next_token(token, input, lx_dt, i);
+	if (lx_dt->next_token_type == PIPE)
+		lx_dt->expecting_command = TRUE;
+	return (next_token(token, input, lx_dt, i));
 }
 
-void	string_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	string_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	int j;
 
@@ -88,5 +150,5 @@ void	string_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	token->token = ft_substr(input, i, j - i);
 	i = j;
 	token->type = lx_dt->next_token_type;
-	next_token(token, input, lx_dt, i);
+	return (next_token(token, input, lx_dt, i));
 }
