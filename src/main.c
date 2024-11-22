@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/22 16:15:35 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/22 17:08:55 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char*	get_input(void)
 		}
 		free(prompt);
 		free(hostname);
-		return (input);
+		return (input); 
 	}
 	return (NULL);
 }
@@ -51,10 +51,10 @@ int	main(int argc, char **argv, char **envp)
 	chdir(getenv("HOME"));
 	init_command_table(&command_table, envp);
 
-	init_signals();
 	while (1)
 	{
 
+		init_signals();
 		if (sig_received)
 		{
 			// sig_received = 0;

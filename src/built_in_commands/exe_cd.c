@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/22 16:19:03 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:20:03 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void exe_cd(t_command *cmd, t_cmnd_tbl *table)
 		chdir(getenv("HOME"));
 		return ;
 	}
-	chdir(cmd->args[0]);
+	else
+	{
+		chdir(cmd->args[0]);
+	}
 	puts("YOU MADE IT TO CD!!");
 }
