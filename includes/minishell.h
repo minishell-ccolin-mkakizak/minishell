@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/21 18:27:40 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:14:03 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <signal.h>
+#include <signal.h>
 
 // command linked list
 typedef struct s_command
@@ -113,6 +114,8 @@ typedef struct s_lx_dt
 #  define TABLE_DEBUG 0
 # endif
 
+
+extern volatile sig_atomic_t sig_received;
 // DEVELOPMENT TOOLS
 // print_command_table.c
 void					print_command(t_command *cmd);
@@ -266,4 +269,10 @@ void					init_fd(t_fd *fd);
 void					restore_fd(t_fd *fd);
 void					init_pipe(t_fd *fd);
 int 					has_pipe(t_command *head);
+
+// SIGNALS
+
+// signals.c
+void					signal_handler(int sig);
+void					init_signals(void);
 #endif

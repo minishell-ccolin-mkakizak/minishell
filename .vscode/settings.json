@@ -2,5 +2,6 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"mock_command_table": "cpp"
-	}
+	},
+	"C_Cpp.errorSquiggles": "disabled"
 }

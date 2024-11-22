@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/21 16:33:54 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/22 14:08:48 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,15 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	char	*path;
 	
 	path = find_path(cmd->command, table->envp);
+	if (path == NULL)
+	{	
+		// Error handling for command not found
+		path = cmd->command;
+	}
 	set_array = set_command(cmd->command, cmd->args);
 	if (!path)
 	{
-		// need to handle errors here
+		// Handle errors here
 		// free_all(cmd_arr);
 		// free(path);
 		throw_error("bash: command not found", 127, 0);
@@ -103,7 +108,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	{
 		ft_free_all(cmd->args);
 		free(path);
-		throw_error("bash: execution went worng", EXIT_FAILURE, 0);
+		throw_error("bash: execution went wrong", EXIT_FAILURE, 0);
 	}
 	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/21 18:33:01 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:15:35 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 char*	get_input(void)
 {
@@ -39,42 +39,25 @@ char*	get_input(void)
 
 volatile sig_atomic_t sig_received = 0;
 
-void	signal_handler(int sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_printf("\nReceived SIGINT (Ctrl+C)\n"); fflush(stdout);
-		sig_received = 1;
-	}
-	else if (sig == SIGQUIT)
-	{
-		ft_printf("\nReceived SIGQUIT (Ctrl+\\)\n");
-	}
-	else if (sig == SIGTERM)
-	{
-		ft_printf("\nReceived SIGTERM\n");
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
+
 	char		*input;
 	t_cmnd_tbl	*command_table;
+
 
 	(void)argc;
 	(void)argv;
 	chdir(getenv("HOME"));
 	init_command_table(&command_table, envp);
 
-	signal(SIGINT, signal_handler);
-	signal(SIGQUIT, signal_handler);
-	signal(SIGTERM, signal_handler);
+	init_signals();
 	while (1)
 	{
 
 		if (sig_received)
 		{
-			sig_received = 0;
+			// sig_received = 0;
 			continue;
 		}
 
