@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 23:14:37 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/21 11:01:21 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,6 @@ void					print_tokens(t_token *token);
 
 //--------------------------PARSING FUCNTIONS-----------------------------------------//
 //parsing.c
-int						main_parsing(char **envp);
 int						parse(char *input, t_cmnd_tbl *command_table);
 
 // lexer.c

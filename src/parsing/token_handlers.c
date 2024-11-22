@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 23:36:30 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/21 10:55:24 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,15 @@ void	go_to_end_of_quotes(char *input, int *j, char c)
 			input = continue_input(input, ">");
 	}
 	*j = i;
+}
+
+char	*continue_input_if_lst_tok_is_pipe(char *input, int i)
+{
+	ft_printf("continue%c", 10); //debug
+	i = skip_spaces_tabs(input, i);
+	if (input[i])
+		return(input);
+	return (continue_input(input, ">"));
 }
 
 int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
@@ -135,8 +144,11 @@ int	sngl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	token->token[1] = '\0';
 	token->type = lx_dt->next_token_type;
 	i++;
-	if (lx_dt->next_token_type == PIPE)
+	if (token->type == PIPE)
+	{
 		lx_dt->expecting_command = TRUE;
+		input = continue_input_if_lst_tok_is_pipe(input, i);
+	}
 	return (next_token(token, input, lx_dt, i));
 }
 

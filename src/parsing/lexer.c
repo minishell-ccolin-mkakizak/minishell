@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 21:02:58 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/21 10:44:38 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,3 +132,5 @@ int	next_token_type(char *input, int i)
 		return (ENVP);
 	return (STRING_TYPE);
 }
+
+// maloc checks include ft_substr and ft_strjoin
