@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/21 11:01:21 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/22 17:04:51 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int						tokenize(t_token *token, char *input, t_lx_dt *lx_dt,
 int						next_token(t_token *token, char *input, t_lx_dt *lx_dt,
 							int i);
 int						skip_spaces_tabs(char *input, int i);
-int						next_token_type(char *input, int i);
+int						next_token_type(char *input, int i, t_lx_dt *lx_dt);
 
 // token_handlers.c
 int						command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i);

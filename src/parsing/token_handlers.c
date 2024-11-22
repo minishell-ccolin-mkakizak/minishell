@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/21 10:55:24 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/22 16:10:11 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,17 @@ int	double_quote_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 
 int	envp_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
+	ft_printf("envp token == %c\n", input[i]); //debug
 	int	j;
 
-	j = ++i;
+	j = i + 1;
 	while (is_valid_key_char(input[j], FALSE))
 		j++;
 	token->token = ft_substr(input, i, j - i);
 	i = j;
 	token->type = lx_dt->next_token_type;
-	return (next_token(token, input, lx_dt, i));
+	ft_printf("quite envp token\n"); //debug
+	return (next_token(token, input, lx_dt, ++i));
 }
 
 int	dbl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)

@@ -6,61 +6,16 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/22 08:17:51 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/22 17:09:29 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-char	*expend_string_envps(char *str, t_env_list *envp)
-{
-	return (str);
-}
-
-char	*expend_command_envps(char *cmd, t_env_list *envp)
-{
-	return (cmd);
-}
-
-char	*expend_double_quote_envps(char *str, t_env_list *envp)
-{
-	// int		i;
-	// int		start;
-	// int		index;
-	// char	*key;
-	// char	*prefix;
-	// char	*suffix;
-	
-	// i = 0;
-	// start = 0;
-	// index = 0;
-	// while (str[i])
-	// {
-	// 	if (str[i] == '$' && is_valid_key_char(str[i + 1], TRUE))
-	// 	{
-	// 		start = i++;
-	// 		while (str[i] && is_valid_key_char(str[i], FALSE))
-	// 			i++;
-	// 		key = malloc(sizeof(char) * (i - start));
-	// 		if (!key)
-	// 			return (NULL);
-	// 		start++;
-	// 		while (start < i)
-	// 		{
-	// 			key[index++] = str[start++];
-	// 		}
-	// 		key[index] = '\0';
-	// 	}
-	// 	key = expend_envp_envps(key, envp);
-	// }
-	return (str);
-}
-
-char	*expend_envp_envps(char *str, t_env_list *envp)
+char	*expend_envp(char *str, t_env_list *envp)
 {
 	int		name_len;
-	ft_printf("%s%c", str, 10); //debug
+	ft_printf("variable = %s\n", str); //debug
 	while (envp)
 	{
 		name_len = ft_strlen(envp->name);
@@ -68,16 +23,63 @@ char	*expend_envp_envps(char *str, t_env_list *envp)
 		{
 			free(str);
 			str = ft_strdup(envp->value);
-			ft_printf("?%s%c", str, 10); //debug
 			break ;
 		}
 		envp = envp->next;
 	}
 	if (!envp)
 	{
-		ft_printf("NOT FOUND%c", 10); //debug
 		free(str);
 		str = ft_strdup("");
+	}
+	return (str);
+}
+
+char	*replace_substring_with_envp(char *str, int start, int end,t_env_list *envp)
+{
+	char	*prefix;
+	char	*variable;
+	char	*suffix;
+
+	ft_printf("\nstart = %c end = %c\n", str[start], str[end]); //debug
+	prefix = ft_substr(str, 0, start);
+	variable = expend_envp(ft_substr(str, start + 1, end - start), envp);
+	suffix = ft_substr(str, end + 1, ft_strlen(str));
+	free(str);
+	if (prefix[0] != 0)
+		str = ft_strjoin(prefix, variable);
+	else
+		str = ft_strdup(variable);
+	if (suffix[0] != 0)
+		str = ft_strjoin(str, suffix);
+	free(prefix);
+	free(variable);
+	free(suffix);
+	return (str);
+}
+
+
+char	*find_envps(char *str, t_env_list *envp)
+{
+	int		i;
+	int		start;
+	int		end;
+
+	i = 0;
+	start = 0;
+	end = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && is_valid_key_char(str[i + 1], TRUE))
+		{
+			start = i;
+			i++;
+			while (str[i] && is_valid_key_char(str[i], FALSE))
+				end = i++;
+			str = replace_substring_with_envp(str, start, end, envp);
+			i = 0;
+		}
+		i++;
 	}
 	return (str);
 }
@@ -86,19 +88,10 @@ void	expend_envps(t_token *token, t_env_list *envp)
 {
 	while (token)
 	{
-		if (token->type == STRING_TYPE)
-			token->token = expend_string_envps(token->token, envp);
-		if (token->type == COMMAND)
-			token->token = expend_envp_envps(token->token, envp);
-		if (token->type == DOUBLE_QUOTE)
-			token->token = expend_double_quote_envps(token->token, envp);
-		if (token->type == ENVP)
-			token->token = expend_envp_envps(token->token, envp);
-		if (token->type == INPUT_TYPE || token->type == OUTPUT_TYPE || token->type == APPEND)
-		{
-			token = token->next;
-			token->token = expend_string_envps(token->token, envp);
-		}
+		if (token && token->type == HEREDOC)
+			token = token->next->next;
+		if (token && token->type == ENVP || token->type == STRING_TYPE |token->type == DOUBLE_QUOTE)
+			token->token = find_envps(token->token, envp);
 		token = token->next;
 	}
 }
