@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 11:42:35 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 13:46:14 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,16 @@ char	*continue_input_if_lst_tok_is_pipe(char *input, int i)
 	return (continue_input(input, ">"));
 }
 
-// int	next_comand_token_type(char *input, int i)
-// {
-// 	if (input[i] == '\'')
-// 		return (SINGLE_QUOTE);
-// 	if (input[i] == '\"')
-// 		return (DOUBLE_QUOTE);
-// 	return (STRING_TYPE);
-// }
-
-// int	tokenize_command(t_token *token, char *input, int i)
-// {
-// 	int	next_tok;
-
-// 	next_tok = next_token_type(input, i);
-// 	if (next_tok == SINGLE_QUOTE)
-// 		return (single_quote_token(token, input, lx_dt, i));
-// 	if (next_tok == DOUBLE_QUOTE)
-// 		return (double_quote_token(token, input, lx_dt, i));
-// 	if (next_tok == STRING_TYPE)
-// 		return (string_token(token, input, lx_dt, i));
-// 	return (0);
-// }
-
-char	*remove_quotes(char *command, int i, int j)
+char	*remove_quotes(char *command, int i, int j, int *is_quoted_empty_string)
 {
 	char	*new_str;
 	char	c;
-	new_str = malloc(sizeof(char) * (quoteless_strlen(command, 0, 0) + 1));
+	int		len;
+
+	len = quoteless_strlen(command, 0, 0);
+	if (len != ft_strlen(command))
+		*is_quoted_empty_string = TRUE;
+	new_str = malloc(sizeof(char) * (len + 1));
 	if (!new_str)
 		return (NULL);
 	while (command[i])
@@ -122,17 +104,19 @@ int	quoteless_strlen(char *str, int i, int j)
 	return (j);
 }
 
-char*	expend_command_envps(char *command, t_env_list *envp)
+char*	expend_command_envps(char *command, t_env_list *envp, int *is_quoted_empty_string)
 {
 	command = find_envps(command, envp, TRUE);
-	command = remove_quotes(command, 0, 0);
+	command = remove_quotes(command, 0, 0, is_quoted_empty_string);
 	return (command);
 }
 
 int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	int j;
+	int	is_quoted_empty_string;
 
+	is_quoted_empty_string = FALSE;
 	j = i;
 	while (input[j] && input[j] != ' ')
 	{
@@ -143,7 +127,12 @@ int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	token->token = ft_substr(input, i, j - i);
 	i = j;
 	token->type = COMMAND;
-	token->token = expend_command_envps(token->token, lx_dt->envp);
+	token->token = expend_command_envps(token->token, lx_dt->envp, &is_quoted_empty_string);
+	if(!is_quoted_empty_string && token->token[0] == 0)
+	{
+		free(token->token);
+		return (tokenize(token, input, lx_dt, i));
+	}
 	lx_dt->expecting_command = FALSE;
 	return (next_token(token, input, lx_dt, i));
 }
