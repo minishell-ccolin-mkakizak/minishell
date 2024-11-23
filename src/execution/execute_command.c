@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/21 16:33:54 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:17:40 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*find_path(char *cmd, t_env_list *envs)
 		return (NULL);
 	i = 0;
 	path_str = get_env_var(envs, "PATH");
-	if(path_str == NULL)
+	if (path_str == NULL)
 	{
 		// errro handling for not finding paths:
 	}
@@ -64,21 +64,21 @@ char	*find_path(char *cmd, t_env_list *envs)
 	return (ft_free_all(path_arr), NULL);
 }
 
-char **set_command(char *command, char **args)
-{	
+char	**set_command(char *command, char **args)
+{
 	char	**res;
 	int		args_count;
-	int 	i;
+	int		i;
 
 	i = 0;
-	args_count =  get_array_len(args);
-	res = ft_calloc(sizeof(char *), args_count + 2);	
-	while(i <= args_count)
-	{	
-		if(i == 0)
+	args_count = get_array_len(args);
+	res = ft_calloc(sizeof(char *), args_count + 2);
+	while (i <= args_count)
+	{
+		if (i == 0)
 			res[i] = ft_strdup(command);
 		else
-			res[i] = ft_strdup(args[i - 1]); 
+			res[i] = ft_strdup(args[i - 1]);
 		i++;
 	}
 	res[i] = NULL;
@@ -89,7 +89,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 {
 	char	**set_array;
 	char	*path;
-	
+
 	path = find_path(cmd->command, table->envp);
 	set_array = set_command(cmd->command, cmd->args);
 	if (!path)
@@ -97,13 +97,13 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 		// need to handle errors here
 		// free_all(cmd_arr);
 		// free(path);
-		throw_error("bash: command not found", 127, 0);
+		throw_error("minishell: command not found", 127, 0);
 	}
 	if (execve(path, set_array, envp) == -1)
 	{
 		ft_free_all(cmd->args);
 		free(path);
-		throw_error("bash: execution went worng", EXIT_FAILURE, 0);
+		throw_error("minishell: execution went worng", EXIT_FAILURE, 0);
 	}
 	return (0);
 }

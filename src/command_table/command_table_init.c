@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 23:14:57 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 14:08:36 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_command(t_command *command, int is_pipe)
 t_command	*init_new_command(int is_pipe)
 {
 	t_command	*command;
+
 	command = malloc(sizeof(t_command));
 	if (!command)
 		return (NULL);

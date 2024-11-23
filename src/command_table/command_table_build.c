@@ -6,33 +6,37 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 20:18:21 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 14:36:28 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+void	process_tokens(t_token **token, t_command *command)
+{
+	while (*token && (*token)->type != PIPE)
+	{
+		if (*token)
+			*token = add_command(*token, command);
+		if (*token)
+			*token = add_args(*token, command, 0);
+		if (*token)
+			*token = add_operator(*token, command);
+	}
+	command->is_built_in = is_built_in(command);
+}
+
 void	build_command_table(t_token *token, t_cmnd_tbl *command_table)
 {
 	t_command	*command;
+
 	command_table->head = init_new_command(0);
 	if (!command_table->head)
-	{
 		return ;
-	}
 	command = command_table->head;
 	while (1)
 	{
-		while (token && token->type != PIPE)
-		{
-			if (token)
-				token = add_command(token, command);
-			if (token)
-				token = add_args(token, command);
-			if (token)
-				token = add_operator(token, command);
-		}
-		command->is_built_in = is_built_in(command);
+		process_tokens(&token, command);
 		if (token && token->type == PIPE)
 		{
 			command->pipe_out = 1;
@@ -66,15 +70,14 @@ t_token	*add_operator(t_token *token, t_command *command)
 	return (token);
 }
 
-t_token	*add_args(t_token *token, t_command *command)
+t_token	*add_args(t_token *token, t_command *command, int i)
 {
 	t_token	*head;
-	int		i;
+
 	if (!is_arg(token->type))
 	{
 		return (token);
 	}
-	i = 0;
 	head = token;
 	while (token && (is_arg(token->type)))
 	{

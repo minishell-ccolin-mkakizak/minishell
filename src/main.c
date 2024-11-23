@@ -6,17 +6,17 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 23:24:05 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 14:09:24 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char*	get_input(void)
+char	*get_input(void)
 {
-	char		*prompt;
-	char		*hostname;
-	char		*input;
+	char	*prompt;
+	char	*hostname;
+	char	*input;
 
 	hostname = get_hostname();
 	prompt = build_prompt(hostname);
@@ -49,9 +49,9 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		input = get_input();
-			if (input)
-				if (parse(input, command_table) == PARSING_ERROR)
-					continue ;
+		if (input)
+			if (parse(input, command_table) == PARSING_ERROR)
+				continue ;
 		if (input)
 			pipeline(command_table, envp);
 		if (!input)

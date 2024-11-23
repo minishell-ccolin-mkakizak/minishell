@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 10:48:00 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 15:08:21 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ void	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
 
 int	is_command_token(t_lx_dt *lx_dt)
 {
-	return (lx_dt->expecting_command && !is_previous_tok_operator_except_pipe(lx_dt) && (lx_dt->next_token_type == SINGLE_QUOTE || lx_dt->next_token_type == DOUBLE_QUOTE || lx_dt->next_token_type == STRING_TYPE || lx_dt->next_token_type == ENVP));
+	return (lx_dt->expecting_command
+		&& !is_previous_tok_operator_except_pipe(lx_dt)
+		&& (lx_dt->next_token_type == SINGLE_QUOTE
+			|| lx_dt->next_token_type == DOUBLE_QUOTE
+			|| lx_dt->next_token_type == STRING_TYPE
+			|| lx_dt->next_token_type == ENVP));
 }
 
 int	tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
@@ -40,10 +45,9 @@ int	tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	lx_dt->next_token_type = next_token_type(input, i);
 	if (is_command_token(lx_dt))
 		return (command_token(token, input, lx_dt, i));
-	if (lx_dt->next_token_type == SINGLE_QUOTE)
-		return (single_quote_token(token, input, lx_dt, i));
-	if (lx_dt->next_token_type == DOUBLE_QUOTE)
-		return (double_quote_token(token, input, lx_dt, i));
+	if (lx_dt->next_token_type == SINGLE_QUOTE
+		|| lx_dt->next_token_type == DOUBLE_QUOTE)
+		return (quote_token(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == HEREDOC || lx_dt->next_token_type == APPEND)
 		return (dbl_char_opr_tok(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == ENVP)
@@ -57,40 +61,10 @@ int	tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	return (0);
 }
 
-int	is_previous_tok_operator_except_pipe(t_lx_dt *lx_dt)
-{
-	return (lx_dt->previous_token_type == INPUT_TYPE || lx_dt->previous_token_type == OUTPUT_TYPE || lx_dt->previous_token_type == HEREDOC || lx_dt->previous_token_type == APPEND);
-}
-
-int	is_current_tok_operator_except_pipe(t_token *token)
-{
-	return (token->type == INPUT_TYPE || token->type == OUTPUT_TYPE || token->type == HEREDOC || token->type == APPEND);
-}
-
-int	is_arg(int type)
-{
-	return (type == STRING_TYPE || type == SINGLE_QUOTE || type == DOUBLE_QUOTE || type == ENVP);
-}
-
-int	syntax_check(t_token *token, t_lx_dt *lx_dt, int is_last)
-{
-	int	is_error;
-	is_error = FALSE;
-	if (is_last && is_current_tok_operator_except_pipe(token))
-		is_error = ft_printf("minishell: syntax error near unexpected token `newline'\n");
-	if ((lx_dt->previous_token_type == 0 || lx_dt->previous_token_type == PIPE) && token->type == PIPE)
-		is_error = ft_printf("minishell: syntax error near unexpected token `%s'\n", token->token);
-	if (is_previous_tok_operator_except_pipe(lx_dt) && !is_arg(token->type))
-		is_error = ft_printf("minishell: syntax error near unexpected token `%s'\n", token->token);
-	if (is_previous_tok_operator_except_pipe(lx_dt) && !lx_dt->expecting_command && !is_arg(token->type))
-		is_error = ft_printf("minishell: syntax error near unexpected token `%s'\n", token->token);
-	return (is_error);
-}
-
 int	next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
-	int		is_last;
-	
+	int	is_last;
+
 	is_last = FALSE;
 	i = skip_spaces_tabs(input, i);
 	if (!input[i])

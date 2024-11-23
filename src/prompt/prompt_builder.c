@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 11:22:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/10/06 12:57:36 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 14:09:16 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*build_prompt(char *hostname)
 
 	path = getcwd(NULL, 0);
 	current_dir = get_current_dir(path, '/');
-	total_len = ft_strlen(getenv("USER")) + ft_strlen(current_dir) \
+	total_len = ft_strlen(getenv("USER")) + ft_strlen(current_dir)
 		+ ft_strlen(hostname) + ft_strlen(get_prompt_suffix()) + 3;
 	prompt = malloc(total_len);
 	if (!prompt)
