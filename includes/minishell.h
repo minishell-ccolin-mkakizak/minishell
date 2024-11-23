@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 10:46:39 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 13:53:18 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,9 @@ void		exe_export(t_command *cmd,  t_cmnd_tbl *table);
 void		exe_exit(t_command *cmd,  t_cmnd_tbl *table);
 
 // exe_utils.c
-int	is_match(char *str1, char *str2);
+int						is_match(char *str1, char *str2);
+int						get_array_len(char **array);
+int						print_str_arr(char **arr, int len);
 
 // EXECUTION
 // execution.c
