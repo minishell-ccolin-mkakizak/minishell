@@ -6,18 +6,19 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/22 17:13:22 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 10:48:00 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input)
+void	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
 {
 	lx_dt->expecting_command = TRUE;
 	lx_dt->previous_token_type = 0;
 	lx_dt->pre_previous_token_type = 0;
 	lx_dt->next_token_type = 0;
+	lx_dt->envp = c->envp;
 	*token = malloc(sizeof(t_token));
 	if (!*token)
 		return ;
@@ -36,7 +37,7 @@ int	tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	i = skip_spaces_tabs(input, i);
 	if (!input[i])
 		return (0);
-	lx_dt->next_token_type = next_token_type(input, i, lx_dt);
+	lx_dt->next_token_type = next_token_type(input, i);
 	if (is_command_token(lx_dt))
 		return (command_token(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == SINGLE_QUOTE)
@@ -111,7 +112,7 @@ int	next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	return (tokenize(token->next, input, lx_dt, i));
 }
 
-int	next_token_type(char *input, int i, t_lx_dt *lx)
+int	next_token_type(char *input, int i)
 {
 	if (input[i] == '>' && input[i + 1] == '>')
 		return (APPEND);

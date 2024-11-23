@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/22 16:10:11 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 11:42:35 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,89 @@ void	go_to_end_of_quotes(char *input, int *j, char c)
 
 char	*continue_input_if_lst_tok_is_pipe(char *input, int i)
 {
-	ft_printf("continue%c", 10); //debug
 	i = skip_spaces_tabs(input, i);
 	if (input[i])
 		return(input);
 	return (continue_input(input, ">"));
+}
+
+// int	next_comand_token_type(char *input, int i)
+// {
+// 	if (input[i] == '\'')
+// 		return (SINGLE_QUOTE);
+// 	if (input[i] == '\"')
+// 		return (DOUBLE_QUOTE);
+// 	return (STRING_TYPE);
+// }
+
+// int	tokenize_command(t_token *token, char *input, int i)
+// {
+// 	int	next_tok;
+
+// 	next_tok = next_token_type(input, i);
+// 	if (next_tok == SINGLE_QUOTE)
+// 		return (single_quote_token(token, input, lx_dt, i));
+// 	if (next_tok == DOUBLE_QUOTE)
+// 		return (double_quote_token(token, input, lx_dt, i));
+// 	if (next_tok == STRING_TYPE)
+// 		return (string_token(token, input, lx_dt, i));
+// 	return (0);
+// }
+
+char	*remove_quotes(char *command, int i, int j)
+{
+	char	*new_str;
+	char	c;
+	new_str = malloc(sizeof(char) * (quoteless_strlen(command, 0, 0) + 1));
+	if (!new_str)
+		return (NULL);
+	while (command[i])
+	{
+		if (command[i] == '\'' || command[i] == '"')
+		{
+			c = command[i++];
+			while (command[i] && command[i] != c)
+				new_str[j++] = command[i++];
+			if (command[i])
+				i++;
+		}
+		else
+			new_str[j++] = command[i++];
+	}
+	new_str[j] = '\0';
+	return (new_str);
+}
+
+int	quoteless_strlen(char *str, int i, int j)
+{
+	char	c;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '"')
+		{
+			c = str[i++];
+			while (str[i] && str[i] != c)
+			{
+				j++;
+				i++;
+			}
+			if (str[i])
+				i++;
+		}
+		else
+		{
+			j++;
+			i++;
+		}
+	}
+	return (j);
+}
+
+char*	expend_command_envps(char *command, t_env_list *envp)
+{
+	command = find_envps(command, envp, TRUE);
+	command = remove_quotes(command, 0, 0);
+	return (command);
 }
 
 int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
@@ -65,6 +143,7 @@ int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	token->token = ft_substr(input, i, j - i);
 	i = j;
 	token->type = COMMAND;
+	token->token = expend_command_envps(token->token, lx_dt->envp);
 	lx_dt->expecting_command = FALSE;
 	return (next_token(token, input, lx_dt, i));
 }
@@ -111,7 +190,6 @@ int	double_quote_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 
 int	envp_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
-	ft_printf("envp token == %c\n", input[i]); //debug
 	int	j;
 
 	j = i + 1;
@@ -120,7 +198,6 @@ int	envp_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	token->token = ft_substr(input, i, j - i);
 	i = j;
 	token->type = lx_dt->next_token_type;
-	ft_printf("quite envp token\n"); //debug
 	return (next_token(token, input, lx_dt, ++i));
 }
 
