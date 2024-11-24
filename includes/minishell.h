@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 12:38:53 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 15:19:43 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ typedef struct s_fd
 # define PIPE 110
 # define ENVP 111
 # define PARSING_ERROR 112
+# define SUCCESS 113
+# define ALLOCATION_FAIL 113
 
 //================================>> PROMPT <<==============================//
 # ifdef __APPLE__
@@ -150,10 +152,10 @@ void					go_to_end_of_quotes(char *input, int *j, char c);
 char					*continue_input_if_lst_tok_is_pipe(char *input, int i);
 
 //==========================>> EXPEND_ENVPS_COMMAND.C <<====================//
-char					*remove_quotes(char *command, int i, int j,
+int						remove_quotes(char **command, int i, int j,
 							int *is_quoted_string);
 int						quoteless_strlen(char *str, int i, int j);
-char					*expend_command_envps(char *command, t_env_list *envp,
+int						expend_command_envps(char **command, t_env_list *envp,
 							int *is_quoted_string);
 
 //==============================>> EXPEND_ENVPS.C <<========================//
@@ -209,6 +211,7 @@ int						is_valid_key_char(char c, int is_first_char);
 int						skip_spaces_tabs(char *input, int i);
 int						is_delimiter(char *input, int i);
 int						set_quotes_flags(char c, int *in_squote, int *in_dquote);
+int						alloc_failed(void);
 
 //==========================================================================//
 //							COMMAND TABLE FUNCTIONS							//
@@ -220,24 +223,24 @@ int						is_specific_builtin(t_command *command,
 int						is_built_in(t_command *command);
 
 //=========================>> COMMAND_TABLE_BUILD.C <<======================//
-void					process_tokens(t_token **token, t_command *command);
-void					build_command_table(t_token *token,
+int						process_tokens(t_token **token, t_command *command);
+int						build_command_table(t_token *token,
 							t_cmnd_tbl *command_table);
 t_token					*add_command(t_token *token, t_command *command);
-t_token					*add_operator(t_token *token, t_command *command);
-t_token					*add_args(t_token *token, t_command *command, int i);
+int						add_operator(t_token **token, t_command *command);
+int						add_args(t_token **token, t_command *command, int i);
 
 //==========================>> COMMAND_TABLE_INIT.C <<======================//
-void					init_command_table(t_cmnd_tbl **command_table,
+int						init_command_table(t_cmnd_tbl **command_table,
 							char *envp[]);
 void					init_command(t_command *command, int is_pipe);
-t_command				*init_new_command(int is_pipe);
+int						init_new_command(t_command **command, int is_pipe);
 
 //===========================>> OPERATOR_HANDLERS.C <<======================//
-void					realloc_array(char ***array, int i);
+int						realloc_array(char ***array, int i);
 t_token					*handle_input_operator(t_token *token,
 							t_command *command);
-t_token					*handle_output_append_operator(t_token *token,
+int						handle_output_append_operator(t_token **token,
 							t_command *command);
 t_token					*handle_heredoc_operator(t_token *token,
 							t_command *command);

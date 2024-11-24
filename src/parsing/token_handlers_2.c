@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:09:00 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 12:57:39 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 15:14:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	token->token = ft_substr(input, i, j - i);
 	i = j;
 	token->type = COMMAND;
-	token->token = expend_command_envps(token->token, lx_dt->envp,
-			&is_quoted_string);
+	if (expend_command_envps(&token->token, lx_dt->envp,
+			&is_quoted_string))
+			return (ALLOCATION_FAIL);
 	if (!is_quoted_string && token->token[0] == 0)
 	{
 		free(token->token);

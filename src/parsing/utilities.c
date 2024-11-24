@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 11:38:54 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 14:20:25 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,10 @@ int	set_quotes_flags(char c, int *in_squote, int *in_dquote)
 	if (c == '\"' && !*in_dquote && !in_squote)
 		*in_dquote = TRUE;
 	return (*in_squote);
+}
+
+int	alloc_failed(void)
+{
+	ft_printf("Error: could not allocate memory");
+	return (ALLOCATION_FAIL);
 }

@@ -6,46 +6,50 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 14:36:28 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 15:04:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	process_tokens(t_token **token, t_command *command)
+int	process_tokens(t_token **token, t_command *command)
 {
 	while (*token && (*token)->type != PIPE)
 	{
 		if (*token)
 			*token = add_command(*token, command);
 		if (*token)
-			*token = add_args(*token, command, 0);
+			if (add_args(token, command, 0))
+				return (ALLOCATION_FAIL);
 		if (*token)
-			*token = add_operator(*token, command);
+			if (add_operator(token, command))
+				return (ALLOCATION_FAIL);
 	}
 	command->is_built_in = is_built_in(command);
+	return (0);
 }
 
-void	build_command_table(t_token *token, t_cmnd_tbl *command_table)
+int	build_command_table(t_token *token, t_cmnd_tbl *command_table)
 {
 	t_command	*command;
 
-	command_table->head = init_new_command(0);
-	if (!command_table->head)
-		return ;
+	if (init_new_command(&command_table->head, 0))
+		return (ALLOCATION_FAIL);
 	command = command_table->head;
 	while (1)
 	{
-		process_tokens(&token, command);
+		if (process_tokens(&token, command))
+			return (ALLOCATION_FAIL);
 		if (token && token->type == PIPE)
 		{
 			command->pipe_out = 1;
-			command->next = init_new_command(1);
+			if (init_new_command(&command->next, 1))
+				return (ALLOCATION_FAIL);
 			command = command->next;
 			token = token->next;
 			continue ;
 		}
-		return ;
+		return (0);
 	}
 }
 
@@ -59,42 +63,41 @@ t_token	*add_command(t_token *token, t_command *command)
 	return (token);
 }
 
-t_token	*add_operator(t_token *token, t_command *command)
+int	add_operator(t_token **token, t_command *command)
 {
-	if (token)
-		token = handle_input_operator(token, command);
-	if (token)
-		token = handle_output_append_operator(token, command);
-	if (token)
-		token = handle_heredoc_operator(token, command);
-	return (token);
+	if (*token)
+		*token = handle_input_operator(*token, command);
+	if (*token)
+		if (handle_output_append_operator(token, command))
+			return (ALLOCATION_FAIL);
+	if (*token)
+		*token = handle_heredoc_operator(*token, command);
+	return (0);
 }
 
-t_token	*add_args(t_token *token, t_command *command, int i)
+int	add_args(t_token **token, t_command *command, int i)
 {
 	t_token	*head;
 
-	if (!is_arg(token->type))
-	{
-		return (token);
-	}
-	head = token;
-	while (token && (is_arg(token->type)))
+	if (!is_arg((*token)->type))
+		return (0);
+	head = *token;
+	while (*token && (is_arg((*token)->type)))
 	{
 		i++;
-		token = token->next;
+		*token = (*token)->next;
 	}
-	token = head;
+	*token = head;
 	command->args = malloc(sizeof(char *) * (i + 1));
 	if (!command->args)
-		return (NULL);
+		return (alloc_failed());
 	i = 0;
-	while (token && (is_arg(token->type)))
+	while (*token && (is_arg((*token)->type)))
 	{
-		command->args[i] = ft_strdup(token->token);
+		command->args[i] = ft_strdup((*token)->token);
 		i++;
-		token = token->next;
+		*token = (*token)->next;
 	}
 	command->args[i] = NULL;
-	return (token);
+	return (0);
 }
