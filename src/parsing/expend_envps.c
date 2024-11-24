@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:54:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 16:05:48 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 12:38:59 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ char	*expend_envp(char *str, t_env_list *envp)
 	return (str);
 }
 
+/*=============================================================================
+Cuts the string in 3, the prefix, the env inside the string and the suffix.
+expends the env and puts the original string back together.
+=============================================================================*/
 char	*replace_substring_with_envp(char *str, int start, int end,
 		t_env_list *envp)
 {
@@ -59,7 +63,7 @@ char	*replace_substring_with_envp(char *str, int start, int end,
 	return (str);
 }
 
-static char	*process_env_var(char *str, t_env_list *envp, int start)
+static char	*find_end_of_env_key(char *str, t_env_list *envp, int start)
 {
 	int	end;
 
@@ -69,6 +73,13 @@ static char	*process_env_var(char *str, t_env_list *envp, int start)
 	return (replace_substring_with_envp(str, start, end - 1, envp));
 }
 
+/*=============================================================================
+Finds the start of an env key and calls find_end_of_env_key which will find
+the end and expend the envp. The reason why the command token gets special
+treatment is because it can be composed of several quoted parts, contrary
+to other tokens who have their quotes removed at tokenization time and get
+the double or single quote type.
+=============================================================================*/
 char	*find_envps(char *str, t_env_list *envp, int is_command)
 {
 	int	i;
@@ -80,7 +91,7 @@ char	*find_envps(char *str, t_env_list *envp, int is_command)
 	in_dquote = 0;
 	while (str[i])
 	{
-		if (is_command && handle_quotes(str[i], &in_squote, &in_dquote))
+		if (is_command && set_quotes_flags(str[i], &in_squote, &in_dquote))
 		{
 			i++;
 			continue ;
@@ -88,7 +99,7 @@ char	*find_envps(char *str, t_env_list *envp, int is_command)
 		if (str[i] == '$' && is_valid_key_char(str[i + 1], TRUE) && (!is_command
 				|| !in_squote))
 		{
-			str = process_env_var(str, envp, i);
+			str = find_end_of_env_key(str, envp, i);
 			i = 0;
 		}
 		else
@@ -97,6 +108,10 @@ char	*find_envps(char *str, t_env_list *envp, int is_command)
 	return (str);
 }
 
+/*=============================================================================
+envps can be expended from any non-operator token with the exception of the
+heredoc delimiter whether it is quoted or not.
+=============================================================================*/
 void	expend_envps(t_token *token, t_env_list *envp)
 {
 	while (token)

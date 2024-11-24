@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 15:08:21 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 12:38:22 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
 {
 	lx_dt->expecting_command = TRUE;
 	lx_dt->previous_token_type = 0;
-	lx_dt->pre_previous_token_type = 0;
 	lx_dt->next_token_type = 0;
 	lx_dt->envp = c->envp;
 	*token = malloc(sizeof(t_token));
@@ -27,6 +26,11 @@ void	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
 	(*token)->type = 0;
 }
 
+/*=============================================================================
+Returns TRUE if there is no command in the tokens yet, if the current token
+is a type of string, and if the previous command is not any operator except
+for a pipe.
+=============================================================================*/
 int	is_command_token(t_lx_dt *lx_dt)
 {
 	return (lx_dt->expecting_command
@@ -37,6 +41,11 @@ int	is_command_token(t_lx_dt *lx_dt)
 			|| lx_dt->next_token_type == ENVP));
 }
 
+/*=============================================================================
+Skips tabs and spaces, identifies the next token type, and calls the
+appropriate function chain to create the token and call tokenize again for the
+next one. Return value is used to pass any error occuring up the chain. 
+=============================================================================*/
 int	tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	i = skip_spaces_tabs(input, i);
@@ -61,6 +70,12 @@ int	tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	return (0);
 }
 
+/*=============================================================================
+Called after creation of a token. Skips tabs and spaces to determine if the
+current token is the last one and passes the information to the syntax check
+function. Initializes the next node and calls tokenize, or, if it's the last
+token, ends the tokenization process.
+=============================================================================*/
 int	next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	int	is_last;
@@ -106,5 +121,3 @@ int	next_token_type(char *input, int i)
 		return (ENVP);
 	return (STRING_TYPE);
 }
-
-// maloc checks include ft_substr and ft_strjoin and ft_substr

@@ -6,13 +6,17 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:02:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 15:03:05 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 12:39:01 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*remove_quotes(char *command, int i, int j, int *is_quoted_empty_string)
+/*=============================================================================
+Removes quotes from the command token. if the length of the string with and
+without quotes is not the same, is_quoted_string is TRUE.
+=============================================================================*/
+char	*remove_quotes(char *command, int i, int j, int *is_quoted_string)
 {
 	char	*new_str;
 	char	c;
@@ -20,7 +24,7 @@ char	*remove_quotes(char *command, int i, int j, int *is_quoted_empty_string)
 
 	len = quoteless_strlen(command, 0, 0);
 	if (len != ft_strlen(command))
-		*is_quoted_empty_string = TRUE;
+		*is_quoted_string = TRUE;
 	new_str = malloc(sizeof(char) * (len + 1));
 	if (!new_str)
 		return (NULL);
@@ -41,6 +45,10 @@ char	*remove_quotes(char *command, int i, int j, int *is_quoted_empty_string)
 	return (new_str);
 }
 
+/*=============================================================================
+Used to determine how much to allocated for the creation of a unquoted string
+from a quoted string.
+=============================================================================*/
 int	quoteless_strlen(char *str, int i, int j)
 {
 	char	c;
@@ -68,9 +76,9 @@ int	quoteless_strlen(char *str, int i, int j)
 }
 
 char	*expend_command_envps(char *command, t_env_list *envp,
-		int *is_quoted_empty_string)
+		int *is_quoted_string)
 {
 	command = find_envps(command, envp, TRUE);
-	command = remove_quotes(command, 0, 0, is_quoted_empty_string);
+	command = remove_quotes(command, 0, 0, is_quoted_string);
 	return (command);
 }

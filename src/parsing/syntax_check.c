@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:57:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 16:07:49 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 12:45:43 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ int	is_arg(int type)
 		|| type == ENVP);
 }
 
+/*=============================================================================
+The current token is approved or not based on the previous token's type.
+For instance if the previous token is an operator and the current one is not
+an argument, it is not approved.
+The fact that ft_printf returns the number of characters printed is used to
+make is_error TRUE if an error message is printed.
+=============================================================================*/
 int	syntax_check(t_token *token, t_lx_dt *lx_dt, int is_last)
 {
 	int		is_error;

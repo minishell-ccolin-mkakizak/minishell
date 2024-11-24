@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 16:14:45 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 12:38:53 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct s_lx_dt
 {
 	int					next_token_type;
 	int					previous_token_type;
-	int					pre_previous_token_type;
 	int					expecting_command;
 	t_env_list			*envp;
 }						t_lx_dt;
@@ -152,10 +151,10 @@ char					*continue_input_if_lst_tok_is_pipe(char *input, int i);
 
 //==========================>> EXPEND_ENVPS_COMMAND.C <<====================//
 char					*remove_quotes(char *command, int i, int j,
-							int *is_quoted_empty_string);
+							int *is_quoted_string);
 int						quoteless_strlen(char *str, int i, int j);
 char					*expend_command_envps(char *command, t_env_list *envp,
-							int *is_quoted_empty_string);
+							int *is_quoted_string);
 
 //==============================>> EXPEND_ENVPS.C <<========================//
 char					*expend_envp(char *str, t_env_list *envp);
@@ -209,7 +208,7 @@ int						command_token(t_token *token, char *input,
 int						is_valid_key_char(char c, int is_first_char);
 int						skip_spaces_tabs(char *input, int i);
 int						is_delimiter(char *input, int i);
-int						handle_quotes(char c, int *in_squote, int *in_dquote);
+int						set_quotes_flags(char c, int *in_squote, int *in_dquote);
 
 //==========================================================================//
 //							COMMAND TABLE FUNCTIONS							//

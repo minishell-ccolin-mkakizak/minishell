@@ -6,12 +6,15 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:03:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 15:03:49 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 11:10:41 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
+/*=============================================================================
+Called in case of  an unclosed quote or if the last token was a pipe.
+=============================================================================*/
 char	*continue_input(char *input, char *str)
 {
 	char	*line;
@@ -26,6 +29,10 @@ char	*continue_input(char *input, char *str)
 	return (input);
 }
 
+/*=============================================================================
+Used to skip over quoted text without ending the token if is encounters a 
+separator character and prompt the user for input if the quote is unclosed.
+=============================================================================*/
 void	go_to_end_of_quotes(char *input, int *j, char c)
 {
 	int	i;
