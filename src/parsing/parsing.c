@@ -6,17 +6,17 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 14:18:23 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:15:07 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parse(char *input, t_cmnd_tbl *command_table)
+int parse(char *input, t_cmnd_tbl *command_table)
 {
-	t_token	*token;
-	t_lx_dt	*lexer_data;
-	int		return_value;
+	t_token *token;
+	t_lx_dt *lexer_data;
+	int return_value;
 
 	lexer_data = malloc(sizeof(t_lx_dt));
 	if (!lexer_data)

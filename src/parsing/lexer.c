@@ -6,13 +6,13 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 12:38:22 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:15:09 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
+void init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
 {
 	lx_dt->expecting_command = TRUE;
 	lx_dt->previous_token_type = 0;
@@ -20,7 +20,7 @@ void	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
 	lx_dt->envp = c->envp;
 	*token = malloc(sizeof(t_token));
 	if (!*token)
-		return ;
+		return;
 	(*token)->next = NULL;
 	(*token)->token = NULL;
 	(*token)->type = 0;
@@ -31,22 +31,17 @@ Returns TRUE if there is no command in the tokens yet, if the current token
 is a type of string, and if the previous command is not any operator except
 for a pipe.
 =============================================================================*/
-int	is_command_token(t_lx_dt *lx_dt)
+int is_command_token(t_lx_dt *lx_dt)
 {
-	return (lx_dt->expecting_command
-		&& !is_previous_tok_operator_except_pipe(lx_dt)
-		&& (lx_dt->next_token_type == SINGLE_QUOTE
-			|| lx_dt->next_token_type == DOUBLE_QUOTE
-			|| lx_dt->next_token_type == STRING_TYPE
-			|| lx_dt->next_token_type == ENVP));
+	return (lx_dt->expecting_command && !is_previous_tok_operator_except_pipe(lx_dt) && (lx_dt->next_token_type == SINGLE_QUOTE || lx_dt->next_token_type == DOUBLE_QUOTE || lx_dt->next_token_type == STRING_TYPE || lx_dt->next_token_type == ENVP));
 }
 
 /*=============================================================================
 Skips tabs and spaces, identifies the next token type, and calls the
 appropriate function chain to create the token and call tokenize again for the
-next one. Return value is used to pass any error occuring up the chain. 
+next one. Return value is used to pass any error occuring up the chain.
 =============================================================================*/
-int	tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	i = skip_spaces_tabs(input, i);
 	if (!input[i])
@@ -54,16 +49,13 @@ int	tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	lx_dt->next_token_type = next_token_type(input, i);
 	if (is_command_token(lx_dt))
 		return (command_token(token, input, lx_dt, i));
-	if (lx_dt->next_token_type == SINGLE_QUOTE
-		|| lx_dt->next_token_type == DOUBLE_QUOTE)
+	if (lx_dt->next_token_type == SINGLE_QUOTE || lx_dt->next_token_type == DOUBLE_QUOTE)
 		return (quote_token(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == HEREDOC || lx_dt->next_token_type == APPEND)
 		return (dbl_char_opr_tok(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == ENVP)
 		return (envp_token(token, input, lx_dt, i));
-	if (lx_dt->next_token_type == INPUT_TYPE
-		|| lx_dt->next_token_type == OUTPUT_TYPE
-		|| lx_dt->next_token_type == PIPE)
+	if (lx_dt->next_token_type == INPUT_TYPE || lx_dt->next_token_type == OUTPUT_TYPE || lx_dt->next_token_type == PIPE)
 		return (sngl_char_opr_tok(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == STRING_TYPE)
 		return (string_token(token, input, lx_dt, i));
@@ -76,9 +68,9 @@ current token is the last one and passes the information to the syntax check
 function. Initializes the next node and calls tokenize, or, if it's the last
 token, ends the tokenization process.
 =============================================================================*/
-int	next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
-	int	is_last;
+	int is_last;
 
 	is_last = FALSE;
 	i = skip_spaces_tabs(input, i);
@@ -101,7 +93,7 @@ int	next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	return (tokenize(token->next, input, lx_dt, i));
 }
 
-int	next_token_type(char *input, int i)
+int next_token_type(char *input, int i)
 {
 	if (input[i] == '>' && input[i + 1] == '>')
 		return (APPEND);

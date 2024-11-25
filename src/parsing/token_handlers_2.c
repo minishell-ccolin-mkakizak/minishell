@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:09:00 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 15:14:15 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:15:08 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ Builds the command token. Contrary to the other tokens, the command envps need
 to be expended at that point to determine if the parser should look for another
 command.
 The reason why is that bash can use a double quoted non existing env as the
-command. But if it is not quoted, the token is discarded and the parser 
+command. But if it is not quoted, the token is discarded and the parser
 continues looking for a command.
-ex: 
+ex:
 	$AAAAA => token discarded.
 	"$AAAA" => command is set to an empty string.
 =============================================================================*/
-int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
-	int	j;
-	int	is_quoted_string;
+	int j;
+	int is_quoted_string;
 
 	is_quoted_string = FALSE;
 	j = i;
@@ -40,8 +40,8 @@ int	command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	i = j;
 	token->type = COMMAND;
 	if (expend_command_envps(&token->token, lx_dt->envp,
-			&is_quoted_string))
-			return (ALLOCATION_FAIL);
+							 &is_quoted_string))
+		return (ALLOCATION_FAIL);
 	if (!is_quoted_string && token->token[0] == 0)
 	{
 		free(token->token);
