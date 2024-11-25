@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 10:45:11 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/18 15:51:10 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/23 14:18:03 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ pid_t	safe_fork(void)
 
 	res = fork();
 	if (res == -1)
-		throw_error("bash: creating child process failed", EXIT_FAILURE, EINTR);
+		throw_error("minishell: creating child process failed", EXIT_FAILURE,
+			EINTR);
 	return (res);
 }
 
-void init_fd(t_fd *fd)
+void	init_fd(t_fd *fd)
 {
 	fd->stdin_backup = dup(STDIN_FILENO);
 	fd->stdout_backup = dup(STDOUT_FILENO);
@@ -38,7 +39,7 @@ void init_fd(t_fd *fd)
 	fd->pipe_fd[1] = -1;
 }
 
-void restore_fd(t_fd *fd)
+void	restore_fd(t_fd *fd)
 {
 	dup2(fd->stdin_backup, STDIN_FILENO);
 	dup2(fd->stdout_backup, STDOUT_FILENO);
@@ -46,19 +47,21 @@ void restore_fd(t_fd *fd)
 	close(fd->stdout_backup);
 }
 
-void init_pipe(t_fd *fd)
+void	init_pipe(t_fd *fd)
 {
-	if(pipe(fd->pipe_fd) == -1)
+	if (pipe(fd->pipe_fd) == -1)
 	{
-		//pipe fail error handeling
+		// pipe fail error handeling
 		puts("pipe creation failed");
 		return ;
 	}
 }
 
-int has_pipe(t_command *head)
+int	has_pipe(t_command *head)
 {
-	t_command *current = head;
+	t_command	*current;
+
+	current = head;
 	while (current)
 	{
 		if (current->next)

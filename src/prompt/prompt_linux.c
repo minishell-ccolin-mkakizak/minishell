@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 11:23:45 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/19 09:21:03 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 14:09:18 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*get_linux_hostname(void)
 	return (hostname);
 }
 
-/* Extracts and returns the full path for Linux or just the current 
+/* Extracts and returns the full path for Linux or just the current
 directory for macOS */
 char	*get_current_dir(const char *path, char delimiter)
 {

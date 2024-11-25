@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:09:06 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/20 17:06:23 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/21 15:54:17 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,27 @@ int built_in_cmds(t_command *cmd, t_cmnd_tbl *table, int is_child)
 	// {
 
 	// }
-	if(is_match(cmd->args[0], "cd"))
+	if(is_match(cmd->command, "cd"))
 	{
 		exe_cd(cmd, table);
 	}
-	if(is_match(cmd->args[0], "pwd"))
+	if(is_match(cmd->command, "pwd"))
 	{
 		exe_pwd(cmd, table);
 	}
-	if(is_match(cmd->args[0], "export"))
+	if(is_match(cmd->command, "export"))
 	{
 		exe_export(cmd, table);
 	}
-	if(is_match(cmd->args[0], "unset"))
+	if(is_match(cmd->command, "unset"))
 	{
 		exe_unset(cmd, table);
 	}
-	if(is_match(cmd->args[0], "env"))
+	if(is_match(cmd->command, "env"))
 	{
 		exe_env(cmd, table);
 	}
-	if(is_match(cmd->args[0], "exit"))
+	if(is_match(cmd->command, "exit"))
 	{
 		exe_exit(cmd, table);
 	}

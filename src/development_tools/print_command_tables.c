@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 19:43:15 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 14:08:48 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	print_command(t_command *cmd)
 void	print_command_details(t_command *cmd)
 {
 	printf("Input file: %s\n", cmd->input_file ? cmd->input_file : "None");
-	printf("Heredoc delimiter: %s\n", cmd->heredoc_delimiter ? cmd->heredoc_delimiter : "None");
+	printf("Heredoc delimiter: %s\n",
+		cmd->heredoc_delimiter ? cmd->heredoc_delimiter : "None");
 	print_command_arrays(cmd->output_file, "output");
 	print_command_arrays(cmd->append, "append");
 	printf("Pipe In: %d\n", cmd->pipe_in);
@@ -56,6 +57,7 @@ void	print_command_details(t_command *cmd)
 void	print_cmnd_tbl(t_cmnd_tbl *table)
 {
 	int	i;
+
 	if (!TABLE_DEBUG)
 		return ;
 	if (!table)
