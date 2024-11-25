@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/16 17:42:18 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/24 14:20:25 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,23 @@ int	is_delimiter(char *input, int i)
 		|| (input[i] == '$' && is_valid_key_char(input[i + 1], TRUE)))
 		return (1);
 	return (0);
+}
+
+int	set_quotes_flags(char c, int *in_squote, int *in_dquote)
+{
+	if (c == '\'' && *in_squote)
+		*in_squote = FALSE;
+	if (c == '\'' && !*in_squote && !in_dquote)
+		*in_squote = TRUE;
+	if (c == '\"' && *in_dquote)
+		*in_dquote = FALSE;
+	if (c == '\"' && !*in_dquote && !in_squote)
+		*in_dquote = TRUE;
+	return (*in_squote);
+}
+
+int	alloc_failed(void)
+{
+	ft_printf("Error: could not allocate memory");
+	return (ALLOCATION_FAIL);
 }

@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:24:10 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 17:03:05 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/23 14:32:49 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_envp(char **envp)
 	}
 }
 
-const char	*getTokenTypeName(int type)
+const char	*gettokentypebame(int type)
 {
 	switch (type)
 	{
@@ -55,14 +55,15 @@ const char	*getTokenTypeName(int type)
 
 void	print_tokens(t_token *token)
 {
-	int i;
+	int	i;
 
 	if (!TABLE_DEBUG)
 		return ;
 	i = 1;
 	while (1)
 	{
-		printf("Token %-5d\tString= %-20s\tType = %-15s\n\n", i, token->token, getTokenTypeName(token->type));
+		printf("Token %-5d\tString= %-20s\tType = %-15s\n\n", i, token->token,
+			gettokentypebame(token->type));
 		if (!token->next)
 			return ;
 		token = token->next;

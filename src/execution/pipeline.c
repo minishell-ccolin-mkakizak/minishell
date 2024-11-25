@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/20 17:40:16 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/25 18:53:01 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,10 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 
 	current = table->head;
 	prev_pipe = -1;
-
+	is_child = FALSE;
+	pid = -1;
 	init_fd(&fd);
 
-	is_child = FALSE;
-	pid = 1;
 
 	while(current)
 	{
@@ -152,10 +151,29 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			// ft_printf("IN PARENT PROCESS PID_1:[%d]\n", pid);
 			built_in_cmds(current, table, is_child);
 		}
+
 		clean_pipes(&prev_pipe, current, &fd);
 		current = current->next;
 	}
-	while (wait(&status) > 0);
+
+
+	pid_t wpid;
+	wpid = -1;
+	while (1)
+	{
+		wpid = wait(&status);
+
+		if(wpid < 0)
+		{
+			// need to implement error handing
+			break;
+		}
+		if(pid == wpid)
+		{
+			table->exit_status = WEXITSTATUS(status);
+		}
+	}
+	// printf("exit status is : %d\n", table->exit_status);
 	restore_fd(&fd);
 	return (0);
 }

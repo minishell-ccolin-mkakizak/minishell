@@ -6,17 +6,17 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/22 17:08:55 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:36:24 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char*	get_input(void)
+char	*get_input(void)
 {
-	char		*prompt;
-	char		*hostname;
-	char		*input;
+	char	*prompt;
+	char	*hostname;
+	char	*input;
 
 	hostname = get_hostname();
 	prompt = build_prompt(hostname);
@@ -44,13 +44,14 @@ int	main(int argc, char **argv, char **envp)
 
 	char		*input;
 	t_cmnd_tbl	*command_table;
+	int			parser_return_value;
 
 
 	(void)argc;
 	(void)argv;
 	chdir(getenv("HOME"));
-	init_command_table(&command_table, envp);
-
+	if (init_command_table(&command_table, envp))
+		return (ALLOCATION_FAIL);
 	while (1)
 	{
 
@@ -64,8 +65,16 @@ int	main(int argc, char **argv, char **envp)
 		printf("sig_received = %d\n", sig_received);
 		input = get_input();
 		if (input)
-			if (parse(input, command_table) == PARSING_ERROR)
+		{
+			parser_return_value = parse(input, command_table);
+			if (parser_return_value == PARSING_ERROR)
 				continue ;
+			if (parser_return_value == ALLOCATION_FAIL)
+			{
+				//INSERT FUNCTION THAT FREES THE COMMAND TABLE
+				break ;
+			}
+		}
 		if (input)
 			pipeline(command_table, envp);
 		if (!input)

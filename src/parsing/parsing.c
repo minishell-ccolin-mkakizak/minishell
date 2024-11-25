@@ -6,35 +6,36 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/20 21:03:49 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/25 16:15:07 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parse(char *input, t_cmnd_tbl *command_table)
+int parse(char *input, t_cmnd_tbl *command_table)
 {
-	t_token	*token;
-	t_lx_dt	*lx_dt;
-	int		parser_error;
+	t_token *token;
+	t_lx_dt *lexer_data;
+	int return_value;
 
-	lx_dt = malloc(sizeof(t_lx_dt));
-	if (!lx_dt)
+	lexer_data = malloc(sizeof(t_lx_dt));
+	if (!lexer_data)
 		return (0);
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (0);
-	init_lexer(&token, lx_dt, input);
-	parser_error = tokenize(token, input, lx_dt, 0);
-	// expend_envps(token);
+	init_lexer(&token, lexer_data, input, command_table);
+	return_value = tokenize(token, input, lexer_data, 0);
+	expend_envps(token, command_table->envp);
 	print_tokens(token);
 	add_history(input);
 	free(input);
-	if (!parser_error)
+	if (!return_value)
 	{
-		build_command_table(token, command_table);
+		if (build_command_table(token, command_table))
+			return_value = ALLOCATION_FAIL;
 		print_cmnd_tbl(command_table);
 	}
-	free_parser_data(token, lx_dt);
-	return (parser_error);
+	free_parser_data(token, lexer_data);
+	return (return_value);
 }
