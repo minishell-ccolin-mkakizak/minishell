@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/25 16:56:01 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:30:39 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,25 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 		path = cmd->command;
 	}
 	set_array = set_command(cmd->command, cmd->args);
-	if (!path)
+
+	// ft_printf("path: %s\n", path); //debug
+	print_str_arr(set_array, get_array_len(set_array)); //debug
+	if (path == NULL)
 	{
 		// Handle errors here
 		// free_all(cmd_arr);
 		// free(path);
 		throw_error("minishell: command not found", 127, 0);
 	}
+	// puts("does it get here?\n");
 	if (execve(path, set_array, envp) == -1)
-	{
-		ft_free_all(cmd->args);
+	{	
+		
+		// ft_free_all(cmd->args);
 		free(path);
-		throw_error("minishell: execution went worng", EXIT_FAILURE, 0);
+		
+		throw_error("minishell: execution went worng", 127, 0);
 	}
+	puts("does it get here\n");
 	return (0);
 }

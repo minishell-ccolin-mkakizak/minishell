@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/25 18:36:24 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:06:17 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 			continue;
 		}
 
-		printf("sig_received = %d\n", sig_received);
+		// printf("sig_received = %d\n", sig_received);
 		input = get_input();
 		if (input)
 		{

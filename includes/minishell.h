@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/25 16:37:49 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:03:14 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_env_list
 typedef struct s_command_table
 {
 	t_command			*head;
-	int					exit_status;
+	int					last_exit_status;
 	int					exit_shell;
 	t_env_list			*envp;
 }						t_cmnd_tbl;

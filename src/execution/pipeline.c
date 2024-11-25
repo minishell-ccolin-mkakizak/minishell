@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/25 18:53:01 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/25 19:30:15 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,29 @@ int clean_pipes(int *prev_pipe, t_command *current, t_fd *fd)
 		return (0);
 }
 
+void await_process(pid_t pid, t_cmnd_tbl *table)
+{
+	pid_t wpid;
+	int status;
+
+	wpid = -1;
+	while (1)
+	{
+		wpid = wait(&status);
+
+		if(wpid < 0)
+		{
+			// need to implement error handing
+			break;
+		}
+		if(pid == wpid)
+		{
+			table->last_exit_status = WEXITSTATUS(status);
+		}
+	}
+	return ;
+}
+
 int	pipeline(t_cmnd_tbl *table, char *envp[])
 {
 	//maybe i can add some of these to the table struct
@@ -156,24 +179,9 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 		current = current->next;
 	}
 
-
-	pid_t wpid;
-	wpid = -1;
-	while (1)
-	{
-		wpid = wait(&status);
-
-		if(wpid < 0)
-		{
-			// need to implement error handing
-			break;
-		}
-		if(pid == wpid)
-		{
-			table->exit_status = WEXITSTATUS(status);
-		}
-	}
-	// printf("exit status is : %d\n", table->exit_status);
+	await_process(pid, table);
+	printf("exit status is : %d\n", table->last_exit_status);
 	restore_fd(&fd);
 	return (0);
 }
+
