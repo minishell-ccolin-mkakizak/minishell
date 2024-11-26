@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:14:22 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/21 16:14:29 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:48:40 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void exe_export(t_command *cmd, t_cmnd_tbl *table)
 
 	if (!table->envp  || !cmd->args[0])
 	{
-		//error handling if no env
 		return ;
 	}
 	current = table->envp;

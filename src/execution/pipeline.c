@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/25 20:20:32 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:54:15 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 	}
 
 	await_process(pid, table);
-	// printf("exit status is : %d\n", table->last_exit_status);
+	printf("exit status is : %d\n", table->last_exit_status);
 	restore_fd(&fd);
 	return (0);
 }
