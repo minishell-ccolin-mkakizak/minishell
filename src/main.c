@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/25 19:06:17 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/26 14:50:26 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ char	*get_input(void)
 	char	*hostname;
 	char	*input;
 
-	hostname = get_hostname();
-	prompt = build_prompt(hostname);
 	while (1)
 	{
+		hostname = get_hostname();
+		prompt = build_prompt(hostname);
+		free(hostname);
 		input = readline(prompt);
+		free(prompt);
 		if (!input)
 			break ;
 		if (input[0] == 0)
@@ -30,8 +32,8 @@ char	*get_input(void)
 			free(input);
 			continue ;
 		}
-		free(prompt);
-		free(hostname);
+		// free(prompt);
+		// free(hostname);
 		return (input); 
 	}
 	return (NULL);
