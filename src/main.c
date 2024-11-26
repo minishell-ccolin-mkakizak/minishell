@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/26 14:50:26 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:01:36 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ int	main(int argc, char **argv, char **envp)
 
 
 	(void)argc;
-	(void)argv;
-	chdir(getenv("HOME"));
+	(void)argv; 
 	if (init_command_table(&command_table, envp))
 		return (ALLOCATION_FAIL);
 	while (1)

@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/26 16:47:51 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/26 17:04:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void exe_cd_home(t_cmnd_tbl *table)
 
 void exe_cd_tilde(char *path, t_cmnd_tbl *table)
 {
-	char *home_dir = getenv("HOME");
+	char *home_dir;
+	char *new_dir;
+	
+	home_dir = getenv("HOME");
 	if (home_dir == NULL)
 	{
 		ft_printf("minishell: cd: HOME not set\n");
@@ -44,7 +47,7 @@ void exe_cd_tilde(char *path, t_cmnd_tbl *table)
 	{
 		table->last_exit_status = 0;
 	}
-	char *new_dir = ft_strjoin(home_dir, path + 1);
+	new_dir = ft_strjoin(home_dir, path + 1);
 	if (new_dir == NULL)
 	{
 		ft_printf("minishell: cd: Cannot allocate memory\n");
@@ -81,6 +84,8 @@ void exe_cd_bare(char *path, t_cmnd_tbl *table)
 
 void exe_cd(t_command *cmd, t_cmnd_tbl *table)
 {
+	char *path;
+	
 	if (cmd->args == NULL || cmd->args[0] == NULL)
 	{
 		exe_cd_home(table);
@@ -94,7 +99,7 @@ void exe_cd(t_command *cmd, t_cmnd_tbl *table)
 	}
 	else 
 	{
-		char *path = cmd->args[0];
+		path = cmd->args[0];
 
 		if (path[0] == '~')
 		{
@@ -105,4 +110,18 @@ void exe_cd(t_command *cmd, t_cmnd_tbl *table)
 			exe_cd_bare(path, table);
 		}
 	}
+
+
+	//TODO: implement cd pwd overright on dir change
+	//could possible add the - opstion using the OLDPWD env variable
+	char *dir;
+
+	dir = getcwd(NULL, 0);
+	if(dir == NULL)
+	{
+		ft_printf("minishell: cd: %s\n", strerror(errno));
+		table->last_exit_status = 1;
+		return ;
+	}
+
 }
