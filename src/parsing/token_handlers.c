@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 12:57:39 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/26 13:20:02 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	quote_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	{
 		j++;
 		if (!input[j])
-			continue_input(input, ">");
+			if (continue_input(input, ">"))
+				return (ALLOCATION_FAIL);
 		if (input[j] == c)
 			break ;
 	}
@@ -60,7 +61,7 @@ int	dbl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	token->token = malloc(sizeof(char) * (2 + 1));
 	if (!token->token)
-		return (0);
+		return (alloc_failed());
 	token->token[0] = input[i];
 	token->token[1] = input[i];
 	token->token[2] = '\0';
@@ -73,7 +74,7 @@ int	sngl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 {
 	token->token = malloc(sizeof(char) * (1 + 1));
 	if (!token->token)
-		return (0);
+		return (alloc_failed());
 	token->token[0] = input[i];
 	token->token[1] = '\0';
 	token->type = lx_dt->next_token_type;
@@ -82,6 +83,8 @@ int	sngl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	{
 		lx_dt->expecting_command = TRUE;
 		input = continue_input_if_lst_tok_is_pipe(input, i);
+		if (!input)
+			return (ALLOCATION_FAIL);
 	}
 	return (next_token(token, input, lx_dt, i));
 }

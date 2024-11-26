@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 15:19:43 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/26 14:34:00 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void					print_tokens(t_token *token);
 
 //============================>> CONTINUE_INPUT.C <<========================//
 char					*continue_input(char *input, char *str);
-void					go_to_end_of_quotes(char *input, int *j, char c);
+int						go_to_end_of_quotes(char *input, int *j, char c);
 char					*continue_input_if_lst_tok_is_pipe(char *input, int i);
 
 //==========================>> EXPEND_ENVPS_COMMAND.C <<====================//
@@ -171,7 +171,7 @@ void					free_tokens(t_token *token);
 void					free_parser_data(t_token *token, t_lx_dt *lx_dt);
 
 //================================>> LEXER.C <<=============================//
-void					init_lexer(t_token **token, t_lx_dt *lx_dt, char *input,
+int						init_lexer(t_token **token, t_lx_dt *lx_dt, char *input,
 							t_cmnd_tbl *c);
 int						is_command_token(t_lx_dt *lx_dt);
 int						tokenize(t_token *token, char *input, t_lx_dt *lx_dt,

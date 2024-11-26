@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 14:20:25 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/26 16:43:32 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	is_delimiter(char *input, int i)
 
 int	set_quotes_flags(char c, int *in_squote, int *in_dquote)
 {
+	ft_printf("flags\n"); //debug
 	if (c == '\'' && *in_squote)
 		*in_squote = FALSE;
 	if (c == '\'' && !*in_squote && !in_dquote)

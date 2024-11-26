@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:54:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 12:38:59 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/26 16:48:36 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,22 @@ char	*find_envps(char *str, t_env_list *envp, int is_command)
 	int	in_squote;
 	int	in_dquote;
 
+	ft_printf("find_envps %s\n", str); //debug
 	i = 0;
 	in_squote = 0;
 	in_dquote = 0;
 	while (str[i])
 	{
+		ft_printf("is command = %d", is_command); //debug
 		if (is_command && set_quotes_flags(str[i], &in_squote, &in_dquote))
 		{
+			ft_printf("input[i] = %c\n", str[i]); //debug
+			ft_printf("single = %d", in_squote); //debug
+			ft_printf("double = %d", in_dquote); //debug
 			i++;
 			continue ;
 		}
-		if (str[i] == '$' && is_valid_key_char(str[i + 1], TRUE) && (!is_command
-				|| !in_squote))
+		if ((str[i] == '$' && is_valid_key_char(str[i + 1], TRUE)) && (!is_command || !in_squote))
 		{
 			str = find_end_of_env_key(str, envp, i);
 			i = 0;
@@ -118,9 +122,10 @@ void	expend_envps(t_token *token, t_env_list *envp)
 	{
 		if (token && token->type == HEREDOC)
 			token = token->next->next;
-		if (token && token->type == ENVP
-			|| token->type == STRING_TYPE | token->type == DOUBLE_QUOTE)
+		// ft_printf("token: char: [%s], int[%s]")
+		if (token && (token->type == ENVP || token->type == STRING_TYPE || token->type == DOUBLE_QUOTE))
 			token->token = find_envps(token->token, envp, FALSE);
-		token = token->next;
+		if (token)
+			token = token->next;
 	}
 }
