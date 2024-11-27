@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:02:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/25 16:15:10 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 13:36:08 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,19 @@ int remove_quotes(char **command, int i, int j, int *is_quoted_string)
 		return (alloc_failed());
 	while ((*command)[i])
 	{
-		if ((*command)[i] == '\'' || *command[i] == '"')
+		if ((*command)[i] == '\'' || (*command)[i] == '"')
 		{
 			c = (*command)[i++];
 			while ((*command)[i] && (*command)[i] != c)
+			{
 				new_str[j++] = (*command)[i++];
+				new_str[j] = '\0';
+			}
 			if ((*command)[i])
 				i++;
 		}
 		else
-			new_str[j++] = *command[i++];
+			new_str[j++] = (*command)[i++];
 	}
 	new_str[j] = '\0';
 	free(*command);
@@ -79,10 +82,10 @@ int quoteless_strlen(char *str, int i, int j)
 	return (j);
 }
 
-int expend_command_envps(char **command, t_env_list *envp,
+int expend_command_envps(char **command, t_lx_dt *lx_dt,
 						 int *is_quoted_string)
 {
-	*command = find_envps(*command, envp, TRUE);
+	*command = find_envps(*command, lx_dt->envp, TRUE, lx_dt->exit_status);
 	if (remove_quotes(command, 0, 0, is_quoted_string))
 		return (ALLOCATION_FAIL);
 	return (0);

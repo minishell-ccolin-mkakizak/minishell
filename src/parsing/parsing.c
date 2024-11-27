@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/26 15:46:55 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 13:32:23 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int parse(char *input, t_cmnd_tbl *command_table)
 	if (!return_value)
 		return_value = tokenize(token, input, lexer_data, 0);
 	if (!return_value)
-		expend_envps(token, command_table->envp);
+		expend_envps(token, command_table->envp, command_table->exit_status);
 	print_tokens(token);
 	free(input);
 	if (!return_value)

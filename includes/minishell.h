@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/26 14:34:00 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 13:36:53 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_lx_dt
 	int					next_token_type;
 	int					previous_token_type;
 	int					expecting_command;
+	int					exit_status;
 	t_env_list			*envp;
 }						t_lx_dt;
 
@@ -103,6 +104,7 @@ typedef struct s_fd
 # define APPEND 109
 # define PIPE 110
 # define ENVP 111
+# define EXIT_STATUS_VARIABLE 114
 # define PARSING_ERROR 112
 # define SUCCESS 113
 # define ALLOCATION_FAIL 113
@@ -155,16 +157,15 @@ char					*continue_input_if_lst_tok_is_pipe(char *input, int i);
 int						remove_quotes(char **command, int i, int j,
 							int *is_quoted_string);
 int						quoteless_strlen(char *str, int i, int j);
-int						expend_command_envps(char **command, t_env_list *envp,
-							int *is_quoted_string);
+int 					expend_command_envps(char **command, t_lx_dt *lx_dt, int *is_quoted_string);
 
 //==============================>> EXPEND_ENVPS.C <<========================//
 char					*expend_envp(char *str, t_env_list *envp);
 char					*replace_substring_with_envp(char *str, int start,
 							int end, t_env_list *envp);
 char					*find_envps(char *str, t_env_list *envp,
-							int is_command);
-void					expend_envps(t_token *token, t_env_list *envp);
+							int is_command, int exit_status);
+void					expend_envps(t_token *token, t_env_list *envp, int	exit_status);
 
 //============================>> FREE_PARSER_DATA.C <<======================//
 void					free_tokens(t_token *token);
