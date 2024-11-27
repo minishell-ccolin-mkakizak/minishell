@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 16:35:07 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:34:25 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_lx_dt
 	int					next_token_type;
 	int					previous_token_type;
 	int					expecting_command;
-	int					exit_status;
+	int					last_exit_status;
 	t_env_list			*envp;
 }						t_lx_dt;
 
@@ -106,7 +106,6 @@ typedef struct s_fd
 # define APPEND 109
 # define PIPE 110
 # define ENVP 111
-# define EXIT_STATUS_VARIABLE 114
 # define PARSING_ERROR 112
 # define SUCCESS 113
 # define ALLOCATION_FAIL 113
@@ -166,8 +165,8 @@ char					*expend_envp(char *str, t_env_list *envp);
 char					*replace_substring_with_envp(char *str, int start,
 							int end, t_env_list *envp);
 char					*find_envps(char *str, t_env_list *envp,
-							int is_command, int exit_status);
-void					expend_envps(t_token *token, t_env_list *envp, int	exit_status);
+							int is_command, int last_exit_status);
+void					expend_envps(t_token *token, t_env_list *envp, int	last_exit_status);
 
 //============================>> FREE_PARSER_DATA.C <<======================//
 void					free_tokens(t_token *token);
@@ -327,7 +326,7 @@ int						execute_cmd(t_command *cmd, t_cmnd_tbl *table,
 							int is_child, char *envp[]);
 
 //===========================>> PIPELINE_UTILS.C <<=========================//
-void					throw_error(char *message, int exit_status,
+void					throw_error(char *message, int last_exit_status,
 							int error_number);
 pid_t					safe_fork(void);
 void					init_fd(t_fd *fd);

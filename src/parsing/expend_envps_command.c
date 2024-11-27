@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:02:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 13:36:08 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:33:19 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int quoteless_strlen(char *str, int i, int j)
 int expend_command_envps(char **command, t_lx_dt *lx_dt,
 						 int *is_quoted_string)
 {
-	*command = find_envps(*command, lx_dt->envp, TRUE, lx_dt->exit_status);
+	*command = find_envps(*command, lx_dt->envp, TRUE, lx_dt->last_exit_status);
 	if (remove_quotes(command, 0, 0, is_quoted_string))
 		return (ALLOCATION_FAIL);
 	return (0);

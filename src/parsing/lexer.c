@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 16:17:35 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:33:11 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
 	lx_dt->previous_token_type = 0;
 	lx_dt->next_token_type = 0;
 	lx_dt->envp = c->envp;
-	lx_dt->exit_status = c->exit_status;
+	lx_dt->last_exit_status = c->last_exit_status;
 	*token = malloc(sizeof(t_token));
 	if (!*token)
 		return (alloc_failed());
