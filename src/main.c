@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 14:29:47 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:45:53 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 char	*get_input(void)
 {
@@ -18,11 +18,13 @@ char	*get_input(void)
 	char	*hostname;
 	char	*input;
 
-	hostname = get_hostname();
-	prompt = build_prompt(hostname);
 	while (1)
 	{
+		hostname = get_hostname();
+		prompt = build_prompt(hostname);
+		free(hostname);
 		input = readline(prompt);
+		free(prompt);
 		if (!input)
 			break ;
 		if (input[0] == 0)
@@ -30,26 +32,38 @@ char	*get_input(void)
 			free(input);
 			continue ;
 		}
-		free(prompt);
-		free(hostname);
+		// free(prompt);
+		// free(hostname);
 		return (input);
 	}
 	return (NULL);
 }
 
+volatile sig_atomic_t sig_received = 0;
+
 int	main(int argc, char **argv, char **envp)
 {
+
 	char		*input;
 	t_cmnd_tbl	*command_table;
 	int			parser_return_value;
 
+
 	(void)argc;
 	(void)argv;
-	chdir(getenv("HOME"));
 	if (init_command_table(&command_table, envp))
 		return (ALLOCATION_FAIL);
 	while (1)
 	{
+
+		init_signals();
+		if (sig_received)
+		{
+			// sig_received = 0;
+			continue;
+		}
+
+		// printf("sig_received = %d\n", sig_received);
 		input = get_input();
 		if (input)
 		{

@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:20:31 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/21 15:56:48 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:49:19 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ void exe_unset(t_command *cmd, t_cmnd_tbl *table)
 
 	char 		*name;
 
-	puts("YOU MADE IT TO UNSET");
-
-	if (!table->envp  || !cmd->args[0])
+	if (!table->envp  || !cmd->args || !cmd->args[0])
 	{
-		//error handling if no name
+		//this actualy does't do anyting
+		// puts("NO ENV TO UNSET");
 		return ;
 	}
 	current = table->envp;
