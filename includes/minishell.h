@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/25 19:03:14 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/27 14:59:54 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,7 +280,7 @@ char					*parse_mac_hostname(char *line);
 t_env_list				*init_env(char *envp[]);
 void					print_env_list(t_env_list *head);
 void					free_env_list(t_env_list *head);
-t_env_list				*create_node(char *env);
+t_env_list				*create_node(char *name, char *value);
 void					free_env_node(t_env_list *node);
 char					*get_env_var(t_env_list *envs, char *name);
 

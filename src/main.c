@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/26 17:01:36 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/27 15:30:38 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_input(void)
 		}
 		// free(prompt);
 		// free(hostname);
-		return (input); 
+		return (input);
 	}
 	return (NULL);
 }
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 
 
 	(void)argc;
-	(void)argv; 
+	(void)argv;
 	if (init_command_table(&command_table, envp))
 		return (ALLOCATION_FAIL);
 	while (1)
