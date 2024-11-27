@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 14:59:54 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:34:25 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_lx_dt
 	int					next_token_type;
 	int					previous_token_type;
 	int					expecting_command;
+	int					last_exit_status;
 	t_env_list			*envp;
 }						t_lx_dt;
 
@@ -150,30 +151,29 @@ void					print_tokens(t_token *token);
 
 //============================>> CONTINUE_INPUT.C <<========================//
 char					*continue_input(char *input, char *str);
-void					go_to_end_of_quotes(char *input, int *j, char c);
+int						go_to_end_of_quotes(char *input, int *j, char c);
 char					*continue_input_if_lst_tok_is_pipe(char *input, int i);
 
 //==========================>> EXPEND_ENVPS_COMMAND.C <<====================//
 int						remove_quotes(char **command, int i, int j,
 							int *is_quoted_string);
 int						quoteless_strlen(char *str, int i, int j);
-int						expend_command_envps(char **command, t_env_list *envp,
-							int *is_quoted_string);
+int 					expend_command_envps(char **command, t_lx_dt *lx_dt, int *is_quoted_string);
 
 //==============================>> EXPEND_ENVPS.C <<========================//
 char					*expend_envp(char *str, t_env_list *envp);
 char					*replace_substring_with_envp(char *str, int start,
 							int end, t_env_list *envp);
 char					*find_envps(char *str, t_env_list *envp,
-							int is_command);
-void					expend_envps(t_token *token, t_env_list *envp);
+							int is_command, int last_exit_status);
+void					expend_envps(t_token *token, t_env_list *envp, int	last_exit_status);
 
 //============================>> FREE_PARSER_DATA.C <<======================//
 void					free_tokens(t_token *token);
 void					free_parser_data(t_token *token, t_lx_dt *lx_dt);
 
 //================================>> LEXER.C <<=============================//
-void					init_lexer(t_token **token, t_lx_dt *lx_dt, char *input,
+int						init_lexer(t_token **token, t_lx_dt *lx_dt, char *input,
 							t_cmnd_tbl *c);
 int						is_command_token(t_lx_dt *lx_dt);
 int						tokenize(t_token *token, char *input, t_lx_dt *lx_dt,
@@ -326,7 +326,7 @@ int						execute_cmd(t_command *cmd, t_cmnd_tbl *table,
 							int is_child, char *envp[]);
 
 //===========================>> PIPELINE_UTILS.C <<=========================//
-void					throw_error(char *message, int exit_status,
+void					throw_error(char *message, int last_exit_status,
 							int error_number);
 pid_t					safe_fork(void);
 void					init_fd(t_fd *fd);

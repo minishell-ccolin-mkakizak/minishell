@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 15:04:15 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/26 14:04:17 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ t_token	*add_command(t_token *token, t_command *command)
 {
 	if (token->type == COMMAND)
 	{
+		if (!command)
+			command->command = NULL;
 		command->command = ft_strdup(token->token);
 		return (token->next);
 	}
@@ -66,7 +68,11 @@ t_token	*add_command(t_token *token, t_command *command)
 int	add_operator(t_token **token, t_command *command)
 {
 	if (*token)
+	{
 		*token = handle_input_operator(*token, command);
+		if (!token)
+			return (alloc_failed());
+	}
 	if (*token)
 		if (handle_output_append_operator(token, command))
 			return (ALLOCATION_FAIL);

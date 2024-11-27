@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:57:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 12:45:43 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:54:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,18 @@ make is_error TRUE if an error message is printed.
 =============================================================================*/
 int	syntax_check(t_token *token, t_lx_dt *lx_dt, int is_last)
 {
-	int		is_error;
-	char	*s;
+	char	*string;
 
-	s = "minishell: syntax error near unexpected token";
-	is_error = FALSE;
+	string = "minishell: syntax error near unexpected token";
+	if (is_previous_tok_operator_except_pipe(lx_dt) && !is_arg(token->type))
+		return (ft_printf("%s `%s'\n", string, token->token));
 	if (is_last && is_current_tok_operator_except_pipe(token))
-		is_error = ft_printf("%s `newline'\n");
+		return (ft_printf("%s `newline'\n", string));
 	if ((lx_dt->previous_token_type == 0 || lx_dt->previous_token_type == PIPE)
 		&& token->type == PIPE)
-		is_error = ft_printf("%s `%s'\n", token->token);
-	if (is_previous_tok_operator_except_pipe(lx_dt) && !is_arg(token->type))
-		is_error = ft_printf("%s `%s'\n", token->token);
+		return (ft_printf("%s `%s'\n", string, token->token));
 	if (is_previous_tok_operator_except_pipe(lx_dt) && !lx_dt->expecting_command
 		&& !is_arg(token->type))
-		is_error = ft_printf("%s `%s'\n", token->token);
-	return (is_error);
+		return (ft_printf("%s `%s'\n",string , token->token));
+	return (0);
 }

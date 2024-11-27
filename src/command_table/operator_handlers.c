@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 15:02:01 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/26 13:22:46 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	realloc_array(char ***array, int i)
 		while ((*array)[j])
 		{
 			new_array[j] = ft_strdup((*array)[j]);
+			if (!new_array[j])
+				return (alloc_failed());
 			j++;
 		}
 		new_array[j] = NULL;
@@ -48,6 +50,8 @@ t_token	*handle_input_operator(t_token *token, t_command *command)
 	{
 		token = token->next;
 		command->input_file = ft_strdup(token->token);
+		if (!command->input_file)
+			return (NULL);
 		token = token->next;
 	}
 	return (token);

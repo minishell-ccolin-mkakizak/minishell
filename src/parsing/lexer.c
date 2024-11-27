@@ -6,24 +6,26 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/25 16:15:09 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:33:11 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
+int	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
 {
 	lx_dt->expecting_command = TRUE;
 	lx_dt->previous_token_type = 0;
 	lx_dt->next_token_type = 0;
 	lx_dt->envp = c->envp;
+	lx_dt->last_exit_status = c->last_exit_status;
 	*token = malloc(sizeof(t_token));
 	if (!*token)
-		return;
+		return (alloc_failed());
 	(*token)->next = NULL;
 	(*token)->token = NULL;
-	(*token)->type = 0;
+	(*token)->type = COMMAND;
+	return (0);
 }
 
 /*=============================================================================
@@ -78,6 +80,14 @@ int next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 		is_last = TRUE;
 	if (syntax_check(token, lx_dt, is_last))
 		return (PARSING_ERROR);
+	if (token->type == PIPE)
+	{
+		is_last = FALSE;
+		lx_dt->expecting_command = TRUE;
+		input = continue_input_if_lst_tok_is_pipe(input, i);
+		if (!input)
+			return (ALLOCATION_FAIL);
+	}
 	if (is_last)
 	{
 		token->next = NULL;
@@ -86,7 +96,7 @@ int next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	lx_dt->previous_token_type = token->type;
 	token->next = malloc(sizeof(t_token));
 	if (!token->next)
-		return (0);
+		return (alloc_failed());
 	token->next->token = NULL;
 	token->next->type = 0;
 	token->next->next = NULL;
@@ -109,7 +119,7 @@ int next_token_type(char *input, int i)
 		return (INPUT_TYPE);
 	if (input[i] == '>')
 		return (OUTPUT_TYPE);
-	if (input[i] == '$' && is_valid_key_char(input[i + 1], TRUE))
+	if (input[i] == '$' && (is_valid_key_char(input[i + 1], TRUE) || input[i + 1] == '?'))
 		return (ENVP);
 	return (STRING_TYPE);
 }

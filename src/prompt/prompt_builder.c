@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 11:22:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 14:09:16 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/26 13:20:00 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char	*build_prompt(char *hostname)
 	prompt = malloc(total_len);
 	if (!prompt)
 	{
+		alloc_failed();
 		free(path);
 		free(current_dir);
 		return (NULL);

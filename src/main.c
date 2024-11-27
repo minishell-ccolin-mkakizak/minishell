@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 15:45:53 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:33:23 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	whitespace_only_handler(char *input)
+{
+	int		i;
+
+	i = 0;
+	while (input[i] && (input[i] == ' ' || input[i] == '\t'))
+		i++;
+	if (!input[i])
+		return (1);
+	return (0);
+}
 
 char	*get_input(void)
 {
@@ -32,8 +44,12 @@ char	*get_input(void)
 			free(input);
 			continue ;
 		}
-		// free(prompt);
-		// free(hostname);
+		add_history(input);
+		if (whitespace_only_handler(input))
+		{
+			free(input);
+			continue ;
+		}
 		return (input);
 	}
 	return (NULL);
@@ -69,7 +85,10 @@ int	main(int argc, char **argv, char **envp)
 		{
 			parser_return_value = parse(input, command_table);
 			if (parser_return_value == PARSING_ERROR)
+			{
+				command_table->last_exit_status = 258;
 				continue ;
+			}
 			if (parser_return_value == ALLOCATION_FAIL)
 			{
 				//INSERT FUNCTION THAT FREES THE COMMAND TABLE

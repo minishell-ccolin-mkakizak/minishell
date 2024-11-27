@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 16:09:00 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/25 16:15:08 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 16:27:22 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,17 @@ int command_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 
 	is_quoted_string = FALSE;
 	j = i;
-	while (input[j] && input[j] != ' ')
+	while (input[j] && (input[j] != ' ' && input[j] != '|' && input[j] != '<' && input[j] != '>'))
 	{
-		if (input[j] == '\'' || input[i] == '\"')
-			go_to_end_of_quotes(input, &j, input[j]);
+		if (input[j] == '\'' || input[j] == '\"')
+			if (go_to_end_of_quotes(input, &j, input[j]))
+				return (ALLOCATION_FAIL);
 		j++;
 	}
 	token->token = ft_substr(input, i, j - i);
 	i = j;
 	token->type = COMMAND;
-	if (expend_command_envps(&token->token, lx_dt->envp,
+	if (expend_command_envps(&token->token, lx_dt,
 							 &is_quoted_string))
 		return (ALLOCATION_FAIL);
 	if (!is_quoted_string && token->token[0] == 0)

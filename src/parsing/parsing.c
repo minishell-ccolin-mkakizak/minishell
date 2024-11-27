@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/25 16:15:07 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 19:33:10 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,13 @@ int parse(char *input, t_cmnd_tbl *command_table)
 
 	lexer_data = malloc(sizeof(t_lx_dt));
 	if (!lexer_data)
-		return (0);
-	token = malloc(sizeof(t_token));
-	if (!token)
-		return (0);
-	init_lexer(&token, lexer_data, input, command_table);
-	return_value = tokenize(token, input, lexer_data, 0);
-	expend_envps(token, command_table->envp);
+		return (alloc_failed());
+	return_value = init_lexer(&token, lexer_data, input, command_table);
+	if (!return_value)
+		return_value = tokenize(token, input, lexer_data, 0);
+	if (!return_value)
+		expend_envps(token, command_table->envp, command_table->last_exit_status);
 	print_tokens(token);
-	add_history(input);
 	free(input);
 	if (!return_value)
 	{
