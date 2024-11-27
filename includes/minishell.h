@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 13:36:53 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 16:35:07 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
+#include <signal.h>
 
 //==========================================================================//
 //									STRUCTURES								//
@@ -58,7 +60,7 @@ typedef struct s_env_list
 typedef struct s_command_table
 {
 	t_command			*head;
-	int					exit_status;
+	int					last_exit_status;
 	int					exit_shell;
 	t_env_list			*envp;
 }						t_cmnd_tbl;
@@ -279,7 +281,7 @@ char					*parse_mac_hostname(char *line);
 t_env_list				*init_env(char *envp[]);
 void					print_env_list(t_env_list *head);
 void					free_env_list(t_env_list *head);
-t_env_list				*create_node(char *env);
+t_env_list				*create_node(char *name, char *value);
 void					free_env_node(t_env_list *node);
 char					*get_env_var(t_env_list *envs, char *name);
 
@@ -331,6 +333,13 @@ pid_t					safe_fork(void);
 void					init_fd(t_fd *fd);
 void					restore_fd(t_fd *fd);
 void					init_pipe(t_fd *fd);
-int						has_pipe(t_command *head);
+int 					has_pipe(t_command *head);
 
+// SIGNALS
+
+// signals.c
+void					signal_handler(int sig);
+void					init_signals(void);
+int						has_pipe(t_command *head);
 #endif
+

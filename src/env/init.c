@@ -6,7 +6,7 @@
 /*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/20 17:33:13 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:03:29 by minoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void print_env_list(t_env_list *head)
 {
 	t_env_list *current = head;
 	int count = 0;
-	// somehow this doesn't work with ft_printf()...
 	while (current != NULL) {
 		ft_printf("[%d]%s=%s\n",count, current->name, current->value);
 		current = current->next;
@@ -66,7 +65,7 @@ void free_env_node(t_env_list *node)
 	free(node);
 }
 
-t_env_list *create_node(char *env)
+t_env_list *create_node(char *name, char *value)
 {
 	t_env_list *node;
 	char	**str_array;
@@ -74,19 +73,19 @@ t_env_list *create_node(char *env)
 	node = ft_calloc(sizeof(t_env_list), 1);
 	if(node == NULL)
 		return (NULL);
-	str_array = ft_split(env, '=');
+	// str_array = ft_split(env, '=');
 	// ft_printf("env:%s=%s\n", str_array[0], str_array[1]);
 
-	node->name = ft_strdup(str_array[0]);
+	node->name = ft_strdup(name);
+	if(node->name == NULL)
+		return (NULL);
 
-	if(str_array[1])
-		node->value = ft_strdup(str_array[1]);
+	if(value)
+		node->value = ft_strdup(value);
 	else
 		node->value = NULL;
 
-	// if(node->name == NULL)
-	// 	return (NULL);
-	ft_free_all(str_array);
+	// ft_free_all(str_array);
 	return (node);
 }
 
@@ -95,6 +94,7 @@ t_env_list *init_env(char *envp[])
 	t_env_list	*head;
 	t_env_list	*current;
 	t_env_list	*new_node;
+	char		**str_array;
 	int 		i;
 	i = 1;
 
@@ -102,7 +102,8 @@ t_env_list *init_env(char *envp[])
 		return(NULL);
 
 	// make the head
-	head = create_node(envp[0]);
+	str_array = ft_split(envp[0], '=');
+	head = create_node(str_array[0], str_array[1]);
 	if(head == NULL)
 		return (NULL);
 
@@ -110,7 +111,9 @@ t_env_list *init_env(char *envp[])
 	while(envp[i])
 	{
 		// need to iterate on each envp and add to the linked list;
-		new_node = create_node(envp[i]);
+		str_array = ft_split(envp[i], '=');
+		new_node = create_node(str_array[0], str_array[1]);
+		free(str_array);
 		if(new_node == NULL)
 			return (NULL);
 		current->next = new_node;

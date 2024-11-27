@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/22 17:43:28 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/26 15:54:15 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,29 @@ int clean_pipes(int *prev_pipe, t_command *current, t_fd *fd)
 		return (0);
 }
 
+void await_process(pid_t pid, t_cmnd_tbl *table)
+{
+	pid_t wpid;
+	int status;
+
+	wpid = -1;
+	while (1)
+	{
+		wpid = wait(&status);
+
+		if(wpid < 0)
+		{
+			// need to implement error handing
+			break;
+		}
+		if(pid == wpid)
+		{
+			table->last_exit_status = WEXITSTATUS(status);
+		}
+	}
+	return ;
+}
+
 int	pipeline(t_cmnd_tbl *table, char *envp[])
 {
 	//maybe i can add some of these to the table struct
@@ -113,11 +136,10 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 
 	current = table->head;
 	prev_pipe = -1;
-
+	is_child = FALSE;
+	pid = -1;
 	init_fd(&fd);
 
-	is_child = FALSE;
-	pid = 1;
 
 	while(current)
 	{
@@ -152,10 +174,14 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			// ft_printf("IN PARENT PROCESS PID_1:[%d]\n", pid);
 			built_in_cmds(current, table, is_child);
 		}
+
 		clean_pipes(&prev_pipe, current, &fd);
 		current = current->next;
 	}
-	while (wait(&status) > 0);
+
+	await_process(pid, table);
+	printf("exit status is : %d\n", table->last_exit_status);
 	restore_fd(&fd);
 	return (0);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_command_tables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 14:08:48 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/25 19:02:55 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_cmnd_tbl(t_cmnd_tbl *table)
 		return ;
 	if (!table)
 		return ;
-	printf("Exit Status: %d\n", table->exit_status);
+	printf("Exit Status: %d\n", table->last_exit_status);
 	printf("Exit shell: %d\n", table->exit_shell);
 	// print_environment_variables(table);
 	print_commands(table);

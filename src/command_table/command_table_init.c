@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_table_init.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/24 14:52:32 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/25 19:03:51 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	init_command_table(t_cmnd_tbl **command_table, char *envp[])
 		return (alloc_failed());
 	(*command_table)->head = NULL;
 	(*command_table)->exit_shell = 0;
-	(*command_table)->exit_status = 0;
+	(*command_table)->last_exit_status = 0;
 	(*command_table)->envp = init_env(envp);
 	return (0);
 }
