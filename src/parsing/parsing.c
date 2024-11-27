@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 13:32:23 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:32:54 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ int parse(char *input, t_cmnd_tbl *command_table)
 
 	lexer_data = malloc(sizeof(t_lx_dt));
 	if (!lexer_data)
-		return (alloc_failed());
-	token = malloc(sizeof(t_token));
-	if (!token)
 		return (alloc_failed());
 	return_value = init_lexer(&token, lexer_data, input, command_table);
 	if (!return_value)

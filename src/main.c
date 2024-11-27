@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/26 15:42:31 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 15:09:35 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ int	main(int argc, char **argv, char **envp)
 		{
 			parser_return_value = parse(input, command_table);
 			if (parser_return_value == PARSING_ERROR)
+			{
+				command_table->exit_status = 258;
 				continue ;
+			}
 			if (parser_return_value == ALLOCATION_FAIL)
 			{
 				//INSERT FUNCTION THAT FREES THE COMMAND TABLE

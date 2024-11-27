@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 13:55:54 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/27 16:14:10 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_valid_key_char(char c, int is_first_char)
 
 int	skip_spaces_tabs(char *input, int i)
 {
-	while (input[i] == ' ' || input[i] == '\t')
+	while (input[i] == ' ' || input[i] == '\t' || input[i] == '\n')
 		i++;
 	return (i);
 }
