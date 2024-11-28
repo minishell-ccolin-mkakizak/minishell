@@ -6,9 +6,10 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 14:44:47 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:07:52 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 //==========================================================================//
 //									LIBRARIES								//
@@ -150,9 +151,9 @@ void					print_tokens(t_token *token);
 //==========================================================================//
 
 //============================>> CONTINUE_INPUT.C <<========================//
-char					*continue_input(char *input, char *str);
-int						go_to_end_of_quotes(char *input, int *j, char c);
-char					*continue_input_if_lst_tok_is_pipe(char *input, int i);
+char					**continue_input(char **input, char *str);
+int						go_to_end_of_quotes(char **input, int *j, char c);
+char					**continue_input_if_lst_tok_is_pipe(char **input, int i);
 
 //==========================>> EXPEND_ENVPS_COMMAND.C <<====================//
 int						remove_quotes(char **command, int i, int j,
@@ -173,17 +174,17 @@ void					free_tokens(t_token *token);
 void					free_parser_data(t_token *token, t_lx_dt *lx_dt);
 
 //================================>> LEXER.C <<=============================//
-int						init_lexer(t_token **token, t_lx_dt *lx_dt, char *input,
+int						init_lexer(t_token **token, t_lx_dt *lx_dt,
 							t_cmnd_tbl *c);
 int						is_command_token(t_lx_dt *lx_dt);
-int						tokenize(t_token *token, char *input, t_lx_dt *lx_dt,
+int						tokenize(t_token *token, char **input, t_lx_dt *lx_dt,
 							int i);
-int						next_token(t_token *token, char *input, t_lx_dt *lx_dt,
+int						next_token(t_token *token, char **input, t_lx_dt *lx_dt,
 							int i);
-int						next_token_type(char *input, int i);
+int						next_token_type(char **input, int i);
 
 //===============================>> PARSING.C <<============================//
-int						parse(char *input, t_cmnd_tbl *command_table);
+int						parse(char **input, t_cmnd_tbl *command_table);
 
 //============================>> SYNTAX_CHECK.C <<==========================//
 int						is_previous_tok_operator_except_pipe(t_lx_dt *lx_dt);
@@ -193,25 +194,25 @@ int						syntax_check(t_token *token, t_lx_dt *lx_dt,
 							int is_last);
 
 //============================>> TOKEN_HANDLERS.C <<========================//
-int						quote_token(t_token *token, char *input, t_lx_dt *lx_dt,
+int						quote_token(t_token *token, char **input, t_lx_dt *lx_dt,
 							int i);
-int						envp_token(t_token *token, char *input, t_lx_dt *lx_dt,
+int						envp_token(t_token *token, char **input, t_lx_dt *lx_dt,
 							int i);
-int						dbl_char_opr_tok(t_token *token, char *input,
+int						dbl_char_opr_tok(t_token *token, char **input,
 							t_lx_dt *lx_dt, int i);
-int						sngl_char_opr_tok(t_token *token, char *input,
+int						sngl_char_opr_tok(t_token *token, char **input,
 							t_lx_dt *lx_dt, int i);
-int						string_token(t_token *token, char *input,
+int						string_token(t_token *token, char **input,
 							t_lx_dt *lx_dt, int i);
 
 //===========================>> TOKEN_HANDLERS_2.C <<=======================//
-int						command_token(t_token *token, char *input,
+int						command_token(t_token *token, char **input,
 							t_lx_dt *lx_dt, int i);
 
 //===============================>> UTILITIES.C <<==========================//
 int						is_valid_key_char(char c, int is_first_char);
-int						skip_spaces_tabs(char *input, int i);
-int						is_delimiter(char *input, int i);
+int						skip_spaces_tabs(char **input, int i);
+int						is_delimiter(char **input, int i);
 int						set_quotes_flags(char c, int *in_squote, int *in_dquote);
 int						alloc_failed(void);
 

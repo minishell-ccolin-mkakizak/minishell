@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:54:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 19:34:56 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 15:55:29 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,21 @@ char	*replace_substring_with_exit_status(char *str, int start, int end, int last
 	char	*prefix;
 	char	*variable;
 	char	*suffix;
+	char	*temp;
 
 	prefix = ft_substr(str, 0, start);
 	variable = ft_itoa(last_exit_status);
 	suffix = ft_substr(str, end + 1, ft_strlen(str));
 	free(str);
 	if (prefix[0] != 0)
-		str = ft_strjoin(prefix, variable);
+		temp = ft_strjoin(prefix, variable);
 	else
-		str = ft_strdup(variable);
+		temp = ft_strdup(variable);
 	if (suffix[0] != 0)
-		str = ft_strjoin(str, suffix);
+	{
+		str = ft_strjoin(temp, suffix);
+		free(temp);
+	}
 	free(prefix);
 	free(variable);
 	free(suffix);
