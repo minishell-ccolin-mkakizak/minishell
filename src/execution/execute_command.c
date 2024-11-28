@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/28 16:55:18 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/28 19:37:10 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 		// free(path);
 		// puts("bad command\n");
 		ft_printf("minishell: %s: %s\n", cmd->command, strerror(errno));
+		// free_command_list(cmd);
 		exit(127);
 	}
 	return (0);
