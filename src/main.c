@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 19:33:23 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 15:09:27 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,6 @@ int	main(int argc, char **argv, char **envp)
 		if (!input)
 			break ;
 	}
-	free_env_list(command_table->envp);
+	free_command_table(command_table);
 	return (rl_clear_history(), ft_printf("Exiting...\n"), 0);
 }
