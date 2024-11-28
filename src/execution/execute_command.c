@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/28 16:07:27 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:55:18 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ char	*validate_path(char **path_arr, char *cmd)
 	{
 		if (cmd[0] == '/')
 		{
-			if (!access(cmd, X_OK))
+			// return (cmd);
+			// if (!access(cmd, X_OK))
 				return (ft_free_all(path_arr), cmd);
-			else
-				return (ft_free_all(path_arr), NULL);
+			// else
+			// 	return (ft_free_all(path_arr), cmd);
 		}
 		if (ft_strncmp(&path_arr[i][ft_strlen(path_arr[i]) - 1], "/", 1))
 			tmp = ft_strjoin(path_arr[i], "/");
@@ -34,6 +35,7 @@ char	*validate_path(char **path_arr, char *cmd)
 			tmp = ft_strdup(path_arr[i]);
 		path = ft_strjoin(tmp, cmd);
 		free(tmp);
+		// puts("does it get here?\n");
 		if (!access(path, X_OK))
 			return (ft_free_all(path_arr), path);
 		free(path);
@@ -56,6 +58,8 @@ char	*find_path(char *cmd, t_env_list *envs)
 	if (path_str == NULL)
 	{
 		// errro handling for not finding paths:
+		// ft_printf("minishell: %s: \n", cmd);
+		return (NULL);
 	}
 	path_arr = ft_split(path_str, ':');
 	free(path_str);
@@ -94,30 +98,20 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	path = find_path(cmd->command, table->envp);
 	if (path == NULL)
 	{	
-		// Error handling for command not found
-		throw_error("minishell: command not found", 127, 0);
 		path = cmd->command;
 	}
-	set_array = set_command(cmd->command, cmd->args);
-
-	// ft_printf("path: %s\n", path); //debug
-	print_str_arr(set_array, get_array_len(set_array)); //debug
-	if (path == NULL)
-	{
-		// Handle errors here
-		// free_all(cmd_arr);
-		// free(path);
-		throw_error("minishell: command not found", 127, 0);
-	}
+	set_array = set_command(path, cmd->args);
+	// printf("path: %s\n", path); //debuge
+	// print_str_arr(set_array, get_array_len(set_array)); //debug
 	// puts("does it get here?\n");
 	if (execve(path, set_array, envp) == -1)
 	{	
 		
 		// ft_free_all(cmd->args);
-		free(path);
-		
-		throw_error("minishell: execution went worng", 127, 0);
+		// free(path);
+		// puts("bad command\n");
+		ft_printf("minishell: %s: %s\n", cmd->command, strerror(errno));
+		exit(127);
 	}
-	puts("does it get here\n");
 	return (0);
 }
