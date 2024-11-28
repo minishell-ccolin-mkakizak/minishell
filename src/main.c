@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 19:33:23 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 13:12:18 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ char	*get_input(void)
 			free(input);
 			continue ;
 		}
-		add_history(input);
 		if (whitespace_only_handler(input))
 		{
+			add_history(input);
 			free(input);
 			continue ;
 		}
@@ -83,7 +83,7 @@ int	main(int argc, char **argv, char **envp)
 		input = get_input();
 		if (input)
 		{
-			parser_return_value = parse(input, command_table);
+			parser_return_value = parse(&input, command_table);
 			if (parser_return_value == PARSING_ERROR)
 			{
 				command_table->last_exit_status = 258;
@@ -94,9 +94,8 @@ int	main(int argc, char **argv, char **envp)
 				//INSERT FUNCTION THAT FREES THE COMMAND TABLE
 				break ;
 			}
-		}
-		if (input)
 			pipeline(command_table, envp);
+		}
 		if (!input)
 			break ;
 	}
