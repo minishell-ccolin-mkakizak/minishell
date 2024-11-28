@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/27 15:03:29 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/28 14:49:09 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,6 @@ char *get_env_var(t_env_list *envs, char *name)
 		return(ft_strdup(current->value));
 	}
 	return(NULL);
-}
-
-void free_env_list(t_env_list *head)
-{
-	t_env_list *current = head;
-	while (current != NULL) {
-		t_env_list *temp = current;
-		current = current->next;
-		free_env_node(temp);
-	}
-}
-
-void free_env_node(t_env_list *node)
-{
-	if(node == NULL)
-		return ;
-	if(node->name)
-		free(node->name);
-	if(node->value)
-		free(node->value);
-	free(node);
 }
 
 t_env_list *create_node(char *name, char *value)
@@ -106,14 +85,14 @@ t_env_list *init_env(char *envp[])
 	head = create_node(str_array[0], str_array[1]);
 	if(head == NULL)
 		return (NULL);
-
+	ft_free_all(str_array);
 	current = head;
 	while(envp[i])
 	{
 		// need to iterate on each envp and add to the linked list;
 		str_array = ft_split(envp[i], '=');
 		new_node = create_node(str_array[0], str_array[1]);
-		free(str_array);
+		ft_free_all(str_array);
 		if(new_node == NULL)
 			return (NULL);
 		current->next = new_node;

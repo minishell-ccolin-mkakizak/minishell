@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 14:38:24 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 16:07:52 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 //==========================================================================//
 //									LIBRARIES								//
@@ -280,8 +281,8 @@ char					*parse_mac_hostname(char *line);
 t_env_list				*init_env(char *envp[]);
 void					print_env_list(t_env_list *head);
 void					free_env_list(t_env_list *head);
-t_env_list				*create_node(char *name, char *value);
 void					free_env_node(t_env_list *node);
+t_env_list				*create_node(char *name, char *value);
 char					*get_env_var(t_env_list *envs, char *name);
 
 //==========================================================================//
@@ -334,6 +335,14 @@ void					restore_fd(t_fd *fd);
 void					init_pipe(t_fd *fd);
 int 					has_pipe(t_command *head);
 
+//==========================================================================//
+//									CLEANUP									//
+//==========================================================================//
+
+//free_command_table.c
+void					free_env_list(t_env_list *head);
+void					free_env_node(t_env_list *node);
+void					free_command_table(t_cmnd_tbl *table);
 // SIGNALS
 
 // signals.c

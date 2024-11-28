@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minoka <minoka@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/27 15:26:04 by minoka           ###   ########.fr       */
+/*   Updated: 2024/11/28 15:53:11 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ void exe_cd_home(t_cmnd_tbl *table)
 		ft_printf("minishell: cd: %s: %s\n", home_dir, strerror(errno));
 		table->last_exit_status = 1;
 	}
+	// free(home_dir);
 	table->last_exit_status = 0;
-	return ;
+	return (free(home_dir));
 }
 
 void exe_cd_tilde(char *path, t_cmnd_tbl *table)
@@ -127,6 +128,7 @@ void update_env(t_cmnd_tbl *table)
 		return ;
 	}
 	set_env_var(table, "PWD", dir);
+	return(free(dir));
 }
 
 void exe_cd(t_command *cmd, t_cmnd_tbl *table)
