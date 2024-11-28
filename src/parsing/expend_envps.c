@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:54:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 15:55:29 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 16:49:12 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,26 @@ char	*replace_substring_with_envp(char *str, int start, int end,
 	char	*prefix;
 	char	*variable;
 	char	*suffix;
+	char	*temp;
 
 	prefix = ft_substr(str, 0, start);
 	variable = expend_envp(ft_substr(str, start + 1, end - start), envp);
 	suffix = ft_substr(str, end + 1, ft_strlen(str));
 	free(str);
 	if (prefix[0] != 0)
-		str = ft_strjoin(prefix, variable);
+		temp = ft_strjoin(prefix, variable);
 	else
-		str = ft_strdup(variable);
+		temp = ft_strdup(variable);
 	if (suffix[0] != 0)
-		str = ft_strjoin(str, suffix);
+		str = ft_strjoin(temp, suffix);
+	else
+	{
+		free(prefix);
+		free(variable);
+		free(suffix);
+		return (temp);
+	}
+	free(temp);
 	free(prefix);
 	free(variable);
 	free(suffix);
@@ -79,10 +88,15 @@ char	*replace_substring_with_exit_status(char *str, int start, int end, int last
 	else
 		temp = ft_strdup(variable);
 	if (suffix[0] != 0)
-	{
 		str = ft_strjoin(temp, suffix);
-		free(temp);
+	else
+	{
+		free(prefix);
+		free(variable);
+		free(suffix);
+		return (temp);
 	}
+	free(temp);
 	free(prefix);
 	free(variable);
 	free(suffix);

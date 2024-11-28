@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 13:06:53 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 16:48:40 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ next one. Return value is used to pass any error occuring up the chain.
 =============================================================================*/
 int tokenize(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
-	i = skip_spaces_tabs(input, i);
+	if ((*input)[i])
+		i = skip_spaces_tabs(input, i);
 	if (!(*input)[i])
 		return (0);
 	lx_dt->next_token_type = next_token_type(input, i);
@@ -75,8 +76,9 @@ int next_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 	int is_last;
 
 	is_last = FALSE;
-	i = skip_spaces_tabs(input, i);
-	if (!(*input)[i])
+	if ((i < ft_strlen(*input)))
+		i = skip_spaces_tabs(input, i);
+	if ((i >= ft_strlen(*input)))
 		is_last = TRUE;
 	if (syntax_check(token, lx_dt, is_last))
 		return (PARSING_ERROR);

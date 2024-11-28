@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:03:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 13:08:20 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 16:22:00 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	go_to_end_of_quotes(char **input, int *j, char c)
 
 char	**continue_input_if_lst_tok_is_pipe(char **input, int i)
 {
-	i = skip_spaces_tabs(input, i);
+	if ((*input)[i])
+		i = skip_spaces_tabs(input, i);
 	if ((*input)[i])
 		return (input);
 	return (continue_input(input, ">"));
