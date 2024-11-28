@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/25 19:30:39 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/28 16:00:19 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	if (path == NULL)
 	{	
 		// Error handling for command not found
+		throw_error("minishell: command not found", 127, 0);
 		path = cmd->command;
 	}
 	set_array = set_command(cmd->command, cmd->args);
@@ -105,7 +106,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	{
 		// Handle errors here
 		// free_all(cmd_arr);
-		// free(path);
+		// free(path);s
 		throw_error("minishell: command not found", 127, 0);
 	}
 	// puts("does it get here?\n");
