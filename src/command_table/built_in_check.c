@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/26 14:05:05 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 14:01:03 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	is_built_in(t_command *command)
 {
 	if (!command->command)
 		return (0);
-	if (is_specific_builtin(command, "echo"))
-		return (1);
+	// if (is_specific_builtin(command, "echo"))
+	// 	return (1);
 	if (is_specific_builtin(command, "cd"))
 		return (1);
 	if (is_specific_builtin(command, "pwd"))

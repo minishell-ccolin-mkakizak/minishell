@@ -3,90 +3,118 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/25 13:41:03 by minokakakiz       #+#    #+#             */
-/*   Updated: 2024/07/11 18:02:08 by mkakizak         ###   ########.fr       */
+/*   Created: 2024/05/10 10:45:06 by ccolin            #+#    #+#             */
+/*   Updated: 2024/11/28 14:58:20 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "get_next_line.h"
 
-size_t	gnl_strlen(const char *str)
-{
-	size_t	i;
-
-	if (str == NULL)
-		return (0);
-	i = 0;
-	while (str[i])
-	{
-		i++;
-	}
-	return (i);
-}
-
-int	check_for_new_line(char *str)
+char	*gnl_strchr(const char *s, int c)
 {
 	int	i;
 
+	i = 0;
+	while (s[i] && s[i] != (char)c && i < BUFFER_SIZE)
+		i++;
+	if (s[i] == (char)c)
+		return ((char *)&s[i]);
+	return ((void *)0);
+}
+
+char	*gnl_strjoin(char const *s1, char const *s2)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	i = 0;
+	j = 0;
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (gnl_strdup(s2));
+	str = malloc(sizeof(char) * (gnl_strlen(s1) + gnl_strlen(s2) + 1));
 	if (str == NULL)
-		return (0);
+		return (NULL);
+	while (s1[i])
+	{
+		str[j++] = s1[i++];
+	}
+	i = 0;
+	while (s2[i] && i < BUFFER_SIZE)
+	{
+		str[j++] = s2[i++];
+	}
+	str[j] = '\0';
+	free((void *)s1);
+	return (str);
+}
+
+char	*gnl_strdup(const char *s1)
+{
+	int		i;
+	int		size;
+	char	*ptr;
+
+	i = 0;
+	size = gnl_strlen(s1);
+	ptr = malloc(sizeof(char) * size + 1);
+	if (ptr == NULL)
+		return (NULL);
+	while (s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+int	gnl_strlen(const char *str)
+{
+	int	i;
+
 	i = 0;
 	while (str[i])
-	{
-		if (str[i] == '\n')
-			return (i);
 		i++;
-	}
-	return (0);
+	return (i);
 }
 
-char	*gnl_strdup(const char *s)
+void	*gnl_memset(void *b, int c, size_t len)
 {
-	size_t	length;
-	char	*cpy;
-	int		i;
+	size_t			i;
+	unsigned char	*ptr;
 
-	length = ft_strlen(s);
-	cpy = (char *)malloc(sizeof(char) * (length + 1));
-	if (cpy == NULL)
-		return (NULL);
+	ptr = (unsigned char *)b;
 	i = 0;
-	while (s[i] != '\0')
-	{
-		cpy[i] = s[i];
-		i++;
-	}
-	cpy[i] = '\0';
-	return (cpy);
+	while (i < len)
+		ptr[i++] = c;
+	return (b);
 }
 
-int	init(char *sttc_str, char **buffer, char **result)
-{
-	if (sttc_str == NULL)
-		*result = gnl_strdup("");
-	else
-		*result = gnl_strdup(sttc_str);
-	*buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (*buffer == NULL)
-	{
-		free(*result);
-		return (-1);
-	}
-	return (0);
-}
+// #include <fcntl.h>
+// #include <stdio.h>
+// #include <unistd.h>
 
-int	clean_up(char **sttc_str, char **buffer, char **result, int *bytes)
-{
-	free(*sttc_str);
-	*sttc_str = gnl_strdup(*result);
-	free(*result);
-	free(*buffer);
-	if (*bytes == 0 && **sttc_str == '\0')
-	{
-		free(*sttc_str);
-		return (-1);
-	}
-	return (0);
-}
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+
+// 	fd = open("test.txt", O_RDONLY);
+// 	if (fd < 0)
+// 	{
+// 		perror("Error opening file");
+// 		return (1);
+// 	}
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("/nNext Line = %s", line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }

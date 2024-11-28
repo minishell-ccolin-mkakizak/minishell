@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 13:12:18 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 15:11:42 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	}
 	free_env_list(command_table->envp);
-	return (rl_clear_history(), ft_printf("Exiting...\n"), 0);
+	return (clear_history(), ft_printf("Exiting...\n"), 0);
 }
