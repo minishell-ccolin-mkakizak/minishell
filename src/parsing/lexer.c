@@ -6,13 +6,13 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 19:33:11 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 13:06:53 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	init_lexer(t_token **token, t_lx_dt *lx_dt, char *input, t_cmnd_tbl *c)
+int	init_lexer(t_token **token, t_lx_dt *lx_dt, t_cmnd_tbl *c)
 {
 	lx_dt->expecting_command = TRUE;
 	lx_dt->previous_token_type = 0;
@@ -43,10 +43,10 @@ Skips tabs and spaces, identifies the next token type, and calls the
 appropriate function chain to create the token and call tokenize again for the
 next one. Return value is used to pass any error occuring up the chain.
 =============================================================================*/
-int tokenize(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int tokenize(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
 	i = skip_spaces_tabs(input, i);
-	if (!input[i])
+	if (!(*input)[i])
 		return (0);
 	lx_dt->next_token_type = next_token_type(input, i);
 	if (is_command_token(lx_dt))
@@ -70,13 +70,13 @@ current token is the last one and passes the information to the syntax check
 function. Initializes the next node and calls tokenize, or, if it's the last
 token, ends the tokenization process.
 =============================================================================*/
-int next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int next_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
 	int is_last;
 
 	is_last = FALSE;
 	i = skip_spaces_tabs(input, i);
-	if (!input[i])
+	if (!(*input)[i])
 		is_last = TRUE;
 	if (syntax_check(token, lx_dt, is_last))
 		return (PARSING_ERROR);
@@ -85,7 +85,7 @@ int next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 		is_last = FALSE;
 		lx_dt->expecting_command = TRUE;
 		input = continue_input_if_lst_tok_is_pipe(input, i);
-		if (!input)
+		if (!*input)
 			return (ALLOCATION_FAIL);
 	}
 	if (is_last)
@@ -103,23 +103,23 @@ int next_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
 	return (tokenize(token->next, input, lx_dt, i));
 }
 
-int next_token_type(char *input, int i)
+int next_token_type(char **input, int i)
 {
-	if (input[i] == '>' && input[i + 1] == '>')
+	if ((*input)[i] == '>' && (*input)[i + 1] == '>')
 		return (APPEND);
-	if (input[i] == '<' && input[i + 1] == '<')
+	if ((*input)[i] == '<' && (*input)[i + 1] == '<')
 		return (HEREDOC);
-	if (input[i] == '\'')
+	if ((*input)[i] == '\'')
 		return (SINGLE_QUOTE);
-	if (input[i] == '\"')
+	if ((*input)[i] == '\"')
 		return (DOUBLE_QUOTE);
-	if (input[i] == '|')
+	if ((*input)[i] == '|')
 		return (PIPE);
-	if (input[i] == '<')
+	if ((*input)[i] == '<')
 		return (INPUT_TYPE);
-	if (input[i] == '>')
+	if ((*input)[i] == '>')
 		return (OUTPUT_TYPE);
-	if (input[i] == '$' && (is_valid_key_char(input[i + 1], TRUE) || input[i + 1] == '?'))
+	if ((*input)[i] == '$' && (is_valid_key_char((*input)[i + 1], TRUE) || (*input)[i + 1] == '?'))
 		return (ENVP);
 	return (STRING_TYPE);
 }

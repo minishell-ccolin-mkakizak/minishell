@@ -99,8 +99,6 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	}
 	set_array = set_command(cmd->command, cmd->args);
 
-	// ft_printf("path: %s\n", path); //debug
-	print_str_arr(set_array, get_array_len(set_array)); //debug
 	if (path == NULL)
 	{
 		// Handle errors here

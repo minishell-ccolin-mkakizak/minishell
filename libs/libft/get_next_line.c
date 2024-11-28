@@ -5,139 +5,137 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/25 13:41:24 by minokakakiz       #+#    #+#             */
-/*   Updated: 2024/11/18 15:41:50 by ccolin           ###   ########.fr       */
+/*   Created: 2024/05/07 10:18:52 by ccolin            #+#    #+#             */
+/*   Updated: 2024/11/28 14:57:15 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*gnl_strjoin(char *sttc_str, char *buffer)
-{
-	char	*res;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	res = malloc((gnl_strlen(sttc_str) + gnl_strlen(buffer) + 1)
-			* sizeof(char));
-	if (res == NULL)
-	{
-		free(sttc_str);
-		return (NULL);
-	}
-	while (sttc_str[i] != '\0')
-	{
-		res[i] = sttc_str[i];
-		i++;
-	}
-	while (buffer[j] != '\0')
-	{
-		res[i + j] = buffer[j];
-		j++;
-	}
-	res[i + j] = '\0';
-	return (free(sttc_str), res);
-}
-
-char	*get_new_string(int fd, char *sttc_str)
-{
-	char	*buffer;
-	int		bytes;
-	char	*result;
-
-	bytes = 1;
-	if (init(sttc_str, &buffer, &result) == -1)
-		return (NULL);
-	while (check_for_new_line(result) == 0 && (bytes != 0))
-	{
-		bytes = read(fd, buffer, BUFFER_SIZE);
-		if (bytes == -1)
-		{
-			return (free(sttc_str), free(result), free(buffer), NULL);
-		}
-		buffer[bytes] = '\0';
-		result = gnl_strjoin(result, buffer);
-		if (result == NULL)
-		{
-			return (free(buffer), NULL);
-		}
-	}
-	if (clean_up(&sttc_str, &buffer, &result, &bytes) == -1)
-		return (NULL);
-	return (sttc_str);
-}
-
-char	*get_one_line(char *str)
-{
-	int		len;
-	int		i;
-	char	*result;
-
-	len = 0;
-	if (str[0] == '\0')
-		return (NULL);
-	while (str[len] != '\0' && str[len] != '\n')
-	{
-		len++;
-	}
-	i = 0;
-	result = malloc(sizeof(char) * len + 2);
-	if (result == NULL)
-		return (NULL);
-	while (i <= len)
-	{
-		result[i] = str[i];
-		i++;
-	}
-	result[i] = '\0';
-	return (result);
-}
-
-char	*trim_string(int n, char *str)
-{
-	int		i;
-	int		len;
-	char	*result;
-
-	if (n == 0 || str == NULL)
-	{
-		free(str);
-		return (NULL);
-	}
-	len = gnl_strlen(str) - n;
-	i = 0;
-	result = malloc(sizeof(char) * len + 1);
-	if (result == NULL)
-	{
-		free(str);
-		return (NULL);
-	}
-	while (i < len)
-	{
-		result[i] = str[n + i];
-		i++;
-	}
-	result[i] = '\0';
-	return (free(str), result);
-}
+#include "get_next_line.h"
 
 char	*get_next_line(int fd)
 {
-	static char	*sttc_str[1024];
-	char		*result;
+	static char	*leftover[OPEN_MAX];
+	char		*next_line;
+	char		*temp;
 
-	if (BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || fd < 0)
 		return (NULL);
-	sttc_str[fd] = get_new_string(fd, sttc_str[fd]);
-	if (sttc_str[fd] == NULL)
+	leftover[fd] = ft_read_from_file(fd, leftover[fd]);
+	if (!leftover[fd])
+	{
+		free(leftover[fd]);
 		return (NULL);
-	result = get_one_line(sttc_str[fd]);
-	if (result == NULL)
-		return (NULL);
-	sttc_str[fd] = trim_string(gnl_strlen(result), sttc_str[fd]);
-	if (sttc_str[fd] == NULL)
-		return (NULL);
-	return (result);
+	}
+	next_line = ft_find_line(leftover[fd]);
+	temp = leftover[fd];
+	leftover[fd] = ft_find_leftover(leftover[fd]);
+	if (leftover[fd] == NULL)
+		free(leftover[fd]);
+	free(temp);
+	return (next_line);
 }
+
+char	*ft_read_from_file(int fd, char *leftover)
+{
+	char		*buffer;
+	long long	bytes_read;
+
+	buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (NULL);
+	gnl_memset(buffer, 0, BUFFER_SIZE);
+	while (!gnl_strchr(buffer, '\n'))
+	{
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
+		{
+			free(leftover);
+			free(buffer);
+			return (NULL);
+		}
+		else if (bytes_read == 0)
+			break ;
+		else
+			buffer[bytes_read] = '\0';
+		leftover = gnl_strjoin(leftover, buffer);
+	}
+	free(buffer);
+	return (leftover);
+}
+
+char	*ft_find_line(char *leftover)
+{
+	char	*str;
+	int		i;
+	int		j;
+
+	j = 0;
+	i = 0;
+	while (leftover[i] != '\n' && leftover[i])
+		i++;
+	str = malloc(sizeof(char) * (i + 2));
+	if (!str)
+		return (NULL);
+	while (i > j)
+	{
+		str[j] = leftover[j];
+		j++;
+	}
+	if (leftover[j] == '\n')
+	{
+		str[j] = leftover[j];
+		j++;
+	}
+	str[j] = '\0';
+	return (str);
+}
+
+char	*ft_find_leftover(char *leftover)
+{
+	while (*leftover && *leftover != '\n')
+		leftover++;
+	if (*leftover == '\n')
+		leftover++;
+	if (*leftover == '\0')
+		return (NULL);
+	return (gnl_strdup(leftover));
+}
+//#include <fcntl.h> // for open
+//#include <unistd.h> // for close
+//#include <stdio.h> // for printf
+//#include <stdlib.h> // for free
+
+//// Declare get_next_line prototype
+//char *get_next_line(int fd);
+
+//// 
+//int main(void)
+//{
+//    int fd;
+//    char *line;
+
+//    // Open the file in read-only mode
+//    //fd = open("test.txt", O_RDONLY);
+//    fd = 1;
+//    if (fd == -1)
+//    {
+//        perror("Error opening file");
+//        return 1;
+//    }
+
+//    // Read lines from the file using get_next_line
+//    while ((line = get_next_line(fd)) != NULL)
+//    {
+//        printf("%s", line);
+//        free(line); // Don't forget to free the line after processing it
+//    }
+
+//    // Close the file
+//    if (close(fd) == -1)
+//    {
+//        perror("Error closing file");
+//        return 1;
+//    }
+
+//    return 0;
+//}

@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 16:24:17 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/28 13:00:26 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,82 +21,82 @@ not the next one.
 If that makes any sense.
 =============================================================================*/
 
-int	quote_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	quote_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
 	int		j;
 	char	c;
 
-	c = input[i];
+	c = (*input)[i];
 	j = i;
 	while (1)
 	{
 		j++;
-		if (!input[j])
+		if (!(*input)[j])
 			input = continue_input(input, ">");
-		if (input[j] == c)
+		if ((*input)[j] == c)
 			break ;
 	}
-	token->token = ft_substr(input, i + 1, j - i - 1);
+	token->token = ft_substr(*input, i + 1, j - i - 1);
 	i = j;
 	token->type = lx_dt->next_token_type;
 	i++;
 	return (next_token(token, input, lx_dt, i));
 }
 
-int	envp_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	envp_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
 	int	j;
 
 	j = i + 1;
-	if (input[j] == '?')
+	if ((*input)[j] == '?')
 	{
 		j++;
-		token->token = ft_substr(input, i, j - i);
+		token->token = ft_substr(*input, i, j - i);
 	}
 	else
 	{
-		while (is_valid_key_char(input[j], FALSE))
+		while (is_valid_key_char((*input)[j], FALSE))
 			j++;
-		token->token = ft_substr(input, i, j - i);
+		token->token = ft_substr(*input, i, j - i);
 	}
 	i = j;
 	token->type = lx_dt->next_token_type;
 	return (next_token(token, input, lx_dt, ++i));
 }
 
-int	dbl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	dbl_char_opr_tok(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
 	token->token = malloc(sizeof(char) * (2 + 1));
 	if (!token->token)
 		return (alloc_failed());
-	token->token[0] = input[i];
-	token->token[1] = input[i];
+	token->token[0] = (*input)[i];
+	token->token[1] = (*input)[i];
 	token->token[2] = '\0';
 	token->type = lx_dt->next_token_type;
 	i = i + 2;
 	return (next_token(token, input, lx_dt, i));
 }
 
-int	sngl_char_opr_tok(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	sngl_char_opr_tok(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
 	token->token = malloc(sizeof(char) * (1 + 1));
 	if (!token->token)
 		return (alloc_failed());
-	token->token[0] = input[i];
+	token->token[0] = (*input)[i];
 	token->token[1] = '\0';
 	token->type = lx_dt->next_token_type;
 	i++;
 	return (next_token(token, input, lx_dt, i));
 }
 
-int	string_token(t_token *token, char *input, t_lx_dt *lx_dt, int i)
+int	string_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
 	int	j;
 
 	j = i;
-	while (input[j] && !is_delimiter(input, j))
+	while ((*input)[j] && !is_delimiter(input, j))
 		j++;
-	token->token = ft_substr(input, i, j - i);
+	token->token = ft_substr(*input, i, j - i);
 	i = j;
 	token->type = lx_dt->next_token_type;
 	return (next_token(token, input, lx_dt, i));
