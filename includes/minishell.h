@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 20:12:20 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:56:02 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,7 +343,7 @@ int 					has_pipe(t_command *head);
 void					free_env_list(t_env_list *head);
 void					free_env_node(t_env_list *node);
 void					free_command_table(t_cmnd_tbl *table);
-void					free_command_list(t_command *head);
+void					free_command_list(t_cmnd_tbl *table);
 // SIGNALS
 
 // signals.c

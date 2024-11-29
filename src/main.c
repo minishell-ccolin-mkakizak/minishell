@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 20:08:50 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:59:21 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			pipeline(command_table, envp);
 			if(command_table->head)
-				free_command_list(command_table->head);
+				free_command_list(command_table);
 		}
 		if (!input)
 			break ;
