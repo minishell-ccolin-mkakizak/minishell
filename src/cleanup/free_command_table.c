@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:33:38 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/29 14:19:17 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:41:14 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void free_command_table(t_cmnd_tbl *table)
 		return;
 	if(table->head)
 	{
-		puts("does it think there is a head?");
 		free_command_list(table);
 	}
 	if(table->envp)

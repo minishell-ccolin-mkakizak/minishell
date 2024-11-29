@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 15:36:54 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:41:28 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ char	*validate_path(char **path_arr, char *cmd)
 	{
 		if (cmd[0] == '/')
 		{
-			// return (cmd);
-			// if (!access(cmd, X_OK))
-				return (ft_free_all(path_arr), cmd);
-			// else
-			// 	return (ft_free_all(path_arr), cmd);
+			return (ft_free_all(path_arr), cmd);
 		}
 		if (ft_strncmp(&path_arr[i][ft_strlen(path_arr[i]) - 1], "/", 1))
 			tmp = ft_strjoin(path_arr[i], "/");
@@ -98,7 +94,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	path = find_path(cmd->command, table->envp);
 	if (path == NULL)
 	{	
-		ft_printf("minishell: %s: command not found\n", cmd->command);
+		ft_printf("%s: command not found\n", cmd->command);
 		exit(127);
 	}
 	set_array = set_command(cmd->command, cmd->args);

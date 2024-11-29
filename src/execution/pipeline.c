@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 15:06:31 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:16:58 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 // 	struct s_command	*next;
 // }						t_command;
 
+//TODO: i need a way to know which is the last redirection in the list 
+	// like if i have echo hello > file1 >> file2 > file3
+	//then hello should be written in the file3
+
 int output_redirect(t_command *cmd)
 {
 	int fd;
@@ -39,15 +43,18 @@ int output_redirect(t_command *cmd)
 	i = 0;
 	while(cmd->output_file[i])
 	{
-		// this needs an if condition if the operation is > or >>
-		//>> is apend > outfile
-		flags = O_WRONLY | O_CREAT | O_TRUNC;
+		//output file is >
+		flags = O_WRONLY | O_CREAT ;
 
 		fd = open(cmd->output_file[i], flags, 0644);
+		// ft_printf("output file: %s\n", cmd->output_file[i]);
+		// ft_printf("fd: %d\n", fd);
 		if(fd == -1)
 		{	
-			// ft_printf("minishell: %s: %s\n", cmd->input_file[i], strerror(errno));
-			return (-1);
+			// puts("does it make it here?\n");
+			ft_printf("minishell: %s: %s\n", cmd->output_file[i], strerror(errno));
+			// puts("does it make it here?\n");
+			exit(EXIT_FAILURE);
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
@@ -56,33 +63,34 @@ int output_redirect(t_command *cmd)
 	return (0);
 }
 
-// int append_redirect(t_command *cmd)
-// {
-// 	int fd;
-// 	int flags;
-// 	int i;
+int append_redirect(t_command *cmd)
+{
+	int fd;
+	int flags;
+	int i;
 
-// 	if(cmd->append == NULL || cmd->append[0] == NULL)
-// 		return(0);
+	if(cmd->append == NULL || cmd->append[0] == NULL)
+		return(0);
 
 
-// 	i = 0;
-// 	while(cmd->append[i])
-// 	{
-// 		flags = O_WRONLY | O_CREAT | O_TRUNC;
+	i = 0;
+	while(cmd->append[i])
+	{
+		//append is >> 
+		flags = O_WRONLY | O_CREAT | O_APPEND;
 
-// 		fd = open(cmd->append[i], flags, 0644);
-// 		if(fd == -1)
-// 		{
-// 			ft_printf("minishell: %s: %s\n", cmd->append[i], strerror(errno));
-// 			exit(EXIT_FAILURE);
-// 		}
-// 		dup2(fd, STDOUT_FILENO);
-// 		close(fd);
-// 		i++;
-// 	}
-// 	return (0);
-// }
+		fd = open(cmd->append[i], flags, 0644);
+		if(fd == -1)
+		{
+			ft_printf("minishell: %s: %s\n", cmd->append[i], strerror(errno));
+			exit(EXIT_FAILURE);
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		i++;
+	}
+	return (0);
+}
 
 int input_redirect(t_command *cmd)
 {
@@ -201,7 +209,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
 			output_redirect(current);
-			// append_redirect(current);
+			append_redirect(current);
 			if(current->is_built_in)
 				built_in_cmds(current, table, is_child);
 			else
