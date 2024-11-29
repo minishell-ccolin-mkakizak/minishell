@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 17:06:37 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:08:16 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*validate_path(char **path_arr, char *cmd)
 		// puts("does it get here?\n");
 		if (!access(path, X_OK))
 		{
-			puts("access error");
 			return (ft_free_all(path_arr), path);
 		}
 		free(path);
