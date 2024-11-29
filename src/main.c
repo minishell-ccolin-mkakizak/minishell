@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 16:08:28 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:51:58 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	whitespace_only_handler(char *input)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (input[i] && (input[i] == ' ' || input[i] == '\t'))
@@ -55,15 +55,13 @@ char	*get_input(void)
 	return (NULL);
 }
 
-volatile sig_atomic_t sig_received = 0;
+volatile sig_atomic_t	sig_received = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
-
 	char		*input;
 	t_cmnd_tbl	*command_table;
 	int			parser_return_value;
-
 
 	(void)argc;
 	(void)argv;
@@ -71,14 +69,12 @@ int	main(int argc, char **argv, char **envp)
 		return (ALLOCATION_FAIL);
 	while (1)
 	{
-
 		init_signals();
 		if (sig_received)
 		{
 			// sig_received = 0;
-			continue;
+			continue ;
 		}
-
 		// printf("sig_received = %d\n", sig_received);
 		input = get_input();
 		if (input)
@@ -91,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			if (parser_return_value == ALLOCATION_FAIL)
 			{
-				//INSERT FUNCTION THAT FREES THE COMMAND TABLE
+				// INSERT FUNCTION THAT FREES THE COMMAND TABLE
 				break ;
 			}
 			pipeline(command_table, envp);

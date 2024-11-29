@@ -6,17 +6,17 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 13:13:27 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:50:49 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int parse(char **input, t_cmnd_tbl *command_table)
+int	parse(char **input, t_cmnd_tbl *command_table)
 {
-	t_token *token;
-	t_lx_dt *lexer_data;
-	int return_value;
+	t_token	*token;
+	t_lx_dt	*lexer_data;
+	int		return_value;
 
 	lexer_data = malloc(sizeof(t_lx_dt));
 	if (!lexer_data)
@@ -25,7 +25,8 @@ int parse(char **input, t_cmnd_tbl *command_table)
 	if (!return_value)
 		return_value = tokenize(token, input, lexer_data, 0);
 	if (!return_value)
-		expend_envps(token, command_table->envp, command_table->last_exit_status);
+		expend_envps(token, command_table->envp,
+			command_table->last_exit_status);
 	print_tokens(token);
 	add_history(*input);
 	free(*input);

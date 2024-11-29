@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:57:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 15:54:15 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:50:50 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	syntax_check(t_token *token, t_lx_dt *lx_dt, int is_last)
 		return (ft_printf("%s `%s'\n", string, token->token));
 	if (is_previous_tok_operator_except_pipe(lx_dt) && !lx_dt->expecting_command
 		&& !is_arg(token->type))
-		return (ft_printf("%s `%s'\n",string , token->token));
+		return (ft_printf("%s `%s'\n", string, token->token));
 	return (0);
 }

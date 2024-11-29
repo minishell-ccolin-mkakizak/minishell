@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:03:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 16:22:00 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:50:38 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	**continue_input(char **input, char *str)
 {
 	char	*line;
 	char	*temp;
+
 	line = readline(str);
 	temp = ft_strjoin(*input, "\n");
 	free(*input);
@@ -31,12 +32,13 @@ char	**continue_input(char **input, char *str)
 }
 
 /*=============================================================================
-Used to skip over quoted text without ending the token if is encounters a 
+Used to skip over quoted text without ending the token if is encounters a
 separator character and prompt the user for input if the quote is unclosed.
 =============================================================================*/
 int	go_to_end_of_quotes(char **input, int *j, char c)
 {
 	int	i;
+
 	i = *j;
 	while (1)
 	{

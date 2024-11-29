@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 16:07:52 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:48:30 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 //==========================================================================//
 //									LIBRARIES								//
@@ -22,13 +21,12 @@
 # include <libft.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
-#include <signal.h>
 
 //==========================================================================//
 //									STRUCTURES								//
@@ -153,21 +151,24 @@ void					print_tokens(t_token *token);
 //============================>> CONTINUE_INPUT.C <<========================//
 char					**continue_input(char **input, char *str);
 int						go_to_end_of_quotes(char **input, int *j, char c);
-char					**continue_input_if_lst_tok_is_pipe(char **input, int i);
+char					**continue_input_if_lst_tok_is_pipe(char **input,
+							int i);
 
 //==========================>> EXPEND_ENVPS_COMMAND.C <<====================//
 int						remove_quotes(char **command, int i, int j,
 							int *is_quoted_string);
 int						quoteless_strlen(char *str, int i, int j);
-int 					expend_command_envps(char **command, t_lx_dt *lx_dt, int *is_quoted_string);
+int						expend_command_envps(char **command, t_lx_dt *lx_dt,
+							int *is_quoted_string);
 
 //==============================>> EXPEND_ENVPS.C <<========================//
 char					*expend_envp(char *str, t_env_list *envp);
 char					*replace_substring_with_envp(char *str, int start,
 							int end, t_env_list *envp);
-char					*find_envps(char *str, t_env_list *envp,
-							int is_command, int last_exit_status);
-void					expend_envps(t_token *token, t_env_list *envp, int	last_exit_status);
+char					*find_envps(char *str, t_env_list *envp, int is_command,
+							int last_exit_status);
+void					expend_envps(t_token *token, t_env_list *envp,
+							int last_exit_status);
 
 //============================>> FREE_PARSER_DATA.C <<======================//
 void					free_tokens(t_token *token);
@@ -194,8 +195,8 @@ int						syntax_check(t_token *token, t_lx_dt *lx_dt,
 							int is_last);
 
 //============================>> TOKEN_HANDLERS.C <<========================//
-int						quote_token(t_token *token, char **input, t_lx_dt *lx_dt,
-							int i);
+int						quote_token(t_token *token, char **input,
+							t_lx_dt *lx_dt, int i);
 int						envp_token(t_token *token, char **input, t_lx_dt *lx_dt,
 							int i);
 int						dbl_char_opr_tok(t_token *token, char **input,
@@ -213,7 +214,8 @@ int						command_token(t_token *token, char **input,
 int						is_valid_key_char(char c, int is_first_char);
 int						skip_spaces_tabs(char **input, int i);
 int						is_delimiter(char **input, int i);
-int						set_quotes_flags(char c, int *in_squote, int *in_dquote);
+int						set_quotes_flags(char c, int *in_squote,
+							int *in_dquote);
 int						alloc_failed(void);
 
 //==========================================================================//
@@ -333,13 +335,13 @@ pid_t					safe_fork(void);
 void					init_fd(t_fd *fd);
 void					restore_fd(t_fd *fd);
 void					init_pipe(t_fd *fd);
-int 					has_pipe(t_command *head);
+int						has_pipe(t_command *head);
 
 //==========================================================================//
 //									CLEANUP									//
 //==========================================================================//
 
-//free_command_table.c
+// free_command_table.c
 void					free_env_list(t_env_list *head);
 void					free_env_node(t_env_list *node);
 void					free_command_table(t_cmnd_tbl *table);
@@ -350,4 +352,3 @@ void					signal_handler(int sig);
 void					init_signals(void);
 int						has_pipe(t_command *head);
 #endif
-

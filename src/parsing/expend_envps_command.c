@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:02:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 19:33:19 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:50:42 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 Removes quotes from the command token. if the length of the string with and
 without quotes is not the same, is_quoted_string is TRUE.
 =============================================================================*/
-int remove_quotes(char **command, int i, int j, int *is_quoted_string)
+int	remove_quotes(char **command, int i, int j, int *is_quoted_string)
 {
-	char *new_str;
-	char c;
-	int len;
+	char	*new_str;
+	char	c;
+	int		len;
 
 	len = quoteless_strlen(*command, 0, 0);
 	if (len != ft_strlen(*command))
@@ -56,9 +56,9 @@ int remove_quotes(char **command, int i, int j, int *is_quoted_string)
 Used to determine how much to allocated for the creation of a unquoted string
 from a quoted string.
 =============================================================================*/
-int quoteless_strlen(char *str, int i, int j)
+int	quoteless_strlen(char *str, int i, int j)
 {
-	char c;
+	char	c;
 
 	while (str[i])
 	{
@@ -82,8 +82,7 @@ int quoteless_strlen(char *str, int i, int j)
 	return (j);
 }
 
-int expend_command_envps(char **command, t_lx_dt *lx_dt,
-						 int *is_quoted_string)
+int	expend_command_envps(char **command, t_lx_dt *lx_dt, int *is_quoted_string)
 {
 	*command = find_envps(*command, lx_dt->envp, TRUE, lx_dt->last_exit_status);
 	if (remove_quotes(command, 0, 0, is_quoted_string))
