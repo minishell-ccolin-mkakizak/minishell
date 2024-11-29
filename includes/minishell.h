@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/29 13:56:02 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:04:26 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # include <sys/wait.h>
 # include <unistd.h>
 # include <signal.h>
-#include <signal.h>
+# include <sys/stat.h>
 
 //==========================================================================//
 //									STRUCTURES								//

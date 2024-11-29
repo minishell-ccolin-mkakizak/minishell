@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 15:41:28 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:06:37 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ char	*validate_path(char **path_arr, char *cmd)
 		free(tmp);
 		// puts("does it get here?\n");
 		if (!access(path, X_OK))
+		{
+			puts("access error");
 			return (ft_free_all(path_arr), path);
+		}
 		free(path);
 	}
 	return (NULL);
@@ -86,21 +89,38 @@ char	**set_command(char *command, char **args)
 	return (res);
 }
 
+int is_directory(char *path)
+{
+	struct stat path_stat;
+	
+	if(stat(path, &path_stat) != 0)
+	{
+		return (0);
+	};
+	return S_ISDIR(path_stat.st_mode);
+}
+
 int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 {
 	char	**set_array;
 	char	*path;
-
+	int	i;
 	path = find_path(cmd->command, table->envp);
 	if (path == NULL)
 	{	
 		ft_printf("%s: command not found\n", cmd->command);
 		exit(127);
 	}
+	if (is_directory(path))
+	{
+		ft_printf("minishell: %s: is a directory\n", cmd->command);
+		exit(126);
+	}
 	set_array = set_command(cmd->command, cmd->args);
 	// printf("path: %s\n", path); //debuge
 	// print_str_arr(set_array, get_array_len(set_array)); //debug
 	// puts("does it get here?\n");
+
 	if (execve(path, set_array, envp) == -1)
 	{	
 		

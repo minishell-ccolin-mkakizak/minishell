@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 16:16:58 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:20:51 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,9 @@ int output_redirect(t_command *cmd)
 		flags = O_WRONLY | O_CREAT ;
 
 		fd = open(cmd->output_file[i], flags, 0644);
-		// ft_printf("output file: %s\n", cmd->output_file[i]);
-		// ft_printf("fd: %d\n", fd);
 		if(fd == -1)
 		{	
-			// puts("does it make it here?\n");
 			ft_printf("minishell: %s: %s\n", cmd->output_file[i], strerror(errno));
-			// puts("does it make it here?\n");
 			exit(EXIT_FAILURE);
 		}
 		dup2(fd, STDOUT_FILENO);
@@ -71,7 +67,6 @@ int append_redirect(t_command *cmd)
 
 	if(cmd->append == NULL || cmd->append[0] == NULL)
 		return(0);
-
 
 	i = 0;
 	while(cmd->append[i])
@@ -105,7 +100,6 @@ int input_redirect(t_command *cmd)
 
 	if(cmd->input_file)
 	{
-		// this also needs a if statment if the operation is < or <<
 		flags = O_RDONLY;
 
 		fd = open(cmd->input_file, flags, 0644);
