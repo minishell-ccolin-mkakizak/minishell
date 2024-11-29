@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/29 17:04:26 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:12:08 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,7 @@ void					exe_exit(t_command *cmd, t_cmnd_tbl *table);
 int						is_match(char *str1, char *str2);
 int						get_array_len(char **array);
 int						print_str_arr(char **arr, int len);
+int						is_directory(char *path);
 
 //==========================================================================//
 //							EXECUTION FUNCTIONS								//
@@ -325,6 +326,7 @@ char					*validate_path(char **path_arr, char *cmd);
 char					*find_path(char *cmd, t_env_list *table);
 int						execute_cmd(t_command *cmd, t_cmnd_tbl *table,
 							int is_child, char *envp[]);
+char					**set_command(char *command, char **args);
 
 //===========================>> PIPELINE_UTILS.C <<=========================//
 void					throw_error(char *message, int last_exit_status,

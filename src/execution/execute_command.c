@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 17:08:16 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:10:51 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*validate_path(char **path_arr, char *cmd)
 			tmp = ft_strdup(path_arr[i]);
 		path = ft_strjoin(tmp, cmd);
 		free(tmp);
-		// puts("does it get here?\n");
 		if (!access(path, X_OK))
 		{
 			return (ft_free_all(path_arr), path);
@@ -86,17 +85,6 @@ char	**set_command(char *command, char **args)
 	}
 	res[i] = NULL;
 	return (res);
-}
-
-int is_directory(char *path)
-{
-	struct stat path_stat;
-	
-	if(stat(path, &path_stat) != 0)
-	{
-		return (0);
-	};
-	return S_ISDIR(path_stat.st_mode);
 }
 
 int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
