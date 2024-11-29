@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/28 19:37:10 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:36:54 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,10 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	path = find_path(cmd->command, table->envp);
 	if (path == NULL)
 	{	
-		path = cmd->command;
+		ft_printf("minishell: %s: command not found\n", cmd->command);
+		exit(127);
 	}
-	set_array = set_command(path, cmd->args);
+	set_array = set_command(cmd->command, cmd->args);
 	// printf("path: %s\n", path); //debuge
 	// print_str_arr(set_array, get_array_len(set_array)); //debug
 	// puts("does it get here?\n");
