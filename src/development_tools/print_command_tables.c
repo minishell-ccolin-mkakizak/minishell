@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/29 17:30:32 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 18:00:30 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	print_command(t_command *cmd)
 
 void	print_command_details(t_command *cmd)
 {
-	printf("Input file: %s\n", cmd->input_file ? cmd->input_file : "None")
+	printf("Input file: %s\n", cmd->input_file ? cmd->input_file : "None");
 	printf("Heredoc delimiter: %s\n",
 		cmd->heredoc_delimiter ? cmd->heredoc_delimiter : "None");
 	print_command_arrays(cmd->output_file, "output");
 	print_command_arrays(cmd->append, "append");
-	printf("Pipe In: %d\n", cmd->pipe_in)	
-	printf("Pipe Out: %d\n", cmd->pipe_out)
-	printf("Is Built-in: %d\n", cmd->is_built_in)
+	printf("Pipe In: %d\n", cmd->pipe_in);
+	printf("Pipe Out: %d\n", cmd->pipe_out);
+	printf("Is Built-in: %d\n", cmd->is_built_in);
 	printf("----------\n\n");
 }
 
@@ -63,7 +63,7 @@ void	print_cmnd_tbl(t_cmnd_tbl *table)
 	if (!table)
 		return ;
 	printf("Exit Status: %d\n", table->last_exit_status);
-	printf("Exit shell: %d\n", table->exit_shell)
+	printf("Exit shell: %d\n", table->exit_shell);
 	// print_environment_variables(table);
 	print_commands(table);
 }
