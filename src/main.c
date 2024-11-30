@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 16:08:28 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:22:05 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_input(void)
 	return (NULL);
 }
 
-volatile sig_atomic_t sig_received = 0;
+// volatile sig_atomic_t sig_received = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -73,12 +73,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 
 		init_signals();
-		if (sig_received)
-		{
-			// sig_received = 0;
-			continue;
-		}
-
+		// if (sig_received)
+		// {
+		// 	// sig_received = 0;
+		// 	continue;
+		// }
 		// printf("sig_received = %d\n", sig_received);
 		input = get_input();
 		if (input)
@@ -95,6 +94,8 @@ int	main(int argc, char **argv, char **envp)
 				break ;
 			}
 			pipeline(command_table, envp);
+			if(command_table->head)
+				free_command_list(command_table);
 		}
 		if (!input)
 			break ;
