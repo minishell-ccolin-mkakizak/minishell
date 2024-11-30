@@ -6,29 +6,26 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/29 16:49:50 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/30 13:53:26 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	realloc_array(char ***array, int i)
+int	realloc_array(char ***array, int i, int j)
 {
 	char	**new_array;
-	int		j;
 
 	if (i > 0)
 	{
 		new_array = malloc(sizeof(char *) * (i + 2));
 		if (!new_array)
 			return (alloc_failed());
-		j = 0;
 		while ((*array)[j])
 		{
 			new_array[j] = ft_strdup((*array)[j]);
-			if (!new_array[j])
+			if (!new_array[j++])
 				return (alloc_failed());
-			j++;
 		}
 		new_array[j] = NULL;
 		new_array[j + 1] = NULL;
@@ -44,17 +41,22 @@ int	realloc_array(char ***array, int i)
 	return (0);
 }
 
-t_token	*handle_input_operator(t_token *token, t_command *command)
+int	handle_input_operator(t_token **token, t_command *command)
 {
-	if (token->type == INPUT_TYPE)
+	int	i;
+
+	i = 0;
+	if ((*token)->type == INPUT_TYPE)
 	{
-		token = token->next;
-		command->input_file = ft_strdup(token->token);
-		if (!command->input_file)
-			return (NULL);
-		token = token->next;
+		while (command->input_file && command->input_file[i])
+			i++;
+		if (realloc_array(&command->input_file, i, 0))
+			return (ALLOCATION_FAIL);
+		*token = (*token)->next;
+		command->input_file[i] = ft_strdup((*token)->token);
+		*token = (*token)->next;
 	}
-	return (token);
+	return (0);
 }
 
 int	handle_output_append_operator(t_token **token, t_command *command)
@@ -66,7 +68,7 @@ int	handle_output_append_operator(t_token **token, t_command *command)
 	{
 		while (command->output_file && command->output_file[i])
 			i++;
-		if (realloc_array(&command->output_file, i))
+		if (realloc_array(&command->output_file, i, 0))
 			return (ALLOCATION_FAIL);
 		*token = (*token)->next;
 		command->output_file[i] = ft_strdup((*token)->token);
@@ -76,7 +78,7 @@ int	handle_output_append_operator(t_token **token, t_command *command)
 	{
 		while (command->append && command->append[i])
 			i++;
-		if (realloc_array(&command->append, i))
+		if (realloc_array(&command->append, i, 0))
 			return (ALLOCATION_FAIL);
 		*token = (*token)->next;
 		command->append[i] = ft_strdup((*token)->token);
@@ -85,13 +87,20 @@ int	handle_output_append_operator(t_token **token, t_command *command)
 	return (0);
 }
 
-t_token	*handle_heredoc_operator(t_token *token, t_command *command)
+int	handle_heredoc_operator(t_token **token, t_command *command)
 {
-	if (token->type == HEREDOC)
+	int	i;
+
+	i = 0;
+	if ((*token)->type == HEREDOC)
 	{
-		token = token->next;
-		command->heredoc_delimiter = ft_strdup(token->token);
-		token = token->next;
+		while (command->heredoc_delimiter && command->heredoc_delimiter[i])
+			i++;
+		if (realloc_array(&command->heredoc_delimiter, i, 0))
+			return (ALLOCATION_FAIL);
+		*token = (*token)->next;
+		command->heredoc_delimiter[i] = ft_strdup((*token)->token);
+		*token = (*token)->next;
 	}
-	return (token);
+	return (0);
 }

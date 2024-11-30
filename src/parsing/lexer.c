@@ -6,27 +6,11 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/29 16:50:47 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/30 14:06:47 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	init_lexer(t_token **token, t_lx_dt *lx_dt, t_cmnd_tbl *c)
-{
-	lx_dt->expecting_command = TRUE;
-	lx_dt->previous_token_type = 0;
-	lx_dt->next_token_type = 0;
-	lx_dt->envp = c->envp;
-	lx_dt->last_exit_status = c->last_exit_status;
-	*token = malloc(sizeof(t_token));
-	if (!*token)
-		return (alloc_failed());
-	(*token)->next = NULL;
-	(*token)->token = NULL;
-	(*token)->type = COMMAND;
-	return (0);
-}
 
 /*=============================================================================
 Returns TRUE if there is no command in the tokens yet, if the current token
@@ -73,6 +57,18 @@ int	tokenize(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 	return (0);
 }
 
+int	is_last_token(char **input, int *i)
+{
+	int	is_last;
+
+	is_last = FALSE;
+	if ((*i < ft_strlen(*input)))
+		*i = skip_spaces_tabs(input, *i);
+	if ((*i >= ft_strlen(*input)))
+		is_last = TRUE;
+	return (is_last);
+}
+
 /*=============================================================================
 Called after creation of a token. Skips tabs and spaces to determine if the
 current token is the last one and passes the information to the syntax check
@@ -83,11 +79,7 @@ int	next_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
 	int	is_last;
 
-	is_last = FALSE;
-	if ((i < ft_strlen(*input)))
-		i = skip_spaces_tabs(input, i);
-	if ((i >= ft_strlen(*input)))
-		is_last = TRUE;
+	is_last = is_last_token(input, &i);
 	if (syntax_check(token, lx_dt, is_last))
 		return (PARSING_ERROR);
 	if (token->type == PIPE)
@@ -107,9 +99,7 @@ int	next_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 	token->next = malloc(sizeof(t_token));
 	if (!token->next)
 		return (alloc_failed());
-	token->next->token = NULL;
-	token->next->type = 0;
-	token->next->next = NULL;
+	init_new_token(token);
 	return (tokenize(token->next, input, lx_dt, i));
 }
 

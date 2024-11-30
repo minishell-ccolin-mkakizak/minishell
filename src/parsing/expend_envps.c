@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:54:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/29 16:50:44 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/30 14:08:04 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,74 +33,6 @@ char	*expend_envp(char *str, t_env_list *envp)
 		free(str);
 		str = ft_strdup("");
 	}
-	return (str);
-}
-
-/*=============================================================================
-Cuts the string in 3, the prefix, the env inside the string and the suffix.
-expends the env and puts the original string back together.
-=============================================================================*/
-char	*replace_substring_with_envp(char *str, int start, int end,
-		t_env_list *envp)
-{
-	char	*prefix;
-	char	*variable;
-	char	*suffix;
-	char	*temp;
-
-	prefix = ft_substr(str, 0, start);
-	variable = expend_envp(ft_substr(str, start + 1, end - start), envp);
-	suffix = ft_substr(str, end + 1, ft_strlen(str));
-	free(str);
-	if (prefix[0] != 0)
-		temp = ft_strjoin(prefix, variable);
-	else
-		temp = ft_strdup(variable);
-	if (suffix[0] != 0)
-		str = ft_strjoin(temp, suffix);
-	else
-	{
-		free(prefix);
-		free(variable);
-		free(suffix);
-		return (temp);
-	}
-	free(temp);
-	free(prefix);
-	free(variable);
-	free(suffix);
-	return (str);
-}
-
-char	*replace_substring_with_exit_status(char *str, int start, int end,
-		int last_exit_status)
-{
-	char	*prefix;
-	char	*variable;
-	char	*suffix;
-	char	*temp;
-
-	prefix = ft_substr(str, 0, start);
-	variable = ft_itoa(last_exit_status);
-	suffix = ft_substr(str, end + 1, ft_strlen(str));
-	free(str);
-	if (prefix[0] != 0)
-		temp = ft_strjoin(prefix, variable);
-	else
-		temp = ft_strdup(variable);
-	if (suffix[0] != 0)
-		str = ft_strjoin(temp, suffix);
-	else
-	{
-		free(prefix);
-		free(variable);
-		free(suffix);
-		return (temp);
-	}
-	free(temp);
-	free(prefix);
-	free(variable);
-	free(suffix);
 	return (str);
 }
 
@@ -139,8 +71,8 @@ char	*find_envps(char *str, t_env_list *envp, int is_command,
 	{
 		if (is_command)
 			set_quotes_flags(str[i], &in_squote, &in_dquote);
-		if ((str[i] == '$' && (is_valid_key_char(str[i + 1], TRUE) || str[i
-					+ 1] == '?')) && (!is_command || !in_squote))
+		if ((str[i] == '$' && (is_valid_key_char(str[i + 1], TRUE) \
+			|| str[i + 1] == '?')) && (!is_command || !in_squote))
 		{
 			str = find_end_of_env_key(str, envp, i, last_exit_status);
 			i = 0;

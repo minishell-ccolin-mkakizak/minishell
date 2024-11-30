@@ -6,11 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/11/29 16:48:30 by ccolin           ###   ########.fr       */
-=======
-/*   Updated: 2024/11/29 17:12:08 by mkakizak         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2024/11/30 13:51:38 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +25,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <unistd.h>
-<<<<<<< HEAD
-=======
-# include <signal.h>
-# include <sys/stat.h>
->>>>>>> main
 
 //==========================================================================//
 //									STRUCTURES								//
@@ -46,9 +38,9 @@ typedef struct s_command
 {
 	char				*command;
 	char				**args;
-	char				*input_file;
+	char				**input_file;
 	char				**output_file;
-	char				*heredoc_delimiter;
+	char				**heredoc_delimiter;
 	char				**append;
 	int					pipe_in;
 	int					pipe_out;
@@ -103,6 +95,9 @@ typedef struct s_fd
 //									MACROS									//
 //==========================================================================//
 
+//===============================>> SIGNALS <<==============================//
+# define SIGNAL_RECEIVED 116
+
 //===============================>> PARSER <<===============================//
 # define STRING_TYPE 100
 # define COMMAND 101
@@ -115,8 +110,8 @@ typedef struct s_fd
 # define PIPE 110
 # define ENVP 111
 # define PARSING_ERROR 112
-# define SUCCESS 113
-# define ALLOCATION_FAIL 113
+# define ALLOCATION_FAIL 114
+# define NO_INPUT 115
 
 //================================>> PROMPT <<==============================//
 # ifdef __APPLE__
@@ -164,34 +159,39 @@ char					**continue_input_if_lst_tok_is_pipe(char **input,
 							int i);
 
 //==========================>> EXPEND_ENVPS_COMMAND.C <<====================//
-int						remove_quotes(char **command, int i, int j,
-							int *is_quoted_string);
+int						remove_quotes(char **command, int *is_quoted_string);
 int						quoteless_strlen(char *str, int i, int j);
 int						expend_command_envps(char **command, t_lx_dt *lx_dt,
 							int *is_quoted_string);
 
 //==============================>> EXPEND_ENVPS.C <<========================//
 char					*expend_envp(char *str, t_env_list *envp);
-char					*replace_substring_with_envp(char *str, int start,
-							int end, t_env_list *envp);
+
 char					*find_envps(char *str, t_env_list *envp, int is_command,
 							int last_exit_status);
 void					expend_envps(t_token *token, t_env_list *envp,
 							int last_exit_status);
 
-//============================>> FREE_PARSER_DATA.C <<======================//
-void					free_tokens(t_token *token);
-void					free_parser_data(t_token *token, t_lx_dt *lx_dt);
+//=======================>> REPLACE_SUBSTRING_WITH_ENV.C <<=================//
+char					*replace_substring_with_exit_status(char *str,
+							int start, int end, int last_exit_status);
+char					*replace_substring_with_envp(char *str, int start,
+							int end, t_env_list *envp);
+void					free_substrings(char *temp, char *prefix,
+							char *variable, char *suffix);
 
 //================================>> LEXER.C <<=============================//
-int						init_lexer(t_token **token, t_lx_dt *lx_dt,
-							t_cmnd_tbl *c);
 int						is_command_token(t_lx_dt *lx_dt);
 int						tokenize(t_token *token, char **input, t_lx_dt *lx_dt,
 							int i);
 int						next_token(t_token *token, char **input, t_lx_dt *lx_dt,
 							int i);
 int						next_token_type(char **input, int i);
+
+//==============================>> INIT LEXER.C <<==========================//
+int						init_lexer(t_token **token, t_lx_dt *lx_dt,
+							t_cmnd_tbl *c);
+void					init_new_token(t_token *token);
 
 //===============================>> PARSING.C <<============================//
 int						parse(char **input, t_cmnd_tbl *command_table);
@@ -251,12 +251,12 @@ void					init_command(t_command *command, int is_pipe);
 int						init_new_command(t_command **command, int is_pipe);
 
 //===========================>> OPERATOR_HANDLERS.C <<======================//
-int						realloc_array(char ***array, int i);
-t_token					*handle_input_operator(t_token *token,
+int						realloc_array(char ***array, int i, int j);
+int						handle_input_operator(t_token **token,
 							t_command *command);
 int						handle_output_append_operator(t_token **token,
 							t_command *command);
-t_token					*handle_heredoc_operator(t_token *token,
+int						handle_heredoc_operator(t_token **token,
 							t_command *command);
 
 //==========================================================================//
@@ -352,14 +352,21 @@ int						has_pipe(t_command *head);
 //									CLEANUP									//
 //==========================================================================//
 
-// free_command_table.c
+//============================>> FREE_PARSER_DATA.C <<======================//
+void					free_tokens(t_token *token);
+void					free_parser_data(t_token *token, t_lx_dt *lx_dt);
+
+//===========================>> FREE_COMMAND_TABLE.C <<=====================//
 void					free_env_list(t_env_list *head);
 void					free_env_node(t_env_list *node);
 void					free_command_table(t_cmnd_tbl *table);
 void					free_command_list(t_cmnd_tbl *table);
-// SIGNALS
 
-// signals.c
+//==========================================================================//
+//									SIGNALS									//
+//==========================================================================//
+
+//================================>> SIGNALS.C <<===========================//
 void					signal_handler(int sig);
 void					init_signals(void);
 int						has_pipe(t_command *head);

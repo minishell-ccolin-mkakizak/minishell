@@ -104,8 +104,6 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 		exit(126);
 	}
 	set_array = set_command(cmd->command, cmd->args);
-	// printf("path: %s\n", path); //debuge
-	// print_str_arr(set_array, get_array_len(set_array)); //debug
 	// puts("does it get here?\n");
 
 	if (execve(path, set_array, envp) == -1)
