@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:33:38 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/28 16:06:31 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 15:41:14 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,11 @@
 // }						t_command;
 
 
-void free_command_list(t_command *head)
-{
-	if(head == NULL)
-		return ;
-	t_command *current = head;
-	while (current != NULL) 
-	{
-		t_command *temp = current;
-		if(temp->args != NULL && temp->args[0] != NULL)
-			ft_free_all(temp->args);
-		if(temp->output_file != NULL && temp->output_file[0] != NULL)
-			ft_free_all(temp->output_file);
-		if(temp->append != NULL && temp->append[0] != NULL)
-			ft_free_all(temp->append);
-		if(temp->command)
-			free(temp->command);
-		if(temp->input_file)
-			free(temp->input_file);
-		if(temp->heredoc_delimiter)
-			free(temp->heredoc_delimiter);
-		current = current->next;
-		if(temp)
-			free(temp);
-	}
-}
-
 void free_env_list(t_env_list *head)
 {
 	t_env_list *current = head;
-	while (current != NULL) {
+	while (current != NULL)
+	{
 		t_env_list *temp = current;
 		current = current->next;
 		free_env_node(temp);
@@ -75,11 +50,53 @@ void free_env_node(t_env_list *node)
 	free(node);
 }
 
+void free_command_list(t_cmnd_tbl *table)
+{
+	t_command *current;
+	t_command *temp;
+	
+	if(table->head == NULL)
+		return ;
+
+	current = table->head;
+	
+	while (current != NULL) 
+	{
+		temp = current;
+		if(current->args != NULL) 
+			ft_free_all(current->args);
+		if(current->output_file != NULL) 
+			ft_free_all(current->output_file);
+		if(current->append != NULL) 
+			ft_free_all(current->append);
+		if(current->command) 
+			free(current->command);
+		if(current->input_file) 
+			free(current->input_file);
+		if(current->heredoc_delimiter) 
+			free(current->heredoc_delimiter);
+		current = current->next;
+		if(temp)
+		{
+			free(temp);
+			temp = NULL;
+		}
+	}
+	table->head = NULL;
+}
+
+
 void free_command_table(t_cmnd_tbl *table)
 {
 	if (!table)
-	return;
-	free_command_list(table->head);
-	free_env_list(table->envp);
+		return;
+	if(table->head)
+	{
+		free_command_list(table);
+	}
+	if(table->envp)
+	{
+		free_env_list(table->envp);
+	}	
 	free(table);
 }

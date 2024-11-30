@@ -6,11 +6,29 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/28 16:54:18 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 16:20:51 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+// typedef struct s_command
+// {
+// 	char				*command;
+// 	char				**args;
+// 	char				*input_file;
+// 	char				** ;
+// 	char				*heredoc_delimiter;
+// 	char				**append;
+// 	int					pipe_in;
+// 	int					pipe_out;
+// 	int					is_built_in;
+// 	struct s_command	*next;
+// }						t_command;
+
+//TODO: i need a way to know which is the last redirection in the list 
+	// like if i have echo hello > file1 >> file2 > file3
+	//then hello should be written in the file3
 
 int output_redirect(t_command *cmd)
 {
@@ -25,14 +43,42 @@ int output_redirect(t_command *cmd)
 	i = 0;
 	while(cmd->output_file[i])
 	{
-		// this needs an if condition if the operation is > or >>
-		flags = O_WRONLY | O_CREAT | O_TRUNC;
+		//output file is >
+		flags = O_WRONLY | O_CREAT ;
 
 		fd = open(cmd->output_file[i], flags, 0644);
 		if(fd == -1)
+		{	
+			ft_printf("minishell: %s: %s\n", cmd->output_file[i], strerror(errno));
+			exit(EXIT_FAILURE);
+		}
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+		i++;
+	}
+	return (0);
+}
+
+int append_redirect(t_command *cmd)
+{
+	int fd;
+	int flags;
+	int i;
+
+	if(cmd->append == NULL || cmd->append[0] == NULL)
+		return(0);
+
+	i = 0;
+	while(cmd->append[i])
+	{
+		//append is >> 
+		flags = O_WRONLY | O_CREAT | O_APPEND;
+
+		fd = open(cmd->append[i], flags, 0644);
+		if(fd == -1)
 		{
-			// need to implement error handing
-			return (-1);
+			ft_printf("minishell: %s: %s\n", cmd->append[i], strerror(errno));
+			exit(EXIT_FAILURE);
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
@@ -54,14 +100,13 @@ int input_redirect(t_command *cmd)
 
 	if(cmd->input_file)
 	{
-		// this also needs a if statment if the operation is < or <<
 		flags = O_RDONLY;
 
 		fd = open(cmd->input_file, flags, 0644);
 		if(fd == -1)
 		{
-			// need to implement error handing
-			return( -1);
+			ft_printf("minishell: %s: %s\n", cmd->input_file, strerror(errno));
+			exit(EXIT_FAILURE);
 		}
 		dup2(fd, STDIN_FILENO);
 		close(fd);
@@ -154,25 +199,19 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 
 		if(pid == 0)
 		{
-			// ft_printf("IN CHILD PROCESS PID_1:[%d]\n", pid);
 			is_child = TRUE;
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
 			output_redirect(current);
-
-
+			append_redirect(current);
 			if(current->is_built_in)
 				built_in_cmds(current, table, is_child);
 			else
-			{
 				execute_cmd(current, table, is_child, envp);
-			}
-			
 		}
 		else if (current->is_built_in && !has_pipe(table->head))
 		{
 
-			// ft_printf("IN PARENT PROCESS PID_1:[%d]\n", pid);
 			built_in_cmds(current, table, is_child);
 		}
 
@@ -181,6 +220,8 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 	}
 
 	await_process(pid, table);
+	// puts("end of piepline\n");
+	// free_command_list(table->head);
 	// printf("exit status is : %d\n", table->last_exit_status);
 	restore_fd(&fd);
 	return (0);

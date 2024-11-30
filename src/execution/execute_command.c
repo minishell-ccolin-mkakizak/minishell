@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/28 16:55:18 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/29 17:10:51 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,7 @@ char	*validate_path(char **path_arr, char *cmd)
 	{
 		if (cmd[0] == '/')
 		{
-			// return (cmd);
-			// if (!access(cmd, X_OK))
-				return (ft_free_all(path_arr), cmd);
-			// else
-			// 	return (ft_free_all(path_arr), cmd);
+			return (ft_free_all(path_arr), cmd);
 		}
 		if (ft_strncmp(&path_arr[i][ft_strlen(path_arr[i]) - 1], "/", 1))
 			tmp = ft_strjoin(path_arr[i], "/");
@@ -35,9 +31,10 @@ char	*validate_path(char **path_arr, char *cmd)
 			tmp = ft_strdup(path_arr[i]);
 		path = ft_strjoin(tmp, cmd);
 		free(tmp);
-		// puts("does it get here?\n");
 		if (!access(path, X_OK))
+		{
 			return (ft_free_all(path_arr), path);
+		}
 		free(path);
 	}
 	return (NULL);
@@ -94,16 +91,23 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 {
 	char	**set_array;
 	char	*path;
-
+	int	i;
 	path = find_path(cmd->command, table->envp);
 	if (path == NULL)
 	{	
-		path = cmd->command;
+		ft_printf("%s: command not found\n", cmd->command);
+		exit(127);
 	}
-	set_array = set_command(path, cmd->args);
+	if (is_directory(path))
+	{
+		ft_printf("minishell: %s: is a directory\n", cmd->command);
+		exit(126);
+	}
+	set_array = set_command(cmd->command, cmd->args);
 	// printf("path: %s\n", path); //debuge
 	// print_str_arr(set_array, get_array_len(set_array)); //debug
 	// puts("does it get here?\n");
+
 	if (execve(path, set_array, envp) == -1)
 	{	
 		
@@ -111,6 +115,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 		// free(path);
 		// puts("bad command\n");
 		ft_printf("minishell: %s: %s\n", cmd->command, strerror(errno));
+		// free_command_list(cmd);
 		exit(127);
 	}
 	return (0);

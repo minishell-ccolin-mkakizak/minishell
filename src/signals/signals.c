@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/22 17:12:08 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/28 18:58:00 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void signal_handler(int sig)
 	}
 	else if (sig == SIGTERM)
 	{
-		write(STDOUT_FILENO, "\nReceived SIGTERM\n", 17);
+		// write(STDOUT_FILENO, "\nReceived SIGTERM\n", 17);
 		exit(EXIT_SUCCESS);
 	}
 }
