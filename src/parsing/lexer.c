@@ -6,36 +6,25 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 13:06:53 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/30 14:06:47 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-int	init_lexer(t_token **token, t_lx_dt *lx_dt, t_cmnd_tbl *c)
-{
-	lx_dt->expecting_command = TRUE;
-	lx_dt->previous_token_type = 0;
-	lx_dt->next_token_type = 0;
-	lx_dt->envp = c->envp;
-	lx_dt->last_exit_status = c->last_exit_status;
-	*token = malloc(sizeof(t_token));
-	if (!*token)
-		return (alloc_failed());
-	(*token)->next = NULL;
-	(*token)->token = NULL;
-	(*token)->type = COMMAND;
-	return (0);
-}
 
 /*=============================================================================
 Returns TRUE if there is no command in the tokens yet, if the current token
 is a type of string, and if the previous command is not any operator except
 for a pipe.
 =============================================================================*/
-int is_command_token(t_lx_dt *lx_dt)
+int	is_command_token(t_lx_dt *lx_dt)
 {
-	return (lx_dt->expecting_command && !is_previous_tok_operator_except_pipe(lx_dt) && (lx_dt->next_token_type == SINGLE_QUOTE || lx_dt->next_token_type == DOUBLE_QUOTE || lx_dt->next_token_type == STRING_TYPE || lx_dt->next_token_type == ENVP));
+	return (lx_dt->expecting_command
+		&& !is_previous_tok_operator_except_pipe(lx_dt)
+		&& (lx_dt->next_token_type == SINGLE_QUOTE
+			|| lx_dt->next_token_type == DOUBLE_QUOTE
+			|| lx_dt->next_token_type == STRING_TYPE
+			|| lx_dt->next_token_type == ENVP));
 }
 
 /*=============================================================================
@@ -43,25 +32,41 @@ Skips tabs and spaces, identifies the next token type, and calls the
 appropriate function chain to create the token and call tokenize again for the
 next one. Return value is used to pass any error occuring up the chain.
 =============================================================================*/
-int tokenize(t_token *token, char **input, t_lx_dt *lx_dt, int i)
+int	tokenize(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
-	i = skip_spaces_tabs(input, i);
+	if ((*input)[i])
+		i = skip_spaces_tabs(input, i);
 	if (!(*input)[i])
 		return (0);
 	lx_dt->next_token_type = next_token_type(input, i);
 	if (is_command_token(lx_dt))
 		return (command_token(token, input, lx_dt, i));
-	if (lx_dt->next_token_type == SINGLE_QUOTE || lx_dt->next_token_type == DOUBLE_QUOTE)
+	if (lx_dt->next_token_type == SINGLE_QUOTE
+		|| lx_dt->next_token_type == DOUBLE_QUOTE)
 		return (quote_token(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == HEREDOC || lx_dt->next_token_type == APPEND)
 		return (dbl_char_opr_tok(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == ENVP)
 		return (envp_token(token, input, lx_dt, i));
-	if (lx_dt->next_token_type == INPUT_TYPE || lx_dt->next_token_type == OUTPUT_TYPE || lx_dt->next_token_type == PIPE)
+	if (lx_dt->next_token_type == INPUT_TYPE
+		|| lx_dt->next_token_type == OUTPUT_TYPE
+		|| lx_dt->next_token_type == PIPE)
 		return (sngl_char_opr_tok(token, input, lx_dt, i));
 	if (lx_dt->next_token_type == STRING_TYPE)
 		return (string_token(token, input, lx_dt, i));
 	return (0);
+}
+
+int	is_last_token(char **input, int *i)
+{
+	int	is_last;
+
+	is_last = FALSE;
+	if ((*i < ft_strlen(*input)))
+		*i = skip_spaces_tabs(input, *i);
+	if ((*i >= ft_strlen(*input)))
+		is_last = TRUE;
+	return (is_last);
 }
 
 /*=============================================================================
@@ -70,14 +75,11 @@ current token is the last one and passes the information to the syntax check
 function. Initializes the next node and calls tokenize, or, if it's the last
 token, ends the tokenization process.
 =============================================================================*/
-int next_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
+int	next_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 {
-	int is_last;
+	int	is_last;
 
-	is_last = FALSE;
-	i = skip_spaces_tabs(input, i);
-	if (!(*input)[i])
-		is_last = TRUE;
+	is_last = is_last_token(input, &i);
 	if (syntax_check(token, lx_dt, is_last))
 		return (PARSING_ERROR);
 	if (token->type == PIPE)
@@ -97,13 +99,11 @@ int next_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 	token->next = malloc(sizeof(t_token));
 	if (!token->next)
 		return (alloc_failed());
-	token->next->token = NULL;
-	token->next->type = 0;
-	token->next->next = NULL;
+	init_new_token(token);
 	return (tokenize(token->next, input, lx_dt, i));
 }
 
-int next_token_type(char **input, int i)
+int	next_token_type(char **input, int i)
 {
 	if ((*input)[i] == '>' && (*input)[i + 1] == '>')
 		return (APPEND);
@@ -119,7 +119,8 @@ int next_token_type(char **input, int i)
 		return (INPUT_TYPE);
 	if ((*input)[i] == '>')
 		return (OUTPUT_TYPE);
-	if ((*input)[i] == '$' && (is_valid_key_char((*input)[i + 1], TRUE) || (*input)[i + 1] == '?'))
+	if ((*input)[i] == '$' && (is_valid_key_char((*input)[i + 1], TRUE)
+			|| (*input)[i + 1] == '?'))
 		return (ENVP);
 	return (STRING_TYPE);
 }

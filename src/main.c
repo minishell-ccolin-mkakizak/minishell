@@ -3,24 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/29 16:22:05 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/30 12:59:20 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	whitespace_only_handler(char *input)
+int	whitespace_only_handler(char **input)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (input[i] && (input[i] == ' ' || input[i] == '\t'))
+	while ((*input)[i] && ((*input)[i] == ' ' || (*input)[i] == '\t'))
 		i++;
-	if (!input[i])
+	if (!(*input)[i])
+	{
+		add_history(*input);
+		free(*input);
 		return (1);
+	}
 	return (0);
 }
 
@@ -44,12 +48,8 @@ char	*get_input(void)
 			free(input);
 			continue ;
 		}
-		if (whitespace_only_handler(input))
-		{
-			add_history(input);
-			free(input);
+		if (whitespace_only_handler(&input))
 			continue ;
-		}
 		return (input);
 	}
 	return (NULL);
@@ -57,13 +57,48 @@ char	*get_input(void)
 
 // volatile sig_atomic_t sig_received = 0;
 
+int	handle_signals(void)
+{
+	// init_signals();
+	// if (sig_received)
+	// {
+	// 	// sig_received = 0;
+	// 	return ((SIGNAL_RECEIVED));
+	// }
+	return (0);
+}
+
+int	minishell_loop(t_cmnd_tbl *command_table, char **envp)
+{
+	char	*input;
+	int		return_value;
+
+	if (handle_signals())
+		return (SIGNAL_RECEIVED);
+	input = get_input();
+	if (input)
+	{
+		return_value = parse(&input, command_table);
+		if (return_value == PARSING_ERROR)
+		{
+			command_table->last_exit_status = 258;
+			return (PARSING_ERROR);
+		}
+		if (return_value == ALLOCATION_FAIL)
+			return (ALLOCATION_FAIL);
+		pipeline(command_table, envp);
+		if (command_table->head)
+			free_command_list(command_table);
+	}
+	if (!input)
+		return (NO_INPUT);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-
-	char		*input;
+	int			return_value;
 	t_cmnd_tbl	*command_table;
-	int			parser_return_value;
-
 
 	(void)argc;
 	(void)argv;
@@ -71,35 +106,11 @@ int	main(int argc, char **argv, char **envp)
 		return (ALLOCATION_FAIL);
 	while (1)
 	{
-
-		init_signals();
-		// if (sig_received)
-		// {
-		// 	// sig_received = 0;
-		// 	continue;
-		// }
-		// printf("sig_received = %d\n", sig_received);
-		input = get_input();
-		if (input)
-		{
-			parser_return_value = parse(&input, command_table);
-			if (parser_return_value == PARSING_ERROR)
-			{
-				command_table->last_exit_status = 258;
-				continue ;
-			}
-			if (parser_return_value == ALLOCATION_FAIL)
-			{
-				//INSERT FUNCTION THAT FREES THE COMMAND TABLE
-				break ;
-			}
-			pipeline(command_table, envp);
-			if(command_table->head)
-				free_command_list(command_table);
-		}
-		if (!input)
+		return_value = minishell_loop(command_table, envp);
+		if (return_value == PARSING_ERROR || return_value == SIGNAL_RECEIVED)
+			continue ;
+		if (return_value == ALLOCATION_FAIL || return_value == NO_INPUT)
 			break ;
 	}
-	free_command_table(command_table);
-	return (rl_clear_history(), ft_printf("Exiting...\n"), 0);
+	exit(EXIT_SUCCESS);
 }

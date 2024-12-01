@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 19:24:10 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/23 14:32:49 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/30 13:48:09 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,28 @@ void	print_envp(char **envp)
 
 const char	*gettokentypebame(int type)
 {
-	switch (type)
-	{
-	case STRING_TYPE:
+	if (type == STRING_TYPE)
 		return ("STRING");
-	case COMMAND:
+	else if (type == COMMAND)
 		return ("COMMAND");
-	case SINGLE_QUOTE:
+	else if (type == SINGLE_QUOTE)
 		return ("SINGLE_QUOTE");
-	case DOUBLE_QUOTE:
+	else if (type == DOUBLE_QUOTE)
 		return ("DOUBLE_QUOTE");
-	case INPUT_TYPE:
+	else if (type == INPUT_TYPE)
 		return ("INPUT_TYPE");
-	case OUTPUT_TYPE:
+	else if (type == OUTPUT_TYPE)
 		return ("OUTPUT_TYPE");
-	case HEREDOC:
+	else if (type == HEREDOC)
 		return ("HEREDOC");
-	case APPEND:
+	else if (type == APPEND)
 		return ("APPEND");
-	case PIPE:
+	else if (type == PIPE)
 		return ("PIPE");
-	case ENVP:
+	else if (type == ENVP)
 		return ("ENVP");
-	default:
+	else
 		return ("UNKNOWN_TYPE");
-	}
 }
 
 void	print_tokens(t_token *token)

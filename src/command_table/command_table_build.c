@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/26 14:04:17 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/30 12:55:38 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,16 +68,14 @@ t_token	*add_command(t_token *token, t_command *command)
 int	add_operator(t_token **token, t_command *command)
 {
 	if (*token)
-	{
-		*token = handle_input_operator(*token, command);
-		if (!token)
-			return (alloc_failed());
-	}
+		if (handle_input_operator(token, command))
+			return (ALLOCATION_FAIL);
 	if (*token)
 		if (handle_output_append_operator(token, command))
 			return (ALLOCATION_FAIL);
 	if (*token)
-		*token = handle_heredoc_operator(*token, command);
+		if (handle_heredoc_operator(token, command))
+			return (ALLOCATION_FAIL);
 	return (0);
 }
 

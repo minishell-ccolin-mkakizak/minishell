@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:46:48 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/28 19:30:49 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/30 10:57:29 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	ft_free_all(char **str)
 {
 	int	i;
-	if(str == NULL)
-		return ;
 
+	if (str == NULL)
+		return ;
 	i = 0;
 	while (str[i] != NULL)
 	{

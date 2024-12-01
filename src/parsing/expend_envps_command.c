@@ -6,21 +6,48 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:02:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/27 19:33:19 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/30 13:22:47 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
 /*=============================================================================
-Removes quotes from the command token. if the length of the string with and
-without quotes is not the same, is_quoted_string is TRUE.
+Copies the command into a new string while removing any quoted segments.
+Handles single and double quotes, preserving only the contents inside them.
 =============================================================================*/
-int remove_quotes(char **command, int i, int j, int *is_quoted_string)
+static void	copy_without_quotes(const char *command, char *new_str)
 {
-	char *new_str;
-	char c;
-	int len;
+	int		i;
+	int		j;
+	char	c;
+
+	i = 0;
+	j = 0;
+	while (command[i])
+	{
+		if (command[i] == '\'' || command[i] == '"')
+		{
+			c = command[i++];
+			while (command[i] && command[i] != c)
+				new_str[j++] = command[i++];
+			if (command[i])
+				i++;
+		}
+		else
+			new_str[j++] = command[i++];
+	}
+	new_str[j] = '\0';
+}
+
+/*=============================================================================
+Removes quotes from the command token. If the length of the string with and
+without quotes is not the same, is_quoted_string is set to TRUE.
+=============================================================================*/
+int	remove_quotes(char **command, int *is_quoted_string)
+{
+	char	*new_str;
+	int		len;
 
 	len = quoteless_strlen(*command, 0, 0);
 	if (len != ft_strlen(*command))
@@ -30,23 +57,7 @@ int remove_quotes(char **command, int i, int j, int *is_quoted_string)
 	new_str = malloc(sizeof(char) * (len + 1));
 	if (!new_str)
 		return (alloc_failed());
-	while ((*command)[i])
-	{
-		if ((*command)[i] == '\'' || (*command)[i] == '"')
-		{
-			c = (*command)[i++];
-			while ((*command)[i] && (*command)[i] != c)
-			{
-				new_str[j++] = (*command)[i++];
-				new_str[j] = '\0';
-			}
-			if ((*command)[i])
-				i++;
-		}
-		else
-			new_str[j++] = (*command)[i++];
-	}
-	new_str[j] = '\0';
+	copy_without_quotes(*command, new_str);
 	free(*command);
 	*command = new_str;
 	return (0);
@@ -56,9 +67,9 @@ int remove_quotes(char **command, int i, int j, int *is_quoted_string)
 Used to determine how much to allocated for the creation of a unquoted string
 from a quoted string.
 =============================================================================*/
-int quoteless_strlen(char *str, int i, int j)
+int	quoteless_strlen(char *str, int i, int j)
 {
-	char c;
+	char	c;
 
 	while (str[i])
 	{
@@ -82,11 +93,10 @@ int quoteless_strlen(char *str, int i, int j)
 	return (j);
 }
 
-int expend_command_envps(char **command, t_lx_dt *lx_dt,
-						 int *is_quoted_string)
+int	expend_command_envps(char **command, t_lx_dt *lx_dt, int *is_quoted_string)
 {
 	*command = find_envps(*command, lx_dt->envp, TRUE, lx_dt->last_exit_status);
-	if (remove_quotes(command, 0, 0, is_quoted_string))
+	if (remove_quotes(command, is_quoted_string))
 		return (ALLOCATION_FAIL);
 	return (0);
 }

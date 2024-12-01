@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_command_tables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/29 18:00:30 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/11/30 13:49:56 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_command_arrays(char **array, char *arg_type)
 {
 	int	i;
 
-	printf("Command %s:\n", arg_type);
+	printf(" %s:\n", arg_type);
 	if (array)
 	{
 		i = 0;
@@ -36,16 +36,18 @@ void	print_command(t_command *cmd)
 
 	if (!cmd)
 		return ;
-	printf("Command: %s\n", cmd->command ? cmd->command : "None");
+	if (cmd->command)
+		printf("Command: %s\n", cmd->command);
+	else
+		printf("Command: None\n");
 	print_command_arrays(cmd->args, "arg");
 	print_command_details(cmd);
 }
 
 void	print_command_details(t_command *cmd)
 {
-	printf("Input file: %s\n", cmd->input_file ? cmd->input_file : "None");
-	printf("Heredoc delimiter: %s\n",
-		cmd->heredoc_delimiter ? cmd->heredoc_delimiter : "None");
+	print_command_arrays(cmd->input_file, "input file");
+	print_command_arrays(cmd->heredoc_delimiter, "Heredoc");
 	print_command_arrays(cmd->output_file, "output");
 	print_command_arrays(cmd->append, "append");
 	printf("Pipe In: %d\n", cmd->pipe_in);
@@ -64,7 +66,6 @@ void	print_cmnd_tbl(t_cmnd_tbl *table)
 		return ;
 	printf("Exit Status: %d\n", table->last_exit_status);
 	printf("Exit shell: %d\n", table->exit_shell);
-	// print_environment_variables(table);
 	print_commands(table);
 }
 

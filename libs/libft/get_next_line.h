@@ -6,22 +6,25 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 10:34:18 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/28 14:57:41 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/11/29 16:48:01 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
+# include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
-# define OPEN_MAX 1024
+# ifndef OPEN_MAX
+#  define OPEN_MAX 1024
+# endif
+
 void	*gnl_memset(void *b, int c, size_t len);
 char	*ft_find_leftover(char *leftover);
 int		gnl_strlen(const char *str);
