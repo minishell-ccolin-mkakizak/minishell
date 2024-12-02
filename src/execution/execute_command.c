@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/02 15:02:14 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:05:18 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	if(path == NULL && is_path(cmd->command))
 	{
 		path = ft_strdup(cmd->command);
-		set_array = set_command(cmd->command, cmd->args);
 	}
 
 	if (path == NULL && !is_path(cmd->command))
@@ -112,6 +111,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 		ft_printf("minishell: %s: is a directory\n", cmd->command);
 		exit(126);
 	}
+	set_array = set_command(cmd->command, cmd->args);
 
 	if (execve(path, set_array, envp) == -1)
 	{	
