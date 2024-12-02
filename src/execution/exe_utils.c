@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:17:15 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/29 17:17:43 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 15:01:24 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	print_str_arr(char **arr, int len)
 	return (0);
 }
 
-int is_directory(char *path)
+int is_directory(const char *path)
 {
 	struct stat path_stat;
 	
@@ -55,4 +55,13 @@ int is_directory(char *path)
 		return (FALSE);
 	};
 	return S_ISDIR(path_stat.st_mode);
+}
+
+int is_path(const char *command)
+{
+	struct stat sb;
+
+	if (stat(command, &sb) == 0 && sb.st_mode & S_IXUSR)
+		return (TRUE);
+	return (FALSE);
 }

@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/02 13:45:33 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 14:48:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int input_redirect(t_command *cmd)
 	if(cmd->input_file == NULL || cmd->input_file[0] == NULL)
 		return(0);
 
-	if(cmd->heredoc_delimiter)
+	if(cmd->heredoc_delimiter[0])
 	{
 		handle_heredoc(cmd);
 		return(0);

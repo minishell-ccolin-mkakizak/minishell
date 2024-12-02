@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 12:59:20 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/02 14:37:17 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,12 @@ char	*get_input(void)
 	return (NULL);
 }
 
-// volatile sig_atomic_t sig_received = 0;
-
 int	handle_signals(void)
 {
-	// init_signals();
+	init_signals();
 	// if (sig_received)
 	// {
-	// 	// sig_received = 0;
+	// 	printf("signal received [%ds]\n", sig_received);
 	// 	return ((SIGNAL_RECEIVED));
 	// }
 	return (0);
