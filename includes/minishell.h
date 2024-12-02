@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 13:51:38 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/02 17:15:14 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct s_command
 	char				**output_file;
 	char				**heredoc_delimiter;
 	char				**append;
+	int					last_input_heredoc;
+	int					last_output_append;
 	int					pipe_in;
 	int					pipe_out;
 	int					is_built_in;
@@ -255,7 +257,7 @@ int						realloc_array(char ***array, int i, int j);
 int						handle_input_operator(t_token **token,
 							t_command *command);
 int						handle_output_append_operator(t_token **token,
-							t_command *command);
+							t_command *command, int i);
 int						handle_heredoc_operator(t_token **token,
 							t_command *command);
 
