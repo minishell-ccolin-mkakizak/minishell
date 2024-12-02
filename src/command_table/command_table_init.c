@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 12:55:39 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/02 17:13:49 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	init_command(t_command *command, int is_pipe)
 		command->pipe_in = 1;
 	else
 		command->pipe_in = 0;
+	command->last_input_heredoc = 0;
+	command->last_output_append = 0;
 	command->pipe_out = 0;
 	command->is_built_in = 0;
 	command->next = NULL;

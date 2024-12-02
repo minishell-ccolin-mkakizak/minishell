@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/02 17:22:30 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 18:10:01 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	}
 	set_array = set_command(cmd->command, cmd->args);
 
+	// this envp needs to my env that i parse back into char *envp[]
+	
 	if (execve(path, set_array, envp) == -1)
 	{	
 		
