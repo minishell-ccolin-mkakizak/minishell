@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 17:10:51 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 17:17:23 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	char	*path;
 	int	i;
 	path = find_path(cmd->command, table->envp);
+	if(path == NULL && is_file(cmd->command))
+	{
+		path = ft_strdup(cmd->command);
+	}
 	if (path == NULL)
 	{	
 		ft_printf("%s: command not found\n", cmd->command);

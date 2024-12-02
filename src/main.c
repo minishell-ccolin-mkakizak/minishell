@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 12:59:20 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/02 17:13:43 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*get_input(void)
 
 int	handle_signals(void)
 {
-	// init_signals();
+	init_signals();
 	// if (sig_received)
 	// {
 	// 	// sig_received = 0;
@@ -77,7 +77,8 @@ int	minishell_loop(t_cmnd_tbl *command_table, char **envp)
 		return (SIGNAL_RECEIVED);
 	input = get_input();
 	if (input)
-	{
+	{	
+		ignore_signals();
 		return_value = parse(&input, command_table);
 		if (return_value == PARSING_ERROR)
 		{

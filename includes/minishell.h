@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 13:51:38 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/02 17:15:52 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,7 @@ int						is_match(char *str1, char *str2);
 int						get_array_len(char **array);
 int						print_str_arr(char **arr, int len);
 int						is_directory(char *path);
+int						is_file(char *path);
 
 //==========================================================================//
 //							EXECUTION FUNCTIONS								//
@@ -370,4 +371,5 @@ void					free_command_list(t_cmnd_tbl *table);
 void					signal_handler(int sig);
 void					init_signals(void);
 int						has_pipe(t_command *head);
+int						ignore_signals(void);
 #endif

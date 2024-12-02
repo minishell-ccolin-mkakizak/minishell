@@ -6,11 +6,14 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/28 18:58:00 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 17:11:58 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+// extern volatile sig_atomic_t sig_received = 0;
+volatile sig_atomic_t sig_received = 0;
 
 // extern volatile sig_atomic_t sig_received = 0;
 void signal_handler(int sig)
@@ -18,17 +21,20 @@ void signal_handler(int sig)
 	if (sig == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
+		// printf("SIGINT is: [%d]\n\n", sig);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sig == SIGQUIT)
 	{
+		// printf("SIGQUIT is: [%d]\n\n", sig);
 		rl_on_new_line();
 		rl_redisplay();
 	}
 	else if (sig == SIGTERM)
 	{
+		// printf("SIGTERM is: [%d]\n\n", sig);
 		// write(STDOUT_FILENO, "\nReceived SIGTERM\n", 17);
 		exit(EXIT_SUCCESS);
 	}
@@ -45,5 +51,14 @@ void init_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT,&sa, NULL);
 	sigaction(SIGTERM,&sa, NULL);
+}
+
+
+int ignore_signals(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	return (0);
 }
 
