@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 16:20:51 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 13:45:33 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,25 +91,30 @@ int input_redirect(t_command *cmd)
 {
 	int fd;
 	int flags;
+	int i;
+	
+	if(cmd->input_file == NULL || cmd->input_file[0] == NULL)
+		return(0);
 
 	if(cmd->heredoc_delimiter)
 	{
 		handle_heredoc(cmd);
 		return(0);
 	}
-
-	if(cmd->input_file)
+	i = 0;
+	while(cmd->input_file[i])
 	{
 		flags = O_RDONLY;
 
-		fd = open(cmd->input_file, flags, 0644);
+		fd = open(cmd->input_file[i], flags, 0644);
 		if(fd == -1)
 		{
-			ft_printf("minishell: %s: %s\n", cmd->input_file, strerror(errno));
+			ft_printf("minishell: %s: %s\n", cmd->input_file[i], strerror(errno));
 			exit(EXIT_FAILURE);
 		}
 		dup2(fd, STDIN_FILENO);
 		close(fd);
+		i++;
 	}
 	return (0);
 }
