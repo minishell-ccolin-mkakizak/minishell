@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/02 18:10:01 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 18:24:00 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 {
 	char	**set_array;
 	char	*path;
-	int	i;
+	int		i;
+	char 	**env;
 	path = find_path(cmd->command, table->envp);
 	if(path == NULL && is_file(cmd->command))
 	{
@@ -110,8 +111,13 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[])
 	set_array = set_command(cmd->command, cmd->args);
 
 	// this envp needs to my env that i parse back into char *envp[]
+	env = convert_env_list_to_envp(table->envp);
+	// for (i = 0; envp[i] != NULL; i++) {
+	// 	printf("%s\n", envp[i]);
+	// }
+	// print_str_arr(env, get_array_len(env));
 	
-	if (execve(path, set_array, envp) == -1)
+	if (execve(path, set_array, env) == -1)
 	{	
 		
 		// ft_free_all(cmd->args);

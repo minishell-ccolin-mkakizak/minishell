@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/02 18:11:06 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 18:19:28 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,6 +297,7 @@ void					free_env_list(t_env_list *head);
 void					free_env_node(t_env_list *node);
 t_env_list				*create_node(char *name, char *value);
 char					*get_env_var(t_env_list *envs, char *name);
+char					**convert_env_list_to_envp(t_env_list *head);
 
 //==========================================================================//
 //							BUILT-IN COMMANDS FUNCTIONS						//

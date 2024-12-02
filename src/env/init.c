@@ -6,11 +6,19 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/28 14:49:09 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/02 18:21:57 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+// typedef struct s_env_list
+// {
+// 	char				*name;
+// 	char				*value;
+// 	struct s_env_list	*next;
+// }						t_env_list;
+
 
 // function to print all envp
 void print_env_list(t_env_list *head)
@@ -100,4 +108,45 @@ t_env_list *init_env(char *envp[])
 		i++;
 	}
 	return (head);
+}
+
+char **convert_env_list_to_envp(t_env_list *head)
+{
+	int count = 0;
+	t_env_list *current = head;
+
+	// Count the number of nodes in the linked list
+	while (current != NULL) {
+		count++;
+		current = current->next;
+	}
+
+	// Allocate memory for the envp array
+	char **envp = (char **)malloc((count + 1) * sizeof(char *));
+	if (envp == NULL) {
+		return NULL;
+	}
+
+	// Copy the name-value pairs from the linked list to the envp array
+	current = head;
+	for (int i = 0; i < count; i++) {
+		// Format the name-value pair as "name=value"
+		size_t len = strlen(current->name) + strlen(current->value) + 2;
+		envp[i] = (char *)malloc(len * sizeof(char));
+		if (envp[i] == NULL) {
+			// Free the memory allocated so far
+			for (int j = 0; j < i; j++) {
+				free(envp[j]);
+			}
+			free(envp);
+			return NULL;
+		}
+		// snprintf(envp[i], len, "%s=%s", current->name, current->value);
+		current = current->next;
+	}
+
+	// Set the last element of envp to NULL
+	envp[count] = NULL;
+
+	return envp;
 }
