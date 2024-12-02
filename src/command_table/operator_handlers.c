@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 13:53:26 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/02 17:16:23 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,13 @@ int	handle_input_operator(t_token **token, t_command *command)
 		*token = (*token)->next;
 		command->input_file[i] = ft_strdup((*token)->token);
 		*token = (*token)->next;
+		command->last_input_heredoc = INPUT_TYPE;
 	}
 	return (0);
 }
 
-int	handle_output_append_operator(t_token **token, t_command *command)
+int	handle_output_append_operator(t_token **token, t_command *command, int i)
 {
-	int	i;
-
-	i = 0;
 	if ((*token)->type == OUTPUT_TYPE)
 	{
 		while (command->output_file && command->output_file[i])
@@ -73,6 +71,7 @@ int	handle_output_append_operator(t_token **token, t_command *command)
 		*token = (*token)->next;
 		command->output_file[i] = ft_strdup((*token)->token);
 		*token = (*token)->next;
+		command->last_output_append = OUTPUT_TYPE;
 	}
 	else if ((*token)->type == APPEND)
 	{
@@ -83,6 +82,7 @@ int	handle_output_append_operator(t_token **token, t_command *command)
 		*token = (*token)->next;
 		command->append[i] = ft_strdup((*token)->token);
 		*token = (*token)->next;
+		command->last_output_append = INPUT_TYPE;
 	}
 	return (0);
 }
@@ -101,6 +101,7 @@ int	handle_heredoc_operator(t_token **token, t_command *command)
 		*token = (*token)->next;
 		command->heredoc_delimiter[i] = ft_strdup((*token)->token);
 		*token = (*token)->next;
+		command->last_input_heredoc = HEREDOC;
 	}
 	return (0);
 }
