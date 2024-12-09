@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/09 15:47:25 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:07:46 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,22 +168,7 @@ void await_process(pid_t pid, t_cmnd_tbl *table)
 	}
 	return ;
 }
-int ignore_signals(void)
-{
-    // Ignore SIGINT (Control-C)
-    if (signal(SIGINT, SIG_IGN) == SIG_ERR)
-        return (-1);
 
-    // Ignore SIGQUIT (Control-\)
-    if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
-        return (-1);
-
-    // Optionally ignore SIGTERM
-    if (signal(SIGTERM, SIG_IGN) == SIG_ERR)
-        return (-1);
-
-    return (0);
-}
 
 int	pipeline(t_cmnd_tbl *table, char *envp[])
 {
@@ -215,7 +200,6 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 			pid = safe_fork();
 			
 		}
-		ignore_signals();
 		if(pid == 0)
 		{	
 			is_child = TRUE;

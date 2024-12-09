@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/09 15:51:03 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:07:08 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,6 +319,7 @@ int						is_match(char *str1, char *str2);
 int						get_array_len(char **array);
 int						print_str_arr(char **arr, int len);
 int						is_directory(char *path);
+int						is_path(const char *command);
 
 //==========================================================================//
 //							EXECUTION FUNCTIONS								//
@@ -376,6 +377,6 @@ void					free_command_list(t_cmnd_tbl *table);
 //================================>> SIGNALS.C <<===========================//
 void					signal_handler(int sig);
 int						init_signals(void);
-int						has_pipe(t_command *head);
+// int						ignore_signals(void);
 
 #endif

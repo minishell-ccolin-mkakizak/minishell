@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/09 15:48:48 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:07:15 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,3 +47,16 @@ int init_signals(void)
 	return (0);
 }
 
+int ignore_signals(void)
+{
+	if (signal(SIGINT, SIG_IGN) == SIG_ERR)
+		return (-1);
+
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		return (-1);
+	
+	if (signal(SIGTERM, SIG_IGN) == SIG_ERR)
+		return (-1);
+
+	return (0);
+}
