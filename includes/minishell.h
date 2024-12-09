@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/09 14:46:35 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:30:25 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,8 +333,11 @@ int input_redirect(t_command *cmd);
 int						pipeline(t_cmnd_tbl *table, char *envp[]);
 
 //==============================>> HERE_DOC.C <<============================//
-int						check_for_dilimiter(char* delemiter, char *input);
-int						handle_heredoc(char *delemiter);
+int						heredoc_redirect(t_command *cmd);
+// int						check_for_dilimiter(char* delemiter, char *input);
+// int						handle_heredoc(char *delemiter);
+int						check_for_delimiter(char *delimiter, char *input);
+int						handle_heredoc(char *delimiter, int *pipe_fd);
 
 //===========================>> EXECUTE_COMMAND.C <<========================//
 char					*validate_path(char **path_arr, char *cmd);

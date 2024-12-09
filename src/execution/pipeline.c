@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/09 14:49:10 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:06:28 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,27 +82,6 @@ int append_redirect(t_command *cmd)
 		}
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
-		i++;
-	}
-	return (0);
-}
-
-
-
-int heredoc_redirect(t_command *cmd)
-{
-	int fd;
-	int flags;
-	int i;
-
-	
-	if(cmd->heredoc_delimiter == NULL || cmd->heredoc_delimiter[0] == NULL)
-		return(0);
-
-	i = 0;
-	while(cmd->heredoc_delimiter[i])
-	{
-		handle_heredoc(cmd->heredoc_delimiter[i]);
 		i++;
 	}
 	return (0);
