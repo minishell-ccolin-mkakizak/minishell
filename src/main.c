@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 12:59:20 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/09 16:02:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,18 @@ char	*get_input(void)
 	return (NULL);
 }
 
-// volatile sig_atomic_t sig_received = 0;
-
-int	handle_signals(void)
-{
-	// init_signals();
-	// if (sig_received)
-	// {
-	// 	// sig_received = 0;
-	// 	return ((SIGNAL_RECEIVED));
-	// }
-	return (0);
-}
 
 int	minishell_loop(t_cmnd_tbl *command_table, char **envp)
 {
 	char	*input;
 	int		return_value;
 
-	if (handle_signals())
+	if (init_signals())
 		return (SIGNAL_RECEIVED);
 	input = get_input();
 	if (input)
-	{
+	{	
+		ignore_signals();
 		return_value = parse(&input, command_table);
 		if (return_value == PARSING_ERROR)
 		{

@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/29 16:20:51 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 16:07:46 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,29 +87,30 @@ int append_redirect(t_command *cmd)
 	return (0);
 }
 
+
 int input_redirect(t_command *cmd)
 {
 	int fd;
 	int flags;
+	int i;
 
-	if(cmd->heredoc_delimiter)
-	{
-		handle_heredoc(cmd);
+	if(cmd->input_file == NULL || cmd->input_file[0] == NULL)
 		return(0);
-	}
 
-	if(cmd->input_file)
+	i = 0;
+	while(cmd->input_file[i])
 	{
 		flags = O_RDONLY;
 
-		fd = open(cmd->input_file, flags, 0644);
+		fd = open(cmd->input_file[i], flags, 0644);
 		if(fd == -1)
 		{
-			ft_printf("minishell: %s: %s\n", cmd->input_file, strerror(errno));
+			ft_printf("minishell: %s: %s\n", cmd->input_file[i], strerror(errno));
 			exit(EXIT_FAILURE);
 		}
 		dup2(fd, STDIN_FILENO);
 		close(fd);
+		i++;
 	}
 	return (0);
 }
@@ -168,6 +169,7 @@ void await_process(pid_t pid, t_cmnd_tbl *table)
 	return ;
 }
 
+
 int	pipeline(t_cmnd_tbl *table, char *envp[])
 {
 	//maybe i can add some of these to the table struct
@@ -186,6 +188,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 	init_fd(&fd);
 
 
+
 	while(current)
 	{
 
@@ -195,13 +198,14 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 		if(current->next || !current->is_built_in || has_pipe(table->head))
 		{
 			pid = safe_fork();
+			
 		}
-
 		if(pid == 0)
-		{
+		{	
 			is_child = TRUE;
 			setup_pipes(&prev_pipe, current, &fd);
 			input_redirect(current);
+			heredoc_redirect(current);
 			output_redirect(current);
 			append_redirect(current);
 			if(current->is_built_in)

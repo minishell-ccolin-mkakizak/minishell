@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/02 17:15:14 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/09 16:07:08 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,6 +319,7 @@ int						is_match(char *str1, char *str2);
 int						get_array_len(char **array);
 int						print_str_arr(char **arr, int len);
 int						is_directory(char *path);
+int						is_path(const char *command);
 
 //==========================================================================//
 //							EXECUTION FUNCTIONS								//
@@ -327,12 +328,17 @@ int						is_directory(char *path);
 //==============================>> EXECUTION.C <<===========================//
 // int	main_execution(char *envp[]);
 
+
+int input_redirect(t_command *cmd);
 //==============================>> PIPELINE.C <<============================//
 int						pipeline(t_cmnd_tbl *table, char *envp[]);
 
 //==============================>> HERE_DOC.C <<============================//
-int						check_for_dilimiter(t_command *cmd, char *input);
-int						handle_heredoc(t_command *cmd);
+int						heredoc_redirect(t_command *cmd);
+// int						check_for_dilimiter(char* delemiter, char *input);
+// int						handle_heredoc(char *delemiter);
+int						check_for_delimiter(char *delimiter, char *input);
+int						handle_heredoc(char *delimiter, int *pipe_fd);
 
 //===========================>> EXECUTE_COMMAND.C <<========================//
 char					*validate_path(char **path_arr, char *cmd);
@@ -370,6 +376,7 @@ void					free_command_list(t_cmnd_tbl *table);
 
 //================================>> SIGNALS.C <<===========================//
 void					signal_handler(int sig);
-void					init_signals(void);
-int						has_pipe(t_command *head);
+int						init_signals(void);
+// int						ignore_signals(void);
+
 #endif
