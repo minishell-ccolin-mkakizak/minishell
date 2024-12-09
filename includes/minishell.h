@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/09 15:30:25 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:51:03 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,6 +375,7 @@ void					free_command_list(t_cmnd_tbl *table);
 
 //================================>> SIGNALS.C <<===========================//
 void					signal_handler(int sig);
-void					init_signals(void);
+int						init_signals(void);
 int						has_pipe(t_command *head);
+
 #endif

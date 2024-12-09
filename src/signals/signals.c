@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/28 18:58:00 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:48:48 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ void signal_handler(int sig)
 	}
 	else if (sig == SIGTERM)
 	{
-		// write(STDOUT_FILENO, "\nReceived SIGTERM\n", 17);
 		exit(EXIT_SUCCESS);
 	}
 }
 
-void init_signals(void)
+int init_signals(void)
 {	
 	struct sigaction sa;
 
@@ -45,5 +44,6 @@ void init_signals(void)
 	sigaction(SIGINT, &sa, NULL);
 	sigaction(SIGQUIT,&sa, NULL);
 	sigaction(SIGTERM,&sa, NULL);
+	return (0);
 }
 
