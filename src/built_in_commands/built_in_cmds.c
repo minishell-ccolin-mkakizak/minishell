@@ -6,13 +6,13 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:09:06 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/26 15:48:22 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:34:53 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int built_in_cmds(t_command *cmd, t_cmnd_tbl *table, int is_child)
+int built_in_cmds(t_command *cmd, t_cmnd_tbl *table, int is_child, t_fd *fd)
 {
 	if(is_match(cmd->command, "cd"))
 	{
