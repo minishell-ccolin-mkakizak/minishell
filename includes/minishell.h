@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/02 17:15:14 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/09 14:46:35 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,12 +327,14 @@ int						is_directory(char *path);
 //==============================>> EXECUTION.C <<===========================//
 // int	main_execution(char *envp[]);
 
+
+int input_redirect(t_command *cmd);
 //==============================>> PIPELINE.C <<============================//
 int						pipeline(t_cmnd_tbl *table, char *envp[]);
 
 //==============================>> HERE_DOC.C <<============================//
-int						check_for_dilimiter(t_command *cmd, char *input);
-int						handle_heredoc(t_command *cmd);
+int						check_for_dilimiter(char* delemiter, char *input);
+int						handle_heredoc(char *delemiter);
 
 //===========================>> EXECUTE_COMMAND.C <<========================//
 char					*validate_path(char **path_arr, char *cmd);
