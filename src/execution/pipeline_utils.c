@@ -3,31 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 10:45:11 by minoka            #+#    #+#             */
-/*   Updated: 2024/11/23 14:18:03 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/09 17:56:07 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	throw_error(char *message, int exit_status, int error_number)
-{
-	if (error_number)
-		errno = error_number;
-	perror(message);
-	exit(exit_status);
-}
-
-pid_t	safe_fork(void)
+pid_t	safe_fork(t_fd *fd)
 {
 	pid_t	res;
 
 	res = fork();
 	if (res == -1)
-		throw_error("minishell: creating child process failed", EXIT_FAILURE,
-			EINTR);
+	{
+		restore_fd(fd);
+		ft_printf("minishell: creating child process failed\n");
+		exit(EXIT_FAILURE);
+	}
 	return (res);
 }
 
@@ -52,8 +47,9 @@ void	init_pipe(t_fd *fd)
 	if (pipe(fd->pipe_fd) == -1)
 	{
 		// pipe fail error handeling
-		puts("pipe creation failed");
-		return ;
+		restore_fd(fd);
+		ft_printf("minishell: pipe creation failed\n");
+		exit(EXIT_FAILURE);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/09 17:49:02 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:56:32 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 
 		if(current->next || !current->is_built_in || has_pipe(table->head))
 		{
-			pid = safe_fork();
+			pid = safe_fork(&fd);
 			
 		}
 		if(pid == 0)

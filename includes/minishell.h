@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/09 17:50:19 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:55:56 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,7 @@ int						input_redirect(t_command *cmd);
 
 //==============================>> PIPELINE.C <<============================//
 int						pipeline(t_cmnd_tbl *table, char *envp[]);
-int setup_pipes(int *prev_pipe, t_command *current, t_fd *fd);
+int						setup_pipes(int *prev_pipe, t_command *current, t_fd *fd);
 int						clean_pipes(int *prev_pipe, t_command *current, t_fd *fd);
 
 //==============================>> HERE_DOC.C <<============================//
@@ -350,9 +350,7 @@ int						execute_cmd(t_command *cmd, t_cmnd_tbl *table,
 char					**set_command(char *command, char **args);
 
 //===========================>> PIPELINE_UTILS.C <<=========================//
-void					throw_error(char *message, int last_exit_status,
-							int error_number);
-pid_t					safe_fork(void);
+pid_t					safe_fork(t_fd *fd);
 void					init_fd(t_fd *fd);
 void					restore_fd(t_fd *fd);
 void					init_pipe(t_fd *fd);
