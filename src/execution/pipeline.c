@@ -6,25 +6,12 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/09 16:07:46 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:02:08 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// typedef struct s_command
-// {
-// 	char				*command;
-// 	char				**args;
-// 	char				*input_file;
-// 	char				** ;
-// 	char				*heredoc_delimiter;
-// 	char				**append;
-// 	int					pipe_in;
-// 	int					pipe_out;
-// 	int					is_built_in;
-// 	struct s_command	*next;
-// }						t_command;
 
 //TODO: i need a way to know which is the last redirection in the list 
 	// like if i have echo hello > file1 >> file2 > file3
@@ -169,6 +156,49 @@ void await_process(pid_t pid, t_cmnd_tbl *table)
 	return ;
 }
 
+// typedef struct s_command
+// {
+// 	char				*command;
+// 	char				**args;
+// 	char				**input_file;
+// 	char				**output_file;
+// 	char				**heredoc_delimiter;
+// 	char				**append;
+// 	int					last_input_heredoc;
+// 	int					last_output_append;
+// 	int					pipe_in;
+// 	int					pipe_out;
+// 	int					is_built_in;
+// 	struct s_command	*next;
+// }						t_command;
+
+
+int redirects(t_command *current, t_fd *fd, int prev_pipe)
+{
+	setup_pipes(&prev_pipe, current, fd);
+	if(current->last_input_heredoc == HEREDOC)
+	{
+		input_redirect(current);
+		heredoc_redirect(current);
+	}
+	else
+	{
+		heredoc_redirect(current);
+		input_redirect(current);
+	}
+	if(current->last_output_append == APPEND)
+	{
+		output_redirect(current);
+		append_redirect(current);
+	}
+	else
+	{
+		output_redirect(current);
+		append_redirect(current);
+	}
+	return (0);
+}
+
 
 int	pipeline(t_cmnd_tbl *table, char *envp[])
 {
@@ -203,11 +233,7 @@ int	pipeline(t_cmnd_tbl *table, char *envp[])
 		if(pid == 0)
 		{	
 			is_child = TRUE;
-			setup_pipes(&prev_pipe, current, &fd);
-			input_redirect(current);
-			heredoc_redirect(current);
-			output_redirect(current);
-			append_redirect(current);
+			redirects(current, &fd, prev_pipe);
 			if(current->is_built_in)
 				built_in_cmds(current, table, is_child);
 			else
