@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 14:11:04 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:49:29 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,9 @@ void					free_env_node(t_env_list *node);
 t_env_list				*create_node(char *name, char *value);
 char					*get_env_var(t_env_list *envs, char *name);
 
+//=====================-->> REVERT_ENV_LIST.C <<============================//
+char					**revert_envp_list(t_env_list *head);
+
 //==========================================================================//
 //							BUILT-IN COMMANDS FUNCTIONS						//
 //==========================================================================//
@@ -346,7 +349,7 @@ int						handle_heredoc(char *delimiter, int *pipe_fd);
 char					*validate_path(char **path_arr, char *cmd);
 char					*find_path(char *cmd, t_env_list *table);
 int						execute_cmd(t_command *cmd, t_cmnd_tbl *table,
-							int is_child, char *envp[], t_fd *fd);
+							int is_child, t_fd *fd);
 char					**set_command(char *command, char **args);
 
 //===========================>> PIPELINE_UTILS.C <<=========================//

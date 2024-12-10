@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/09 17:48:39 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:49:12 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**set_command(char *command, char **args)
 
 // restoreing file descriptors seems to work
 
-int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[], t_fd *fd)
+int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, t_fd *fd)
 {
 	char	**set_array;
 	char	*path;
@@ -117,7 +117,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, char *envp[], t
 	}
 	set_array = set_command(cmd->command, cmd->args);
 
-	if (execve(path, set_array, envp) == -1)
+	if (execve(path, set_array, revert_envp_list(table->envp)) == -1)
 	{	
 		restore_fd(fd);
 		ft_printf("minishell: %s: %s\n", cmd->command, strerror(errno));
