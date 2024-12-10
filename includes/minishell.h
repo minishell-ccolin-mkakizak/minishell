@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 14:49:29 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:13:10 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,7 +314,7 @@ void					exe_cd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_unset(t_command *cmd, t_cmnd_tbl *table);
 void					exe_pwd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_env(t_command *cmd, t_cmnd_tbl *table);
-void					exe_export(t_command *cmd, t_cmnd_tbl *table);
+void					exe_export(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_exit(t_command *cmd, t_cmnd_tbl *table);
 
 //==============================>> EXE_UTILS.C <<===========================//
