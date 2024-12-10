@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:14:22 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 17:39:57 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 18:04:33 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,13 @@ void	exe_export(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
 		print_no_args(table->envp);
 		return ;
 	}
-	if (!is_valid_identifier(cmd->args[0]))
+	str_array = ft_env_split(cmd->args[0]);
+	if (!str_array)
+		return ;
+	if (!is_valid_identifier(str_array[0]))
 	{
 		print_export_error(cmd->args[0], fd);
 		return ;
 	}
-	str_array = ft_split(cmd->args[0], '=');
-	if (!str_array)
-		return ;
 	find_and_replace_env(table, str_array);
 }
