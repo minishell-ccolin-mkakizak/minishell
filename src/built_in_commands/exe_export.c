@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:14:22 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/28 14:20:43 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:23:08 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 void exe_export(t_command *cmd, t_cmnd_tbl *table)
 {
-	puts("YOU MADE IT TO EXPORT");
-
 	t_env_list	*current;
 	t_env_list	*prev;
 	t_env_list	*temp;
 	char 		**str_array;
 	char 		*env;
 
-	if (!table->envp  || !cmd->args[0])
+	if (!table->envp  || !cmd->args || !cmd->args[0])
 	{
 		return ;
 	}
+	
 	current = table->envp;
 	env = cmd->args[0];
 	prev = NULL;

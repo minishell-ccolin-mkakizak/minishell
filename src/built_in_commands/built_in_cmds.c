@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 18:09:06 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 13:10:32 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:21:22 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int built_in_cmds(t_command *cmd, t_cmnd_tbl *table, int is_child, t_fd *fd)
 	}
 	if(is_match(cmd->command, "pwd"))
 	{
-		exe_pwd(cmd, table);
+		exe_pwd(cmd, table, fd);
 	}
 	if(is_match(cmd->command, "export"))
 	{
