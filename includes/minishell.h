@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 13:18:05 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:11:04 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,9 +328,9 @@ int						is_path(const char *command);
 //==============================>> REDIRECTS.C <<===========================//
 
 int						redirects(t_command *current, t_fd *fd, int prev_pipe);
-int						output_redirect(t_command *cmd);
-int						append_redirect(t_command *cmd);
-int						input_redirect(t_command *cmd);
+int						output_redirect(t_command *cmd, t_fd *fd);
+int						append_redirect(t_command *cmd, t_fd *fd);
+int						input_redirect(t_command *cmd, t_fd *fd);
 
 //==============================>> PIPELINE.C <<============================//
 int						pipeline(t_cmnd_tbl *table, char *envp[]);
@@ -338,7 +338,7 @@ int						setup_pipes(int *prev_pipe, t_command *current, t_fd *fd);
 int						clean_pipes(int *prev_pipe, t_command *current, t_fd *fd);
 
 //==============================>> HERE_DOC.C <<============================//
-int						heredoc_redirect(t_command *cmd);
+int						heredoc_redirect(t_command *cmd, t_fd *fd);
 int						check_for_delimiter(char *delimiter, char *input);
 int						handle_heredoc(char *delimiter, int *pipe_fd);
 
