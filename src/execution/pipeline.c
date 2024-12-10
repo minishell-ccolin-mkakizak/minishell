@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 17:01:09 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:28:35 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	await_process(pid_t pid, t_cmnd_tbl *table)
 		wpid = wait(&status);
 		if (wpid < 0)
 		{
-			// need to implement error handing
 			break ;
 		}
 		if (pid == wpid)

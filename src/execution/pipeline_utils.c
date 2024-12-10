@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 10:45:11 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 15:24:20 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:28:26 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	init_pipe(t_fd *fd)
 {
 	if (pipe(fd->pipe_fd) == -1)
 	{
-		// pipe fail error handeling
 		restore_fd(fd);
 		ft_printf("minishell: pipe creation failed\n");
 		exit(EXIT_FAILURE);
