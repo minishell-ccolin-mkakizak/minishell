@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 16:59:35 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:41:52 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ char	*get_env_var(t_env_list *envs, char *name)
 {
 	t_env_list	*current;
 	t_env_list	*prev;
-	int			i;
 
 	current = envs;
 	while (current && !is_match(current->name, name))
@@ -49,7 +48,6 @@ char	*get_env_var(t_env_list *envs, char *name)
 t_env_list	*create_node(char *name, char *value)
 {
 	t_env_list	*node;
-	char		**str_array;
 
 	node = ft_calloc(sizeof(t_env_list), 1);
 	if (node == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:15:13 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 15:23:47 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:36:32 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	exe_exit(t_command *cmd, t_cmnd_tbl *table)
 {
+	(void)cmd;
+	(void)table;
 	ft_printf("exit\n");
 	exit(EXIT_SUCCESS);
 }

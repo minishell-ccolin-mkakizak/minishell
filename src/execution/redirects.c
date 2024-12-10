@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirects.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:44:07 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 15:24:24 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:53:10 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	redirects(t_command *current, t_fd *fd, int prev_pipe)
 	if (current->last_input_heredoc == HEREDOC)
 	{
 		input_redirect(current, fd);
-		heredoc_redirect(current, fd);
+		heredoc_redirect(current);
 	}
 	else
 	{
-		heredoc_redirect(current, fd);
+		heredoc_redirect(current);
 		input_redirect(current, fd);
 	}
 	if (current->last_output_append == APPEND)

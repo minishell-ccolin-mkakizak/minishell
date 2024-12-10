@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 15:19:38 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:51:27 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_input(void)
 	return (NULL);
 }
 
-int	minishell_loop(t_cmnd_tbl *command_table, char **envp)
+int	minishell_loop(t_cmnd_tbl *command_table)
 {
 	char	*input;
 	int		return_value;
@@ -74,7 +74,7 @@ int	minishell_loop(t_cmnd_tbl *command_table, char **envp)
 		}
 		if (return_value == ALLOCATION_FAIL)
 			return (ALLOCATION_FAIL);
-		pipeline(command_table, envp);
+		pipeline(command_table);
 		if (command_table->head)
 			free_command_list(command_table);
 	}
@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		return (ALLOCATION_FAIL);
 	while (1)
 	{
-		return_value = minishell_loop(command_table, envp);
+		return_value = minishell_loop(command_table);
 		if (return_value == PARSING_ERROR || return_value == SIGNAL_RECEIVED)
 			continue ;
 		if (return_value == ALLOCATION_FAIL || return_value == NO_INPUT)

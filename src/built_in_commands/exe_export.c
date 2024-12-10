@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:14:22 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 16:42:04 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:39:57 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	find_and_replace_env(t_cmnd_tbl *table, char **str_array)
 {
 	t_env_list	*current;
 	t_env_list	*prev;
-	t_env_list	*new_node;
 
 	current = table->envp;
 	prev = NULL;

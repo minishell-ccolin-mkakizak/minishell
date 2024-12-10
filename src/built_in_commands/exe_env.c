@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:11:56 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 15:51:23 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:37:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	exe_env(t_command *cmd, t_cmnd_tbl *table)
 {
+	(void)cmd;
 	if (table->envp == NULL)
 		ft_printf("enpv is NULL\n");
 	else

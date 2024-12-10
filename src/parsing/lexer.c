@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 14:06:47 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:50:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ int	is_last_token(char **input, int *i)
 	int	is_last;
 
 	is_last = FALSE;
-	if ((*i < ft_strlen(*input)))
+	if ((*i < (int)ft_strlen(*input)))
 		*i = skip_spaces_tabs(input, *i);
-	if ((*i >= ft_strlen(*input)))
+	if ((*i >= (int)ft_strlen(*input)))
 		is_last = TRUE;
 	return (is_last);
 }

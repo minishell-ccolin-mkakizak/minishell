@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:54:32 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 17:23:27 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:45:38 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	heredoc_iterator(t_command *cmd, int *pipe_fds)
 	return (0);
 }
 
-int	heredoc_redirect(t_command *cmd, t_fd *fd)
+int	heredoc_redirect(t_command *cmd)
 {
 	int	i;
 	int	*pipe_fds;
@@ -107,9 +107,6 @@ void	read_write_to_pipe(char *delimiter, int pipe_fd[2])
 
 int	handle_heredoc(char *delimiter, int *pipe_fd)
 {
-	char	*input;
-	size_t	len;
-
 	if (delimiter == NULL)
 		return (-1);
 	if (pipe(pipe_fd) == -1)

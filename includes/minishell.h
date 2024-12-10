@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 16:34:24 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:47:17 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,8 +324,6 @@ void					change_to_new_dir(char *new_dir, t_fd *fd,
 							t_cmnd_tbl *table);
 t_env_list				*find_env_node(t_env_list *envp, char *name,
 							t_env_list **prev);
-void					update_or_add_env_node(t_cmnd_tbl *table, char *name,
-							char *value, t_fd *fd);
 void					set_env_var(t_cmnd_tbl *table, char *name, char *value,
 							t_fd *fd);
 void					update_env(t_cmnd_tbl *table, t_fd *fd);
@@ -349,14 +347,14 @@ int						append_redirect(t_command *cmd, t_fd *fd);
 int						input_redirect(t_command *cmd, t_fd *fd);
 
 //==============================>> PIPELINE.C <<============================//
-int						pipeline(t_cmnd_tbl *table, char *envp[]);
+int						pipeline(t_cmnd_tbl *table);
 int						setup_pipes(int *prev_pipe, t_command *current,
 							t_fd *fd);
 int						clean_pipes(int *prev_pipe, t_command *current,
 							t_fd *fd);
 
 //==============================>> HERE_DOC.C <<============================//
-int						heredoc_redirect(t_command *cmd, t_fd *fd);
+int						heredoc_redirect(t_command *cmd);
 int						check_for_delimiter(char *delimiter, char *input);
 int						handle_heredoc(char *delimiter, int *pipe_fd);
 
@@ -364,7 +362,7 @@ int						handle_heredoc(char *delimiter, int *pipe_fd);
 char					*validate_path(char **path_arr, char *cmd);
 char					*find_path(char *cmd, t_env_list *table);
 int						execute_cmd(t_command *cmd, t_cmnd_tbl *table,
-							int is_child, t_fd *fd);
+							t_fd *fd);
 char					**set_command(char *command, char **args);
 
 //===========================>> PIPELINE_UTILS.C <<=========================//

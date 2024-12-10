@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expend_envps_command.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:02:55 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 13:22:47 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:49:37 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ without quotes is not the same, is_quoted_string is set to TRUE.
 int	remove_quotes(char **command, int *is_quoted_string)
 {
 	char	*new_str;
-	int		len;
+	size_t	len;
 
 	len = quoteless_strlen(*command, 0, 0);
 	if (len != ft_strlen(*command))

@@ -3,10 +3,9 @@ LIBFT_PATH	=	./libs/libft
 LIBFT		=	$(LIBFT_PATH)/libft.a
 INCLUDES	= 	-I includes -I $(LIBFT_PATH)/includes -I /usr/local/opt/readline/include
 
-# this is commented out just for development
-# CFLAGS		=	-Wall -Werror -Wextra $(INCLUDES)
+CFLAGS		=	-Wall -Werror -Wextra $(INCLUDES)
 
-CFLAGS		= 	$(INCLUDES) -DTABLE_DEBUG=$(TABLE_DEBUG) -g
+# CFLAGS		= 	$(INCLUDES) -DTABLE_DEBUG=$(TABLE_DEBUG) -g
 LIBS_PATH	=	-L$(LIBFT_PATH) -L /usr/local/opt/readline/lib
 LIBS_FLAGS	=	-lft -lreadline
 DEBUG_FLAGS	=	-fsanitize=address

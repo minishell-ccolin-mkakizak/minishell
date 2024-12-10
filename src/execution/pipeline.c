@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 17:28:35 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:46:17 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ void	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 		if (current->is_built_in)
 			built_in_cmds(current, table, is_child, fd);
 		else
-			execute_cmd(current, table, is_child, fd);
+			execute_cmd(current, table, fd);
 	}
 	else if (current->is_built_in && !has_pipe(table->head))
 		built_in_cmds(current, table, is_child, fd);
 	clean_pipes(prev_pipe, current, fd);
 }
 
-int	pipeline(t_cmnd_tbl *table, char *envp[])
+int	pipeline(t_cmnd_tbl *table)
 {
 	t_fd		fd;
 	t_command	*current;

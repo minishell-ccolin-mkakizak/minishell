@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_command_tables.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 13:27:06 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 15:24:09 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:41:00 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ void	print_command_arrays(char **array, char *arg_type)
 
 void	print_command(t_command *cmd)
 {
-	int	i;
-
 	if (!cmd)
 		return ;
 	if (cmd->command)
@@ -58,8 +56,6 @@ void	print_command_details(t_command *cmd)
 
 void	print_cmnd_tbl(t_cmnd_tbl *table)
 {
-	int	i;
-
 	if (!TABLE_DEBUG)
 		return ;
 	if (!table)

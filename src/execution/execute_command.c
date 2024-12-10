@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 17:05:57 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:43:39 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,9 @@ void	execute(t_cmnd_tbl *table, t_command *cmd, char *path, t_fd *fd)
 	}
 }
 
-int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, t_fd *fd)
+int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
 {
 	char	*path;
-	int		i;
 
 	path = find_path(cmd->command, table->envp);
 	if (path == NULL && is_path(cmd->command))

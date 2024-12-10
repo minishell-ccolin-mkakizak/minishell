@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:10:59 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 15:23:51 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:35:54 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	exe_pwd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
 {
 	char	*dir;
 
+	(void)cmd;
+	(void)table;
 	dir = getcwd(NULL, 0);
 	if (dir == NULL)
 	{
