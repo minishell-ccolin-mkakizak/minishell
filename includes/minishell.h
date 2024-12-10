@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 15:13:10 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:19:21 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,8 +337,10 @@ int						input_redirect(t_command *cmd, t_fd *fd);
 
 //==============================>> PIPELINE.C <<============================//
 int						pipeline(t_cmnd_tbl *table, char *envp[]);
-int						setup_pipes(int *prev_pipe, t_command *current, t_fd *fd);
-int						clean_pipes(int *prev_pipe, t_command *current, t_fd *fd);
+int						setup_pipes(int *prev_pipe, t_command *current,
+							t_fd *fd);
+int						clean_pipes(int *prev_pipe, t_command *current,
+							t_fd *fd);
 
 //==============================>> HERE_DOC.C <<============================//
 int						heredoc_redirect(t_command *cmd, t_fd *fd);

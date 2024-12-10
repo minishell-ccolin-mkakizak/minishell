@@ -3,26 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   exe_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:20:31 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 13:19:11 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:29:26 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void exe_unset(t_command *cmd, t_cmnd_tbl *table)
+void	exe_unset(t_command *cmd, t_cmnd_tbl *table)
 {
 	t_env_list	*current;
 	t_env_list	*prev;
+	char		*name;
 
-	char 		*name;
-
-	if (!table->envp  || !cmd->args || !cmd->args[0])
-	{
+	if (!table->envp || !cmd->args || !cmd->args[0])
 		return ;
-	}
 	current = table->envp;
 	name = cmd->args[0];
 	prev = NULL;
@@ -43,4 +40,3 @@ void exe_unset(t_command *cmd, t_cmnd_tbl *table)
 	}
 	return ;
 }
-

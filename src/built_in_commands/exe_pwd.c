@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   exe_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:10:59 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 13:18:27 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:23:51 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void exe_pwd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
+void	exe_pwd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
 {
-	char *dir;
+	char	*dir;
 
 	dir = getcwd(NULL, 0);
-	if(dir == NULL)
+	if (dir == NULL)
 	{
 		restore_fd(fd);
 		ft_printf("minishell: pwd: %s\n", strerror(errno));
