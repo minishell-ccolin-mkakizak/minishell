@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 14:54:57 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 17:55:45 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 17:57:34 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ char	*find_envps(char *str, t_env_list *envp, int is_command,
 	{
 		if (is_command)
 			set_quotes_flags(str[i], &in_squote, &in_dquote);
-		if ((str[i] == '$' && (is_valid_key_char(str[i + 1], TRUE) || str[i
-					+ 1] == '?')) && (!is_command || !in_squote))
+		if ((str[i] == '$' && (is_valid_key_char(str[i + 1], TRUE)
+					|| str[i + 1] == '?')) && (!is_command || !in_squote))
 		{
 			str = find_end_of_env_key(str, envp, i, last_exit_status);
 			i = 0;
