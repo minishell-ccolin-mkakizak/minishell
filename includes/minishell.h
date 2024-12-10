@@ -314,7 +314,7 @@ void					exe_cd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_unset(t_command *cmd, t_cmnd_tbl *table);
 void					exe_pwd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_env(t_command *cmd, t_cmnd_tbl *table);
-void					exe_export(t_command *cmd, t_cmnd_tbl *table);
+void					exe_export(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_exit(t_command *cmd, t_cmnd_tbl *table);
 
 //==============================>> EXE_UTILS.C <<===========================//

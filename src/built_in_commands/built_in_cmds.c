@@ -18,8 +18,10 @@ int	built_in_cmds(t_command *cmd, t_cmnd_tbl *table, int is_child, t_fd *fd)
 		exe_cd(cmd, table, fd);
 	if (is_match(cmd->command, "pwd"))
 		exe_pwd(cmd, table, fd);
+	if(is_match(cmd->command, "export"))
+		exe_export(cmd, table, fd);
 	if (is_match(cmd->command, "export"))
-		exe_export(cmd, table);
+		exe_export(cmd, table, fd);
 	if (is_match(cmd->command, "unset"))
 		exe_unset(cmd, table);
 	if (is_match(cmd->command, "env"))
