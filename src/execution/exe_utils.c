@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:17:15 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 15:24:16 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 17:01:10 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ int	is_directory(char *path)
 	if (stat(path, &path_stat) != 0)
 	{
 		return (FALSE);
-	};
+	}
 	return (S_ISDIR(path_stat.st_mode));
 }
 
 int	is_path(const char *command)
 {
-	struct stat sb;
+	struct stat	sb;
 
 	if (stat(command, &sb) == 0 && sb.st_mode & S_IXUSR)
 		return (TRUE);
