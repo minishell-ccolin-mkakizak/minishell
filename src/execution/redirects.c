@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:44:07 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 14:10:18 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:14:11 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int output_redirect(t_command *cmd, t_fd *fd)
 	while(cmd->output_file[i])
 	{
 		flags = O_WRONLY | O_CREAT ;
-
 		file_fd = open(cmd->output_file[i], flags, 0644);
 		if(file_fd == -1)
 		{	
@@ -79,9 +78,7 @@ int append_redirect(t_command *cmd, t_fd *fd)
 	i = 0;
 	while(cmd->append[i])
 	{
-		//append is >> 
 		flags = O_WRONLY | O_CREAT | O_APPEND;
-
 		file_fd = open(cmd->append[i], flags, 0644);
 		if(file_fd == -1)
 		{
