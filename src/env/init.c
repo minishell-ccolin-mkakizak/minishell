@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 16:23:11 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:44:32 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,22 @@ t_env_list	*create_node(char *name, char *value)
 	return (node);
 }
 
-t_env_list	*init_env(char *envp[])
+t_env_list *make_head(char *envp[])
 {
 	t_env_list	*head;
+	char	**str_array;
+	str_array = ft_env_split(envp[0]);
+	head = create_node(str_array[0], str_array[1]);
+	ft_free_all(str_array);
+	if (head == NULL)
+		return(NULL);
+	return(head);
+}
+
+
+t_env_list	*init_env(char *envp[])
+{
+	// t_env_list	*head;
 	t_env_list	*current;
 	t_env_list	*new_node;
 	char		**str_array;
@@ -75,12 +88,14 @@ t_env_list	*init_env(char *envp[])
 	i = 1;
 	if (envp == NULL || envp[0] == NULL)
 		return (NULL);
-	str_array = ft_env_split(envp[0]);
-	head = create_node(str_array[0], str_array[1]);
-	if (head == NULL)
+	// str_array = ft_env_split(envp[0]);
+	// head = create_node(str_array[0], str_array[1]);
+	// if (head == NULL)
+	// 	return (NULL);
+	// ft_free_all(str_array);
+	current = make_head(envp);
+	if(current== NULL)
 		return (NULL);
-	ft_free_all(str_array);
-	current = head;
 	while (envp[i])
 	{
 		str_array = ft_env_split(envp[i]);

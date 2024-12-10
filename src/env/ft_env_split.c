@@ -6,13 +6,11 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:18:45 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 16:24:06 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:32:43 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-
 
 char	**ft_env_split(char const *str)
 {
@@ -22,11 +20,9 @@ char	**ft_env_split(char const *str)
 	result = malloc(3 * sizeof(char *));
 	if (!result)
 		return (NULL);
-
 	result[0] = NULL;
 	result[1] = NULL;
 	result[2] = NULL;
-
 	equal_sign = strchr(str, '=');
 	if (!equal_sign)
 	{
