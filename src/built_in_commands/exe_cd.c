@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 13:14:26 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:38:50 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void exe_cd_home(t_cmnd_tbl *table, t_fd *fd)
 		ft_printf("minishell: cd: %s: %s\n", home_dir, strerror(errno));
 		table->last_exit_status = 1;
 	}
-	// free(home_dir);
 	table->last_exit_status = 0;
 	return (free(home_dir));
 }
