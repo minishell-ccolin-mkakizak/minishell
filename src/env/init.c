@@ -6,19 +6,19 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/28 14:49:09 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 13:28:21 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// function to print all envp
 void print_env_list(t_env_list *head)
 {
 	t_env_list *current = head;
 	int count = 0;
-	while (current != NULL) {
-		ft_printf("[%d]%s=%s\n",count, current->name, current->value);
+	while (current != NULL)
+	{
+		ft_printf("%s=%s\n",current->name, current->value);
 		current = current->next;
 		count ++;
 	}
@@ -52,8 +52,6 @@ t_env_list *create_node(char *name, char *value)
 	node = ft_calloc(sizeof(t_env_list), 1);
 	if(node == NULL)
 		return (NULL);
-	// str_array = ft_split(env, '=');
-	// ft_printf("env:%s=%s\n", str_array[0], str_array[1]);
 
 	node->name = ft_strdup(name);
 	if(node->name == NULL)
@@ -64,7 +62,6 @@ t_env_list *create_node(char *name, char *value)
 	else
 		node->value = NULL;
 
-	// ft_free_all(str_array);
 	return (node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/09 16:07:08 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 14:11:04 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -304,12 +304,12 @@ char					*get_env_var(t_env_list *envs, char *name);
 
 //============================>> BUILT_IN_CMDS.C <<=========================//
 int						built_in_cmds(t_command *cmd, t_cmnd_tbl *table,
-							int is_child);
+							int is_child, t_fd *fd);
 
 //================================>> EXE_*.C <<==============================//
-void					exe_cd(t_command *cmd, t_cmnd_tbl *table);
+void					exe_cd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_unset(t_command *cmd, t_cmnd_tbl *table);
-void					exe_pwd(t_command *cmd, t_cmnd_tbl *table);
+void					exe_pwd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_env(t_command *cmd, t_cmnd_tbl *table);
 void					exe_export(t_command *cmd, t_cmnd_tbl *table);
 void					exe_exit(t_command *cmd, t_cmnd_tbl *table);
@@ -325,18 +325,20 @@ int						is_path(const char *command);
 //							EXECUTION FUNCTIONS								//
 //==========================================================================//
 
-//==============================>> EXECUTION.C <<===========================//
-// int	main_execution(char *envp[]);
+//==============================>> REDIRECTS.C <<===========================//
 
+int						redirects(t_command *current, t_fd *fd, int prev_pipe);
+int						output_redirect(t_command *cmd, t_fd *fd);
+int						append_redirect(t_command *cmd, t_fd *fd);
+int						input_redirect(t_command *cmd, t_fd *fd);
 
-int input_redirect(t_command *cmd);
 //==============================>> PIPELINE.C <<============================//
 int						pipeline(t_cmnd_tbl *table, char *envp[]);
+int						setup_pipes(int *prev_pipe, t_command *current, t_fd *fd);
+int						clean_pipes(int *prev_pipe, t_command *current, t_fd *fd);
 
 //==============================>> HERE_DOC.C <<============================//
-int						heredoc_redirect(t_command *cmd);
-// int						check_for_dilimiter(char* delemiter, char *input);
-// int						handle_heredoc(char *delemiter);
+int						heredoc_redirect(t_command *cmd, t_fd *fd);
 int						check_for_delimiter(char *delimiter, char *input);
 int						handle_heredoc(char *delimiter, int *pipe_fd);
 
@@ -344,13 +346,11 @@ int						handle_heredoc(char *delimiter, int *pipe_fd);
 char					*validate_path(char **path_arr, char *cmd);
 char					*find_path(char *cmd, t_env_list *table);
 int						execute_cmd(t_command *cmd, t_cmnd_tbl *table,
-							int is_child, char *envp[]);
+							int is_child, char *envp[], t_fd *fd);
 char					**set_command(char *command, char **args);
 
 //===========================>> PIPELINE_UTILS.C <<=========================//
-void					throw_error(char *message, int last_exit_status,
-							int error_number);
-pid_t					safe_fork(void);
+pid_t					safe_fork(t_fd *fd);
 void					init_fd(t_fd *fd);
 void					restore_fd(t_fd *fd);
 void					init_pipe(t_fd *fd);
@@ -377,6 +377,6 @@ void					free_command_list(t_cmnd_tbl *table);
 //================================>> SIGNALS.C <<===========================//
 void					signal_handler(int sig);
 int						init_signals(void);
-// int						ignore_signals(void);
+int						ignore_signals(void);
 
 #endif

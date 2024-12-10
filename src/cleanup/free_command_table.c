@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_command_table.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:33:38 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/11/30 13:04:21 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 13:19:29 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,4 @@ void	free_command_table(t_cmnd_tbl *table)
 	}
 	free(table);
 }
+
