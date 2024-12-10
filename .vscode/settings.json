@@ -4,5 +4,8 @@
 		"mock_command_table": "cpp",
 		"unistd.h": "c"
 	},
+	"[c]": {
+	  "editor.defaultFormatter": "keyhr.42-c-format"
+	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

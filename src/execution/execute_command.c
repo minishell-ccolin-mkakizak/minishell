@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 14:49:12 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 15:24:18 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ char	*validate_path(char **path_arr, char *cmd)
 	}
 	return (NULL);
 }
-
 
 char	*find_path(char *cmd, t_env_list *envs)
 {
@@ -87,24 +86,21 @@ char	**set_command(char *command, char **args)
 	return (res);
 }
 
-
-
 // restoreing file descriptors seems to work
 
 int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, t_fd *fd)
 {
 	char	**set_array;
 	char	*path;
-	int	i;
-	path = find_path(cmd->command, table->envp);
+	int		i;
 
-	if(path == NULL && is_path(cmd->command))
+	path = find_path(cmd->command, table->envp);
+	if (path == NULL && is_path(cmd->command))
 	{
 		path = ft_strdup(cmd->command);
 	}
-
 	if (path == NULL && !is_path(cmd->command))
-	{	
+	{
 		restore_fd(fd);
 		ft_printf("%s: command not found\n", cmd->command);
 		exit(127);
@@ -116,9 +112,8 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, int is_child, t_fd *fd)
 		exit(126);
 	}
 	set_array = set_command(cmd->command, cmd->args);
-
 	if (execve(path, set_array, revert_envp_list(table->envp)) == -1)
-	{	
+	{
 		restore_fd(fd);
 		ft_printf("minishell: %s: %s\n", cmd->command, strerror(errno));
 		exit(127);
