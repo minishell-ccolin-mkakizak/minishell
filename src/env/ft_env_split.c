@@ -1,21 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exe_env.c                                          :+:      :+:    :+:   */
+/*   ft_env_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 19:11:56 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 15:51:23 by mkakizak         ###   ########.fr       */
+/*   Created: 2024/12/10 16:18:45 by mkakizak          #+#    #+#             */
+/*   Updated: 2024/12/10 16:24:06 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	exe_env(t_command *cmd, t_cmnd_tbl *table)
+
+
+char	**ft_env_split(char const *str)
 {
-	if (table->envp == NULL)
-		ft_printf("enpv is NULL\n");
-	else
-		print_env_list(table->envp);
+	char	**result;
+	char	*equal_sign;
+
+	result = malloc(3 * sizeof(char *));
+	if (!result)
+		return (NULL);
+
+	result[0] = NULL;
+	result[1] = NULL;
+	result[2] = NULL;
+
+	equal_sign = strchr(str, '=');
+	if (!equal_sign)
+	{
+		result[0] = strdup(str);
+		return (result);
+	}
+	result[0] = strndup(str, equal_sign - str);
+	result[1] = strdup(equal_sign + 1);
+	return (result);
 }

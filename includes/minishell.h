@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 15:19:21 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/10 16:22:53 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,6 +300,9 @@ char					*get_env_var(t_env_list *envs, char *name);
 
 //=====================-->> REVERT_ENV_LIST.C <<============================//
 char					**revert_envp_list(t_env_list *head);
+
+//=====================-->> FT_ENV_SPLIT.C <<============================//
+char					**ft_env_split(char const *str);
 
 //==========================================================================//
 //							BUILT-IN COMMANDS FUNCTIONS						//
