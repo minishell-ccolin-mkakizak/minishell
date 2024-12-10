@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 16:22:53 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:34:24 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,11 +314,21 @@ int						built_in_cmds(t_command *cmd, t_cmnd_tbl *table,
 
 //================================>> EXE_*.C <<==============================//
 void					exe_cd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
+char					*build_new_dir(char *path);
 void					exe_unset(t_command *cmd, t_cmnd_tbl *table);
 void					exe_pwd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_env(t_command *cmd, t_cmnd_tbl *table);
 void					exe_export(t_command *cmd, t_cmnd_tbl *table, t_fd *fd);
 void					exe_exit(t_command *cmd, t_cmnd_tbl *table);
+void					change_to_new_dir(char *new_dir, t_fd *fd,
+							t_cmnd_tbl *table);
+t_env_list				*find_env_node(t_env_list *envp, char *name,
+							t_env_list **prev);
+void					update_or_add_env_node(t_cmnd_tbl *table, char *name,
+							char *value, t_fd *fd);
+void					set_env_var(t_cmnd_tbl *table, char *name, char *value,
+							t_fd *fd);
+void					update_env(t_cmnd_tbl *table, t_fd *fd);
 
 //==============================>> EXE_UTILS.C <<===========================//
 int						is_match(char *str1, char *str2);
