@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 17:46:17 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:05:51 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ void	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 		pid = safe_fork(fd);
 	else
 		pid = -1;
+	ignore_signals();
 	if (pid == 0)
-	{
+	{	
+		init_signals(1);
 		is_child = TRUE;
 		redirects(current, fd, *prev_pipe);
 		if (current->is_built_in)
