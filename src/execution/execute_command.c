@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 17:43:39 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:24:01 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	execute(t_cmnd_tbl *table, t_command *cmd, char *path, t_fd *fd)
 	if (execve(path, set_array, revert_envp_list(table->envp)) == -1)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: %s: %s\n", cmd->command, strerror(errno));
+		printf("minishell: %s: %s\n", cmd->command, strerror(errno));
 		exit(127);
 	}
 }
@@ -107,13 +107,13 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
 	if (path == NULL && !is_path(cmd->command))
 	{
 		restore_fd(fd);
-		ft_printf("%s: command not found\n", cmd->command);
+		printf("%s: command not found\n", cmd->command);
 		exit(127);
 	}
 	if (is_directory(path))
 	{
 		restore_fd(fd);
-		ft_printf("minishell: %s: is a directory\n", cmd->command);
+		printf("minishell: %s: is a directory\n", cmd->command);
 		exit(126);
 	}
 	execute(table, cmd, path, fd);

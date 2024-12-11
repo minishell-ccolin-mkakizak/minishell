@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:14:22 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 18:04:33 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:25:08 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	print_no_args(t_env_list *head)
 	current = head;
 	while (current)
 	{
-		ft_printf("declare -x ");
-		ft_printf("%s=\"%s\"\n", current->name, current->value);
+		printf("declare -x ");
+		printf("%s=\"%s\"\n", current->name, current->value);
 		current = current->next;
 	}
 	return ;
@@ -51,7 +51,7 @@ int	is_valid_identifier(char *str)
 void	print_export_error(char *arg, t_fd *fd)
 {
 	restore_fd(fd);
-	ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
+	printf("minishell: export: `%s': not a valid identifier\n", arg);
 }
 
 void	find_and_replace_env(t_cmnd_tbl *table, char **str_array)

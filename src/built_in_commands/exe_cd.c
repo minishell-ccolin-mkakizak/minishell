@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 16:39:40 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:25:12 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	exe_cd_home(t_cmnd_tbl *table, t_fd *fd)
 	if (home_dir == NULL)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: HOME not set\n");
+		printf("minishell: HOME not set\n");
 		table->last_exit_status = 1;
 		return ;
 	}
 	if (chdir(home_dir) != 0)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: cd: %s: %s\n", home_dir, strerror(errno));
+		printf("minishell: cd: %s: %s\n", home_dir, strerror(errno));
 		table->last_exit_status = 1;
 	}
 	table->last_exit_status = 0;
@@ -42,14 +42,14 @@ void	exe_cd_tilde(char *path, t_cmnd_tbl *table, t_fd *fd)
 	if (!new_dir)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: cd: HOME not set\n");
+		printf("minishell: cd: HOME not set\n");
 		table->last_exit_status = 1;
 		return ;
 	}
 	if (!new_dir)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: cd: Cannot allocate memory\n");
+		printf("minishell: cd: Cannot allocate memory\n");
 		table->last_exit_status = 1;
 		return ;
 	}
@@ -62,7 +62,7 @@ void	exe_cd_bare(char *path, t_cmnd_tbl *table, t_fd *fd)
 	if (chdir(path) != 0)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: cd: %s: %s\n", path, strerror(errno));
+		printf("minishell: cd: %s: %s\n", path, strerror(errno));
 		table->last_exit_status = 1;
 	}
 	else
@@ -84,7 +84,7 @@ void	exe_cd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
 	if (cmd->args[1] != NULL)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: cd: too many arguments\n");
+		printf("minishell: cd: too many arguments\n");
 		table->last_exit_status = 1;
 		return ;
 	}

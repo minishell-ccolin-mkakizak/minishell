@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 11:57:28 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 17:41:52 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:25:40 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_env_list(t_env_list *head)
 	count = 0;
 	while (current != NULL)
 	{
-		ft_printf("%s=%s\n", current->name, current->value);
+		printf("%s=%s\n", current->name, current->value);
 		current = current->next;
 		count++;
 	}

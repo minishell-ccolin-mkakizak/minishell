@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 10:45:11 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 17:28:26 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:24:01 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ pid_t	safe_fork(t_fd *fd)
 	if (res == -1)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: creating child process failed\n");
+		printf("minishell: creating child process failed\n");
 		exit(EXIT_FAILURE);
 	}
 	return (res);
@@ -47,7 +47,7 @@ void	init_pipe(t_fd *fd)
 	if (pipe(fd->pipe_fd) == -1)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: pipe creation failed\n");
+		printf("minishell: pipe creation failed\n");
 		exit(EXIT_FAILURE);
 	}
 }
