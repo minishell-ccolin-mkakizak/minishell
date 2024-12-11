@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 17:51:27 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:06:10 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ int	minishell_loop(t_cmnd_tbl *command_table)
 	char	*input;
 	int		return_value;
 
-	if (init_signals())
+	if (init_signals(0))
 		return (SIGNAL_RECEIVED);
 	input = get_input();
 	if (input)
 	{
-		ignore_signals();
+		// ignore_signals();
 		return_value = parse(&input, command_table);
 		if (return_value == PARSING_ERROR)
 		{

@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:17:15 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 17:01:10 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:25:43 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	print_str_arr(char **arr, int len)
 	i = 0;
 	while (i < len)
 	{
-		ft_printf("[%d]:%s\n", i, arr[i]);
+		printf("[%d]:%s\n", i, arr[i]);
 		i++;
 	}
 	return (0);

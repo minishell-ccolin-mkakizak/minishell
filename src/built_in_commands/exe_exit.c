@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:15:13 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 17:36:32 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:24:01 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ void	exe_exit(t_command *cmd, t_cmnd_tbl *table)
 {
 	(void)cmd;
 	(void)table;
-	ft_printf("exit\n");
+	printf("exit\n");
 	exit(EXIT_SUCCESS);
 }

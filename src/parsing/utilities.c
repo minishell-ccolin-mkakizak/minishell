@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 12:56:04 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:24:01 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int	set_quotes_flags(char c, int *in_squote, int *in_dquote)
 
 int	alloc_failed(void)
 {
-	ft_printf("Error: could not allocate memory");
+	printf("Error: could not allocate memory");
 	return (ALLOCATION_FAIL);
 }

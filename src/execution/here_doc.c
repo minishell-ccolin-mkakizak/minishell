@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:54:32 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/10 17:45:38 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:25:26 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	read_write_to_pipe(char *delimiter, int pipe_fd[2])
 
 	while (1)
 	{
-		ft_printf(">");
+		write(1, ">", 1);
 		input = get_next_line(STDIN_FILENO);
 		if (input == NULL)
 			break ;

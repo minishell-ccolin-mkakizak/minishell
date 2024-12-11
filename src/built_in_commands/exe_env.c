@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:11:56 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 17:57:08 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:24:01 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	exe_env(t_command *cmd, t_cmnd_tbl *table)
 {
 	(void)cmd;
 	if (table->envp == NULL)
-		ft_printf("minishell: env : \n");
+		printf("minishell: env : \n");
 	else
 		print_env_list(table->envp);
 }

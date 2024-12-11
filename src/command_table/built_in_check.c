@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_in_check.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 15:24:00 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:32:03 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_specific_builtin(t_command *command, const char *builtin)
 {
 	if ((ft_strlen(command->command) == ft_strlen(builtin))
-		&& strncmp(command->command, builtin, ft_strlen(builtin)) == 0)
+		&& ft_strncmp(command->command, builtin, ft_strlen(builtin)) == 0)
 		return (1);
 	return (0);
 }

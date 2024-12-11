@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:44:07 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 17:53:10 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:25:47 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	output_redirect(t_command *cmd, t_fd *fd)
 		if (file_fd == -1)
 		{
 			restore_fd(fd);
-			ft_printf("minishell: %s: %s\n", cmd->output_file[i],
+			printf("minishell: %s: %s\n", cmd->output_file[i],
 				strerror(errno));
 			exit(EXIT_FAILURE);
 		}
@@ -81,7 +81,7 @@ int	append_redirect(t_command *cmd, t_fd *fd)
 		if (file_fd == -1)
 		{
 			restore_fd(fd);
-			ft_printf("minishell: %s: %s\n", cmd->append[i], strerror(errno));
+			printf("minishell: %s: %s\n", cmd->append[i], strerror(errno));
 			exit(EXIT_FAILURE);
 		}
 		dup2(file_fd, STDOUT_FILENO);
@@ -107,7 +107,7 @@ int	input_redirect(t_command *cmd, t_fd *fd)
 		if (file_fd == -1)
 		{
 			restore_fd(fd);
-			ft_printf("minishell: %s: %s\n", cmd->input_file[i],
+			printf("minishell: %s: %s\n", cmd->input_file[i],
 				strerror(errno));
 			exit(EXIT_FAILURE);
 		}

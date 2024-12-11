@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_cd_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:09:16 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 16:39:09 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 14:25:28 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	update_env(t_cmnd_tbl *table, t_fd *fd)
 	if (dir == NULL)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: cd: %s\n", strerror(errno));
+		printf("minishell: cd: %s\n", strerror(errno));
 		table->last_exit_status = 1;
 		return ;
 	}
@@ -63,7 +63,7 @@ void	set_env_var(t_cmnd_tbl *table, char *name, char *value, t_fd *fd)
 	else
 	{
 		restore_fd(fd);
-		ft_printf("minishell: cd: Cannot allocate memory\n");
+		printf("minishell: cd: Cannot allocate memory\n");
 	}
 }
 
@@ -82,7 +82,7 @@ void	change_to_new_dir(char *new_dir, t_fd *fd, t_cmnd_tbl *table)
 	if (chdir(new_dir) != 0)
 	{
 		restore_fd(fd);
-		ft_printf("minishell: cd: %s: %s\n", new_dir, strerror(errno));
+		printf("minishell: cd: %s: %s\n", new_dir, strerror(errno));
 		table->last_exit_status = 1;
 	}
 	else
