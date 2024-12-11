@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/11 15:53:44 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:55:29 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		sig_received = 1;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -24,6 +25,7 @@ void	signal_handler(int sig)
 	}
 	else if (sig == SIGTERM)
 	{
+		sig_received = 2;
 		exit(EXIT_SUCCESS);
 	}
 
@@ -32,11 +34,14 @@ void	signal_handler(int sig)
 void	child_signal_handler(int sig)
 {
 	if (sig == SIGINT)
-	{
+	{	
+		sig_received = 1;
+		write(STDOUT_FILENO, "\n", 1);
 		exit(130);
 	}
 	else if (sig == SIGTERM)
 	{
+		sig_received = 2;
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -52,6 +57,8 @@ int	init_signals(int is_child)
 	{
 		sa.sa_handler = signal_handler;
 	}
+
+	// printf("is_child: %d\n", is_child);
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &sa, NULL);
