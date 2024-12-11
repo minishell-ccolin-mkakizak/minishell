@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/11 17:54:23 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 18:04:09 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_fd
 //===============================>> SIGNALS <<==============================//
 # define SIGNAL_RECEIVED 116
 # define CTRL_D 117
+# define CTRL_D_PIPE_INPUT 118
 
 //===============================>> PARSER <<===============================//
 # define STRING_TYPE 100
