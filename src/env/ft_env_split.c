@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 16:18:45 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/10 16:32:43 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:00:08 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	**ft_env_split(char const *str)
 		result[0] = strdup(str);
 		return (result);
 	}
-	result[0] = strndup(str, equal_sign - str);
-	result[1] = strdup(equal_sign + 1);
+	result[0] = ft_strtrim(str, equal_sign);
+	result[1] = ft_strdup(equal_sign + 1);
 	return (result);
 }
