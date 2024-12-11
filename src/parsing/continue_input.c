@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:03:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/11 15:29:42 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:55:31 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@ char	**continue_input(char **input, char *str)
 	char	*temp;
 
 	line = readline(str);
+	printf(">???S%c-----------%c", 10, 10);fflush(stdout); //debug
 	if (!line)
+	{
+		printf("???%c-----------%c", 10, 10);fflush(stdout); //debug
 		return (NULL);
+	}
 	temp = ft_strjoin(*input, "\n");
 	free(*input);
 	*input = ft_strjoin(temp, line);
@@ -51,7 +55,10 @@ int	go_to_end_of_quotes(char **input, int *j, char c)
 		{
 			input = continue_input(input, ">");
 			if (!input)
-				return (PARSING_ERROR);
+			{
+				printf("minishell: unexpected EOF while looking for matching `%c'\nminishell: syntax error: unexpected end of file\n", c);
+			}
+				return (CTRL_D);
 		}
 	}
 	*j = i;
