@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:35:12 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/11 15:59:14 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:54:12 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ int	next_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 	{
 		is_last = FALSE;
 		lx_dt->expecting_command = TRUE;
-		input = continue_input_if_lst_tok_is_pipe(input, i);
-		if (!*input)
-			return (ALLOCATION_FAIL);
+		input = is_input_after_pipe(input, i);
+		if (!input)
+			return (PARSING_ERROR);
 	}
 	if (is_last)
 	{
