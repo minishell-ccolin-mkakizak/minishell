@@ -6,13 +6,13 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/11 17:55:29 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 18:15:00 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// extern volatile sig_atomic_t sig_received = 0;
+volatile sig_atomic_t sig_received = 0;
 void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
@@ -24,7 +24,8 @@ void	signal_handler(int sig)
 		rl_redisplay();
 	}
 	else if (sig == SIGTERM)
-	{
+	{	
+		printf("SIGTERM\n");
 		sig_received = 2;
 		exit(EXIT_SUCCESS);
 	}
