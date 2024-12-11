@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/11 15:05:51 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:49:54 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	await_process(pid_t pid, t_cmnd_tbl *table)
 	return ;
 }
 
-void	handle_command_execution(t_command *current, t_cmnd_tbl *table,
+pid_t	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 		t_fd *fd, int *prev_pipe)
 {
 	pid_t	pid;
@@ -77,8 +77,8 @@ void	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 	ignore_signals();
 	if (pid == 0)
 	{	
-		init_signals(1);
 		is_child = TRUE;
+		init_signals(is_child);
 		redirects(current, fd, *prev_pipe);
 		if (current->is_built_in)
 			built_in_cmds(current, table, is_child, fd);
@@ -88,6 +88,7 @@ void	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 	else if (current->is_built_in && !has_pipe(table->head))
 		built_in_cmds(current, table, is_child, fd);
 	clean_pipes(prev_pipe, current, fd);
+	return (pid);
 }
 
 int	pipeline(t_cmnd_tbl *table)
@@ -95,6 +96,7 @@ int	pipeline(t_cmnd_tbl *table)
 	t_fd		fd;
 	t_command	*current;
 	int			prev_pipe;
+	pid_t		pid;
 
 	current = table->head;
 	prev_pipe = -1;
@@ -103,10 +105,10 @@ int	pipeline(t_cmnd_tbl *table)
 	{
 		if (current->next)
 			init_pipe(&fd);
-		handle_command_execution(current, table, &fd, &prev_pipe);
+		pid = handle_command_execution(current, table, &fd, &prev_pipe);
 		current = current->next;
 	}
-	await_process(-1, table);
+	await_process(pid, table);
 	restore_fd(&fd);
 	return (0);
 }
