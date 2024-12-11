@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/11 15:06:10 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/11 15:35:02 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		return_value = minishell_loop(command_table);
-		if (return_value == PARSING_ERROR || return_value == SIGNAL_RECEIVED)
+		if (return_value == PARSING_ERROR || return_value == SIGNAL_RECEIVED || return_value == CTRL_D)
 			continue ;
 		if (return_value == ALLOCATION_FAIL || return_value == NO_INPUT)
 			break ;

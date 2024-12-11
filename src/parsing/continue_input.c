@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:03:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/10 15:24:26 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 15:29:42 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ char	**continue_input(char **input, char *str)
 	char	*temp;
 
 	line = readline(str);
+	if (!line)
+		return (NULL);
 	temp = ft_strjoin(*input, "\n");
 	free(*input);
 	*input = ft_strjoin(temp, line);
 	free(line);
 	free(temp);
 	if (!input)
-		return (NULL);
+		exit(EXIT_SUCCESS);
 	return (input);
 }
 
@@ -49,7 +51,7 @@ int	go_to_end_of_quotes(char **input, int *j, char c)
 		{
 			input = continue_input(input, ">");
 			if (!input)
-				return (alloc_failed());
+				return (PARSING_ERROR);
 		}
 	}
 	*j = i;
