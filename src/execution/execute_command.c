@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/12 17:01:39 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:08:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,14 @@ char	**set_command(char *command, char **args)
 void	execute(t_cmnd_tbl *table, t_command *cmd, char *path, t_fd *fd)
 {
 	char	**set_array;
-
+	char 	**temp;
+	
 	set_array = set_command(cmd->command, cmd->args);
-	if (execve(path, set_array, revert_envp_list(table->envp)) == -1)
+	temp = revert_envp_list(table->envp);
+	if (execve(path, set_array, temp) == -1)
 	{
 		restore_fd(fd);
+		ft_free_all(temp);
 		printf("minishell: %s: %s\n", cmd->command, strerror(errno));
 		exit(127);
 	}
