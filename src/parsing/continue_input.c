@@ -6,41 +6,12 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:03:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/11 15:55:31 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:54:40 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-/*=============================================================================
-Called in case of  an unclosed quote or if the last token was a pipe.
-=============================================================================*/
-char	**continue_input(char **input, char *str)
-{
-	char	*line;
-	char	*temp;
-
-	line = readline(str);
-	printf(">???S%c-----------%c", 10, 10);fflush(stdout); //debug
-	if (!line)
-	{
-		printf("???%c-----------%c", 10, 10);fflush(stdout); //debug
-		return (NULL);
-	}
-	temp = ft_strjoin(*input, "\n");
-	free(*input);
-	*input = ft_strjoin(temp, line);
-	free(line);
-	free(temp);
-	if (!input)
-		exit(EXIT_SUCCESS);
-	return (input);
-}
-
-/*=============================================================================
-Used to skip over quoted text without ending the token if is encounters a
-separator character and prompt the user for input if the quote is unclosed.
-=============================================================================*/
 int	go_to_end_of_quotes(char **input, int *j, char c)
 {
 	int	i;
@@ -53,23 +24,20 @@ int	go_to_end_of_quotes(char **input, int *j, char c)
 			break ;
 		if (!(*input)[i])
 		{
-			input = continue_input(input, ">");
-			if (!input)
-			{
-				printf("minishell: unexpected EOF while looking for matching `%c'\nminishell: syntax error: unexpected end of file\n", c);
-			}
-				return (CTRL_D);
+			printf("minishell: unexpected EOF while looking for matching `%c'\n", c);
+			return (PARSING_ERROR);
 		}
 	}
 	*j = i;
 	return (0);
 }
 
-char	**continue_input_if_lst_tok_is_pipe(char **input, int i)
+char	**is_input_after_pipe(char **input, int i)
 {
 	if ((*input)[i])
 		i = skip_spaces_tabs(input, i);
 	if ((*input)[i])
 		return (input);
-	return (continue_input(input, ">"));
+	printf("minishell: syntax error near unexpected token `|'\n");
+	return (NULL);
 }

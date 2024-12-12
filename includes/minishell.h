@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/11 15:43:15 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/11 17:41:20 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ void					print_tokens(t_token *token);
 //============================>> CONTINUE_INPUT.C <<========================//
 char					**continue_input(char **input, char *str);
 int						go_to_end_of_quotes(char **input, int *j, char c);
-char					**continue_input_if_lst_tok_is_pipe(char **input,
+char					**is_input_after_pipe(char **input,
 							int i);
 
 //==========================>> EXPEND_ENVPS_COMMAND.C <<====================//
