@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:54:32 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/11 15:25:26 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:33:30 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,22 @@ int	check_for_delimiter(char *delimiter, char *input)
 void	read_write_to_pipe(char *delimiter, int pipe_fd[2])
 {
 	char	*input;
-	size_t	len;
 
 	while (1)
 	{
 		write(1, ">", 1);
 		input = get_next_line(STDIN_FILENO);
 		if (input == NULL)
+		{
+			print_here_doc_error(delimiter);
 			break ;
+		}
 		if (check_for_delimiter(delimiter, input))
 		{
 			free(input);
 			break ;
 		}
-		len = ft_strlen(input);
-		if (len > 0)
-		{
-			if (input[len - 1] != '\n')
-				input[len++] = '\n';
-			write(pipe_fd[1], input, len);
-		}
-		free(input);
+		write_to_pipe(input, pipe_fd);
 	}
 	close(pipe_fd[1]);
 }

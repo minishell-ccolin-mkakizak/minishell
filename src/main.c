@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/12 13:32:31 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/12 14:34:18 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int	minishell_loop(t_cmnd_tbl *command_table)
 	input = get_input();
 	if (input)
 	{
-		// ignore_signals();
 		return_value = parse(&input, command_table);
 		if (return_value == PARSING_ERROR)
 		{

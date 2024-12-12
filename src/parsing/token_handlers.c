@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_handlers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 17:37:49 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/12 13:35:16 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/12 14:21:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	quote_token(t_token *token, char **input, t_lx_dt *lx_dt, int i)
 		j++;
 		if (!(*input)[j])
 		{
-			printf("minishell: unexpected EOF while looking for matching `%c'\n", c);
+			printf("minishell: ");
+			printf("unexpected EOF while looking for matching `%c'\n", c);
 			return (PARSING_ERROR);
 		}
 		if ((*input)[j] == c)

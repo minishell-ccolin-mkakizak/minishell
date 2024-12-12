@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:14:22 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/11 14:25:08 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:15:25 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,5 @@ void	exe_export(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
 		return ;
 	}
 	find_and_replace_env(table, str_array);
+	ft_free_all(str_array);
 }

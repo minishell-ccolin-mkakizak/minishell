@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   continue_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/23 15:03:40 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/11 17:54:40 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/12 14:21:07 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	go_to_end_of_quotes(char **input, int *j, char c)
 			break ;
 		if (!(*input)[i])
 		{
-			printf("minishell: unexpected EOF while looking for matching `%c'\n", c);
+			printf("minishell: ");
+			printf("unexpected EOF while looking for matching `%c'\n", c);
 			return (PARSING_ERROR);
 		}
 	}

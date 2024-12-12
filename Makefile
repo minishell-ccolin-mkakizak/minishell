@@ -6,7 +6,7 @@ INCLUDES	= 	-I includes -I $(LIBFT_PATH)/includes -I /usr/local/opt/readline/inc
 CFLAGS		=	-Wall -Werror -Wextra $(INCLUDES)
 
 # CFLAGS		= 	$(INCLUDES) -DTABLE_DEBUG=$(TABLE_DEBUG) -g
-LIBS_PATH	=	-L$(LIBFT_PATH) -L /usr/local/opt/readline/lib
+LIBS_PATH	=	-L$(LIBFT_PATH) -L /usr/local/opt/readline/lib -g
 LIBS_FLAGS	=	-lft -lreadline
 DEBUG_FLAGS	=	-fsanitize=address
 SRC_DIR		=	src

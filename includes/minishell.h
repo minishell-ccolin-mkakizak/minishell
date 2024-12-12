@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/11 17:41:20 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/12 14:32:23 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,7 +333,7 @@ void					update_env(t_cmnd_tbl *table, t_fd *fd);
 //==============================>> EXE_UTILS.C <<===========================//
 int						is_match(char *str1, char *str2);
 int						get_array_len(char **array);
-int						print_str_arr(char **arr, int len);
+void					print_here_doc_error(char *delimiter);
 int						is_directory(char *path);
 int						is_path(const char *command);
 
@@ -359,6 +359,7 @@ int						clean_pipes(int *prev_pipe, t_command *current,
 int						heredoc_redirect(t_command *cmd);
 int						check_for_delimiter(char *delimiter, char *input);
 int						handle_heredoc(char *delimiter, int *pipe_fd);
+void					write_to_pipe(char *input, int *pipe_fd);
 
 //===========================>> EXECUTE_COMMAND.C <<========================//
 char					*validate_path(char **path_arr, char *cmd);

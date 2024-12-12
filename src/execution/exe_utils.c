@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:17:15 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/11 14:25:43 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:19:32 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,12 @@ int	get_array_len(char **array)
 	return (i);
 }
 
-int	print_str_arr(char **arr, int len)
+void	print_here_doc_error(char *delimiter)
 {
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		printf("[%d]:%s\n", i, arr[i]);
-		i++;
-	}
-	return (0);
+	printf("\n");
+	printf("minishell: warning: Here-document ");
+	printf("delimited by end-of-file (wanted `%s')\n", delimiter);
+	return ;
 }
 
 int	is_directory(char *path)

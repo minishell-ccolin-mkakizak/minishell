@@ -6,13 +6,12 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/11 15:53:44 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:23:12 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-// extern volatile sig_atomic_t sig_received = 0;
 void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
@@ -26,13 +25,13 @@ void	signal_handler(int sig)
 	{
 		exit(EXIT_SUCCESS);
 	}
-
 }
 
 void	child_signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
+		write(STDOUT_FILENO, "\n", 1);
 		exit(130);
 	}
 	else if (sig == SIGTERM)
@@ -44,7 +43,8 @@ void	child_signal_handler(int sig)
 int	init_signals(int is_child)
 {	
 	struct sigaction	sa;
-	if(is_child)
+
+	if (is_child)
 	{
 		sa.sa_handler = child_signal_handler;
 	}
