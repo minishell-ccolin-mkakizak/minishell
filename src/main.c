@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/12 14:34:18 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 18:05:49 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+int	g_global;
 
 int	whitespace_only_handler(char **input)
 {
@@ -60,11 +62,15 @@ int	minishell_loop(t_cmnd_tbl *command_table)
 	char	*input;
 	int		return_value;
 
-	if (init_signals(0))
-		return (SIGNAL_RECEIVED);
+	init_signals(0);
 	input = get_input();
 	if (input)
 	{
+		if(g_global)
+		{
+			command_table->last_exit_status = g_global;
+			g_global = 0;
+		}
 		return_value = parse(&input, command_table);
 		if (return_value == PARSING_ERROR)
 		{
@@ -94,7 +100,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		return_value = minishell_loop(command_table);
-		if (return_value == PARSING_ERROR || return_value == SIGNAL_RECEIVED)
+		if (return_value == PARSING_ERROR)
 			continue ;
 		if (return_value == ALLOCATION_FAIL || return_value == NO_INPUT)
 			break ;
