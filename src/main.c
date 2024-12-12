@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/12 18:05:49 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/12 19:32:20 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	minishell_loop(t_cmnd_tbl *command_table)
 	if (input)
 	{
 		if(g_global)
-		{
+		{	
 			command_table->last_exit_status = g_global;
 			g_global = 0;
 		}

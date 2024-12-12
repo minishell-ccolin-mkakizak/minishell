@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/12 18:06:11 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/12 19:25:14 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	signal_handler(int sig)
 }
 
 void	child_signal_handler(int sig)
-{
+{	
 	if (sig == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
+	{	
+		write(STDERR_FILENO, "\n", 1);
 		exit(130);
 	}
 	else if (sig == SIGTERM)

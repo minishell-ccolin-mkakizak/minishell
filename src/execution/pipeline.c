@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/11 15:49:54 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 19:30:41 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void	await_process(pid_t pid, t_cmnd_tbl *table)
 		}
 		if (pid == wpid)
 		{
-			table->last_exit_status = WEXITSTATUS(status);
+			if (WIFSIGNALED(status))
+  				table->last_exit_status = 128 + WTERMSIG(status);
+			else
+				table->last_exit_status = WEXITSTATUS(status);
 		}
 	}
 	return ;
@@ -74,7 +77,6 @@ pid_t	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 		pid = safe_fork(fd);
 	else
 		pid = -1;
-	ignore_signals();
 	if (pid == 0)
 	{	
 		is_child = TRUE;
@@ -85,8 +87,12 @@ pid_t	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 		else
 			execute_cmd(current, table, fd);
 	}
-	else if (current->is_built_in && !has_pipe(table->head))
+	else
+	{	
+		ignore_signals();
+		if (current->is_built_in && !has_pipe(table->head))
 		built_in_cmds(current, table, is_child, fd);
+	}
 	clean_pipes(prev_pipe, current, fd);
 	return (pid);
 }
