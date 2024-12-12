@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/12 16:49:48 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:01:39 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*find_path(char *cmd, t_env_list *envs)
 	path_str = get_env_var(envs, "PATH");
 	if (path_str == NULL)
 	{
-		return (NULL);
+		return (cmd);
 	}
 	path_arr = ft_split(path_str, ':');
 	free(path_str);
@@ -102,7 +102,7 @@ int	execute_cmd(t_command *cmd, t_cmnd_tbl *table, t_fd *fd)
 	char	*path;
 
 	path = find_path(cmd->command, table->envp);
-	if (path == NULL && is_path(cmd->command))
+	if (is_path(cmd->command))
 		path = ft_strdup(cmd->command);
 	if (path == NULL && !is_path(cmd->command))
 	{
