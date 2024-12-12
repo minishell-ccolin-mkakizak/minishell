@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/12 17:08:41 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/12 17:33:54 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	execute(t_cmnd_tbl *table, t_command *cmd, char *path, t_fd *fd)
 		restore_fd(fd);
 		ft_free_all(temp);
 		printf("minishell: %s: %s\n", cmd->command, strerror(errno));
-		exit(127);
+		exit(126);
 	}
 }
 
