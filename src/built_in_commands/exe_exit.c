@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:15:13 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/12 17:33:03 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:57:37 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	exe_exit(t_command *cmd, t_cmnd_tbl *table)
 	printf("exit\n");
 
 	unsigned int exit_status = 0;
-	exit_status = atoi(cmd->args[0]);
+	exit_status = ft_atoi(cmd->args[0]);
 	printf("exit_status: %d\n", exit_status);
 
 	if (cmd->args[0] == NULL)

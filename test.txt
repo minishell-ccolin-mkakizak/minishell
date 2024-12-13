@@ -1,3 +1,0 @@
-pull_branches.sh
-remove_debug.sh
-src

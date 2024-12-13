@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:35:31 by ccolin            #+#    #+#             */
-/*   Updated: 2024/11/30 12:55:58 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 11:45:24 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,12 @@ int	parse(char **input, t_cmnd_tbl *command_table)
 	if (!return_value)
 		expend_envps(token, command_table->envp,
 			command_table->last_exit_status);
-	print_tokens(token);
 	add_history(*input);
 	free(*input);
 	if (!return_value)
 	{
 		if (build_command_table(token, command_table))
 			return_value = ALLOCATION_FAIL;
-		print_cmnd_tbl(command_table);
 	}
 	free_parser_data(token, lexer_data);
 	return (return_value);

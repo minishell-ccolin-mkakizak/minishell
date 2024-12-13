@@ -1,0 +1,5 @@
+Changed clang to cc in makefile
+removed table rule from makefile
+removed the scripts
+removed developement tools folder and all use of the debug functions in all files
+changed atoi to ft_atoi in exe_exit.c
