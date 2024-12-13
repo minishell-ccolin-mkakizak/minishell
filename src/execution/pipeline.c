@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 13:03:02 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/12 19:30:41 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:38:44 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	await_process(pid_t pid, t_cmnd_tbl *table)
 		if (pid == wpid)
 		{
 			if (WIFSIGNALED(status))
-  				table->last_exit_status = 128 + WTERMSIG(status);
+				table->last_exit_status = 128 + WTERMSIG(status);
 			else
 				table->last_exit_status = WEXITSTATUS(status);
 		}
@@ -73,12 +73,11 @@ pid_t	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 	int		is_child;
 
 	is_child = FALSE;
+	pid = -1;
 	if (current->next || !current->is_built_in || has_pipe(table->head))
 		pid = safe_fork(fd);
-	else
-		pid = -1;
 	if (pid == 0)
-	{	
+	{
 		is_child = TRUE;
 		init_signals(is_child);
 		redirects(current, fd, *prev_pipe);
@@ -88,10 +87,10 @@ pid_t	handle_command_execution(t_command *current, t_cmnd_tbl *table,
 			execute_cmd(current, table, fd);
 	}
 	else
-	{	
+	{
 		ignore_signals();
 		if (current->is_built_in && !has_pipe(table->head))
-		built_in_cmds(current, table, is_child, fd);
+			built_in_cmds(current, table, is_child, fd);
 	}
 	clean_pipes(prev_pipe, current, fd);
 	return (pid);
