@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:15:13 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/13 12:18:59 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 12:21:58 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int is_all_digits(const char *str)
 {
 	if (!str || *str == '\0')
-		return FALSE; // NULL or empty string returns false	
+		return FALSE;
 
 	for (int i = 0; str[i] != '\0'; i++)
 	{
