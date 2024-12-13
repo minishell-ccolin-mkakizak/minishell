@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 10:19:33 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/13 12:26:00 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 13:57:31 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,6 +338,7 @@ int						get_array_len(char **array);
 void					print_here_doc_error(char *delimiter);
 int						is_directory(char *path);
 int						is_path(const char *command);
+void					close_unnecessary_fds(t_fd *fd);
 
 //==========================================================================//
 //							EXECUTION FUNCTIONS								//

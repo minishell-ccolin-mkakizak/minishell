@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 19:15:13 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/13 12:46:55 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 13:53:54 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	exe_exit(t_command *cmd, t_cmnd_tbl *table)
 	if (!is_all_digits(cmd->args[0]))
 		exit_with_error_numeric(cmd);
 	exit_status = (unsigned int)ft_atoi(cmd->args[0]);
-	printf("exit_status: %d\n", exit_status);
 	if (cmd->args[1] != NULL)
 	{
 		printf("minishell: exit: too many arguments\n");

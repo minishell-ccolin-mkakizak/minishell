@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 10:00:00 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/12 19:25:14 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/13 14:00:16 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	signal_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
-		g_global = 130;
+		g_global = SIGINT;
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);

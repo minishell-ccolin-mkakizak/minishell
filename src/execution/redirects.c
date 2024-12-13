@@ -6,7 +6,7 @@
 /*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 17:44:07 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/11 14:25:47 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/13 13:51:14 by mkakizak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	redirects(t_command *current, t_fd *fd, int prev_pipe)
 		output_redirect(current, fd);
 		append_redirect(current, fd);
 	}
+	close_unnecessary_fds(fd);
 	return (0);
 }
 
