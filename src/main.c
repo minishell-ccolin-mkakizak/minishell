@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/12 19:32:20 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/13 11:39:51 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	minishell_loop(t_cmnd_tbl *command_table)
 		return_value = parse(&input, command_table);
 		if (return_value == PARSING_ERROR)
 		{
-			command_table->last_exit_status = 258;
+			command_table->last_exit_status = 2;
 			return (PARSING_ERROR);
 		}
 		if (return_value == ALLOCATION_FAIL)
