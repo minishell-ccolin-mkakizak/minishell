@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 09:57:08 by minoka            #+#    #+#             */
-/*   Updated: 2024/12/12 17:33:54 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:34:52 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ char	**set_command(char *command, char **args)
 void	execute(t_cmnd_tbl *table, t_command *cmd, char *path, t_fd *fd)
 {
 	char	**set_array;
-	char 	**temp;
-	
+	char	**temp;
+
 	set_array = set_command(cmd->command, cmd->args);
 	temp = revert_envp_list(table->envp);
 	if (execve(path, set_array, temp) == -1)

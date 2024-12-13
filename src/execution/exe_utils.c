@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkakizak <mkakizak@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 16:17:15 by mkakizak          #+#    #+#             */
-/*   Updated: 2024/12/12 16:48:55 by mkakizak         ###   ########.fr       */
+/*   Updated: 2024/12/13 12:34:39 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,22 @@ int	is_directory(char *path)
 	return (S_ISDIR(path_stat.st_mode));
 }
 
-int    is_path(const char *command)
+int	is_path(const char *command)
 {
-    struct stat    sb;
-    char *str;
+	struct stat	sb;
+	char		*str;
 
-    if (stat(command, &sb) == 0 && sb.st_mode & S_IXUSR)
-        return (TRUE);
-    else
-    {
-        str = ft_strjoin("/", command);
-        if (stat(str, &sb) == 0 && sb.st_mode & S_IXUSR)
-        {
-            free(str);
-            return (TRUE);
-        }
-        free(str);
-    }
-    return (FALSE);
+	if (stat(command, &sb) == 0 && sb.st_mode & S_IXUSR)
+		return (TRUE);
+	else
+	{
+		str = ft_strjoin("/", command);
+		if (stat(str, &sb) == 0 && sb.st_mode & S_IXUSR)
+		{
+			free(str);
+			return (TRUE);
+		}
+		free(str);
+	}
+	return (FALSE);
 }

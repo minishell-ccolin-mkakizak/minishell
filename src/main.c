@@ -6,7 +6,7 @@
 /*   By: ccolin <ccolin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:32:48 by ccolin            #+#    #+#             */
-/*   Updated: 2024/12/13 11:39:51 by ccolin           ###   ########.fr       */
+/*   Updated: 2024/12/13 12:29:58 by ccolin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ char	*get_input(void)
 	return (NULL);
 }
 
+void	reset_global_status(int *exit_status)
+{
+	if (g_global)
+	{	
+		*exit_status = g_global;
+		g_global = 0;
+	}
+}
+
 int	minishell_loop(t_cmnd_tbl *command_table)
 {
 	char	*input;
@@ -66,11 +75,7 @@ int	minishell_loop(t_cmnd_tbl *command_table)
 	input = get_input();
 	if (input)
 	{
-		if(g_global)
-		{	
-			command_table->last_exit_status = g_global;
-			g_global = 0;
-		}
+		reset_global_status(&command_table->last_exit_status);
 		return_value = parse(&input, command_table);
 		if (return_value == PARSING_ERROR)
 		{
